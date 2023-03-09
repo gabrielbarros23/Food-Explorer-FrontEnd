@@ -43,7 +43,6 @@ function AuthProvider({children}) {
             const fileUploadForm = new FormData()
             fileUploadForm.append("image", image)
             fileUploadForm.append("data", data)
-            console.log(fileUploadForm)
 
             await api.post('/dishes', fileUploadForm).then(response => {console.log('susess')}).catch(error => console.log('error'))
 
@@ -63,12 +62,12 @@ function AuthProvider({children}) {
             fileUploadForm.append("data", data)
 
             
-            await api.put(`${api.defaults.baseURL}/dishes/${id}`, fileUploadForm)
+            await api.put(`/dishes/${id}`, fileUploadForm)
         }catch(error){
             if(error.response){
                 alert(error.response.data.message)
             }else{
-                alert('Não foi possível criar o prato.')
+                alert('Não foi possível editar o prato.')
             }
         }
     }
@@ -80,7 +79,7 @@ function AuthProvider({children}) {
             }
 
 
-            return await api.get(`${api.defaults.baseURL}/categories?categorie=${category}`)
+            return await api.get(`/categories?categorie=${category}`)
                             
         }catch(error){
             if(error.response){
