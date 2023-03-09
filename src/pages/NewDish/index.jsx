@@ -70,13 +70,9 @@ export function NewDish(){
         fileUploadForm.append("image", image)
         fileUploadForm.append("data", data)
 
-        await api.post('/dishes', fileUploadForm).then(navigate('/')).catch((error) => {
-            if (error.response) {
-                alert(error.response.data.message);
-            } else {
-                alert("Erro ao criar o prato!");
-            }
-        })
+        await api.post('/dishes', fileUploadForm)
+
+        navigate('/')
 
     }
 

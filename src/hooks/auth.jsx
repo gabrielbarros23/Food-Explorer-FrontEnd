@@ -44,7 +44,7 @@ function AuthProvider({children}) {
             fileUploadForm.append("image", image)
             fileUploadForm.append("data", data)
 
-            await api.post('/dishes', fileUploadForm).then(response => {console.log('susess')}).catch(error => console.log('error'))
+            await api.post('/dishes', fileUploadForm)
 
         }catch(error){
             if(error.response){
