@@ -63,7 +63,7 @@ function AuthProvider({children}) {
             fileUploadForm.append("data", data)
 
             
-            await api.put(`/dishes/${id}`, fileUploadForm)
+            await api.put(`${api.defaults.baseURL}/dishes/${id}`, fileUploadForm)
         }catch(error){
             if(error.response){
                 alert(error.response.data.message)
@@ -74,14 +74,13 @@ function AuthProvider({children}) {
     }
 
     async function searchCategory(category){
-        console.log('a')
         try{
             if(!category){
                 alert('insira a categoria')
             }
 
 
-            return await api.get(`http://localhost:3333/categories?categorie=${category}`)
+            return await api.get(`${api.defaults.baseURL}/categories?categorie=${category}`)
                             
         }catch(error){
             if(error.response){
