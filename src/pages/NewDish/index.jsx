@@ -2,6 +2,7 @@ import { Container, Form, IngredientArea, FirstRow, SecondRow, ThirdRow, Submit,
 import {useAuth} from '../../hooks/auth'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { api } from '../../services/api'
 import {RxCaretLeft} from 'react-icons/rx'
 import {FiX} from 'react-icons/fi'
 import {Header} from '../../components/Header'
@@ -68,7 +69,6 @@ export function NewDish(){
         const fileUploadForm = new FormData()
         fileUploadForm.append("image", image)
         fileUploadForm.append("data", data)
-        console.log(fileUploadForm)
 
         await api.post('/dishes', fileUploadForm).then(navigate('/')).catch((error) => {
             if (error.response) {
