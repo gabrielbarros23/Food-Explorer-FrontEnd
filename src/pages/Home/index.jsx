@@ -28,6 +28,8 @@ export function Home() {
         const meal = await searchCategory('Refeicao')
         const desserts = await searchCategory('Sobremesa')
 
+        console.log(drink)
+
         setDrinks(drink.data)
         setMeal(meal.data)
         setDesserts(desserts.data)

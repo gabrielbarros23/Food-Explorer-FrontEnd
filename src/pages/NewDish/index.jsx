@@ -37,7 +37,7 @@ export function NewDish(){
         }
     }, [])
     
-    function handleSubmit(){
+    async function handleSubmit(){
 
         if(!title || !description || !categories || !price || !ingredients){
             return alert('Preencha Todos os campos.')
@@ -63,9 +63,21 @@ export function NewDish(){
 
         const data = JSON.stringify(dataJSON)
 
-        createDish({data, image})
+        
+      
+        const fileUploadForm = new FormData()
+        fileUploadForm.append("image", image)
+        fileUploadForm.append("data", data)
+        console.log(fileUploadForm)
 
-        navigate('/')
+        await api.post('/dishes', fileUploadForm).then(navigate('/')).catch((error) => {
+            if (error.response) {
+                alert(error.response.data.message);
+            } else {
+                alert("Erro ao criar o prato!");
+            }
+        })
+
     }
 
     function handleImage(e){

@@ -43,8 +43,9 @@ function AuthProvider({children}) {
             const fileUploadForm = new FormData()
             fileUploadForm.append("image", image)
             fileUploadForm.append("data", data)
+            console.log(fileUploadForm)
 
-            await api.post('/dishes', fileUploadForm)
+            await api.post('/dishes', fileUploadForm).then(response => {console.log('susess')}).catch(error => console.log('error'))
 
         }catch(error){
             if(error.response){
@@ -73,10 +74,12 @@ function AuthProvider({children}) {
     }
 
     async function searchCategory(category){
+        console.log('a')
         try{
             if(!category){
                 alert('insira a categoria')
             }
+
 
             return await api.get(`http://localhost:3333/categories?categorie=${category}`)
                             
