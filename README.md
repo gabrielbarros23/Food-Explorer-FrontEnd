@@ -23,7 +23,7 @@ Food Explorer é o ultimo desafio do curso explorer da Rocketseat. Uma aplicaç�
 Para clonar navegue ao local desejado e digite no terminal.
 
 ```bash
-  $ git clone git@github.com:gabrielbarros23/Food-Explorer-FrontEnd.git
+  $ git clone https://github.com/gabrielbarros23/Food-Explorer-FrontEnd.git
 ```
 
 ## BackEnd
