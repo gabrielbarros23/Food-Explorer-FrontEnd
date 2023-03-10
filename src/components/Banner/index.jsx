@@ -6,7 +6,9 @@ export function Banner(){
         <Container>
             <Content>
 
-                
+                <Image>
+                    <img src={Macaron} alt="" />
+                </Image>
                 
                 <Text>
                     <h1>Sabores inigualáveis</h1>
