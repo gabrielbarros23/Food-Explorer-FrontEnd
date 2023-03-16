@@ -43,7 +43,8 @@ export const Content = styled.div`
     border-bottom: 3px solid ${({theme}) => theme.COLORS.DARK_900};
     
    
-    height: 40.0rem;
+    height: 36.5rem;
+    
 
     >button{
         display: none;

@@ -5,10 +5,10 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
     
-    height: 40.0rem;
+    height: 36.0rem;
     width: 21.0rem;
 
-    padding: 1.0rem 2.4rem;
+    padding: 0rem 2.4rem;
     margin-right: 1.6rem;
 
     background-color: ${({theme}) => theme.COLORS.DARK_200};
@@ -16,14 +16,19 @@ export const Container = styled.div`
     >h1{
         display: flex;
         justify-content: center;
+        text-align: center;
+
+        font-size: 1.4rem;
         
-        width: 16.2rem;
+        height: 3.1rem;
+        
+        width: 19.2rem;
+        overflow: hidden;
         margin-bottom: 1.0rem;
 
         font-size: 1.7rem;
-        text-align: center;
         font-weight: 500;
-        
+
     }
 
     >p:nth-child(4){
@@ -147,7 +152,7 @@ export const Amount = styled.div`
     align-items: center;
 
     width: 16.2rem;
-    margin-bottom: 2.4rem;
+    margin-bottom: 1.4rem;
     gap: 1.4rem;
 
     >button{
@@ -179,6 +184,7 @@ export const Market = styled.div`
     flex-direction: column;
     button{
         width: 17.0rem;
+        margin-bottom: 1.0rem;
     }
     
     @media(min-width: 1100px){
