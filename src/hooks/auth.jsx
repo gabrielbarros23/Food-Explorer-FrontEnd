@@ -45,7 +45,7 @@ function AuthProvider({children}) {
             fileUploadForm.append("data", data)
 
             await api.post('/dishes', fileUploadForm)
-
+            alert('Prato feito com sucesso.')
         }catch(error){
             if(error.response){
                 alert(error.response.data.message)
@@ -63,6 +63,7 @@ function AuthProvider({children}) {
 
             
             await api.put(`/dishes/${id}`, fileUploadForm)
+            alert('Prato atualizado com sucesso.')
         }catch(error){
             if(error.response){
                 alert(error.response.data.message)

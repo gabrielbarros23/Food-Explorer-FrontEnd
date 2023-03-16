@@ -25,14 +25,14 @@ export const Container = styled.div`
 
         padding: 0 3.0rem;
         
-        >button{
+        >button:nth-child(1){
             display: none;
         }
        
     }
 `
 
-export const Logo = styled.div`
+export const Logo = styled.button`
     
     display:flex;
     align-items:center;
@@ -61,6 +61,9 @@ export const Text = styled.div`
         font-size: 1.5rem;
         color: ${({theme}) => theme.COLORS.BLUE_200};
     }
+    >p{
+        color:${({theme}) => theme.COLORS.WHITE}
+    }
 
     @media(min-width: 1100px){
         
@@ -74,6 +77,7 @@ export const Text = styled.div`
             display: ${({isAdmin}) => isAdmin ? 'visible' : 'none'};
             color: ${({theme}) => theme.COLORS.BLUE_200};
         }
+
     }
     
 `

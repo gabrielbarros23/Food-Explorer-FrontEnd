@@ -31,12 +31,16 @@ export function Header({value, onChange}){
         }
     }
 
+    function navigateToHome(){
+        navigate('/')
+    }
+
     return(
         <Container isAdmin={isAdmin}>
             
             <button onClick={() => handleMenu()}><FcMenu/></button>
     
-            <Logo>
+            <Logo onClick={navigateToHome}>
                 <img src={logo} alt="logo do food explorer" />
 
                 <Text>

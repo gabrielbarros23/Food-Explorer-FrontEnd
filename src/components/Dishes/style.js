@@ -1,10 +1,11 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-    display: grid;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     
-    height: 34.0rem;
+    height: 40.0rem;
     width: 21.0rem;
 
     padding: 1.0rem 2.4rem;
@@ -19,7 +20,8 @@ export const Container = styled.div`
         width: 16.2rem;
         margin-bottom: 1.0rem;
 
-        font-size: 1.4rem;
+        font-size: 1.7rem;
+        text-align: center;
         font-weight: 500;
         
     }
@@ -29,8 +31,9 @@ export const Container = styled.div`
         justify-content: center;
 
         width: 16.2rem;
-        font-size: 1.6rem;
+        font-size: 2.2rem;
         margin-bottom: 2.0rem;
+
         
         color: ${({theme}) => theme.COLORS.BLUE_200};
     }
@@ -65,7 +68,7 @@ export const Container = styled.div`
         }
         >p:nth-child(3){
            display: flex;
-           max-height: 12.0rem;
+           height: 4.0rem;
            overflow: hidden;
            
            margin-bottom: 1.5rem;
@@ -91,14 +94,14 @@ export const Image = styled.div`
     justify-content: center;
     align-items: center;
 
-    height: 11.0rem;
-    width: 16.2rem;
+    width: 15.8rem;
+    height: 15.8rem;
 
     margin-bottom: 1.2rem;
     
     >img{
-        width: 8.8rem;
-        height: 8.8rem;
+        width: 13.8rem;
+        height: 13.8rem;
     }
 
     >button{
@@ -150,12 +153,15 @@ export const Amount = styled.div`
     >button{
         display: flex;
         align-items: center;
-
-        font-size: 2.0rem;
-
+        justify-content: center;
+        
         border: none;
         background: none;
         color: ${({theme}) => theme.COLORS.WHITE};
+
+        >svg{
+            font-size: 2.0rem;
+        }
     }
 
     @media(min-width: 1100px){
@@ -164,21 +170,19 @@ export const Amount = styled.div`
         >p{
             font-size: 2.0rem;
         }
-
-        >button{
-            >svg{
-                font-size: 2.0rem;
-            }
-        }
+       
     }
 `
 
 export const Market = styled.div`
     display: flex;
     flex-direction: column;
+    button{
+        width: 17.0rem;
+    }
     
     @media(min-width: 1100px){
-        >button{
+        button{
             width: ${({isAdmin}) => isAdmin? '22.0rem' : '100%'};
         }
         flex-direction: row;

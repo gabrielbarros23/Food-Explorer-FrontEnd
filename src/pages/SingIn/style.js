@@ -4,18 +4,18 @@ export const Container = styled.div `
     display: flex;
     flex-direction: column;
     justify-items: center;
+    align-items: center;
 
     height: 100vh;
     width: 100%;
     
     padding: 15.8rem 5.0rem 0;
 
-    @media(min-width: 1340px){
+    @media(min-width: 1100px){
         flex-direction: row;
         justify-content: center;
 
-        padding: 14.2rem 10.8rem 14.1rem 15.6rem;
-        gap: 30.0rem;
+        padding: 0;
     }
 `
 
@@ -25,19 +25,25 @@ export const Logo = styled.div`
     justify-content: center;
 
     height: 4.3rem;
-    
+    width: clamp( 1.9rem, 85.6rem, 100% );
+
+
     margin-bottom: 5.0rem;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
+
 
     > img{
         margin-right: 1.0rem;
         width: 4.3rem;
     }
 
-    @media(min-width: 1340px){
+    @media(min-width: 1100px){
         height: 60.0rem;
         width: 30.0rem;
         align-items: center;
+        margin-bottom: 0;
+        margin-right: clamp(1rem, 10vw, 30.0rem);
+
 
     }
 
@@ -45,10 +51,11 @@ export const Logo = styled.div`
 
 export const Form = styled.form`
 
-
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: clamp( 1.9rem, 85.6rem, 100% );
+
 
     >div:nth-child(3){
         max-width: 60.0rem;
@@ -80,13 +87,14 @@ export const Form = styled.form`
     
     
 
-    @media(min-width: 1340px){
+    @media(min-width: 1100px){
         
         display: grid;
         
         width: 47.6rem;
         height: 60.0rem;
         padding: 6.4rem;
+
 
         background-color: ${({theme}) => theme.COLORS.DARK_700};
       
@@ -102,6 +110,7 @@ export const Form = styled.form`
 export const Register = styled.div`
     
     text-align:center;
+
     
     >button {
         background: none;

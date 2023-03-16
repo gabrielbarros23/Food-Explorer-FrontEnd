@@ -17,8 +17,9 @@ export const Content = styled.div`
     flex-direction: column;
 
     grid-area: content;
-    padding: 3.6rem 5.6rem 0rem;
+    padding: 3.6rem 5.6rem 2rem;
     justify-content: start;
+    align-items: center;
     gap: 2.0rem;
 
 
@@ -35,8 +36,9 @@ export const Content = styled.div`
 
 export const Left = styled.div`
 
-    max-width: 100.0rem;
     height: fit-content;
+    width: clamp(30.0rem, 60.0rem, 80%);
+
     
     >a{
         display:flex;
@@ -62,7 +64,7 @@ export const Left = styled.div`
         display:flex;
 
         width: 100%;
-        height: 30.0rem;
+        height: 34.0rem;
 
         align-items:center;
         object-fit: contain;
@@ -74,13 +76,12 @@ export const Left = styled.div`
         justify-content: start;
 
         
-        width: 40.0rem;
+        width: clamp(10.0rem, 46.0rem, 100%);
         height: 60.0rem;
 
         >img{
-            height:40.0rem;
-            width: 40.0rem;
-
+            height:50.0rem;
+            width: 100%;
         }
 
         >a{
@@ -93,8 +94,10 @@ export const Left = styled.div`
 
 export const Right = styled.div`
 
-    display: grid;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    width: clamp(30.0rem, 60.0rem, 80%);
+    align-items: center;
     
     
     @media(min-width: 1100px){
@@ -122,8 +125,8 @@ export const Title = styled.div`
         max-height: 10.0rem;
         max-width: 100%;
 
-        font-size: 2.7rem;
-        font-weight: 500;
+        font-size: 2.9rem;
+        font-weight: 700;
         
         justify-content:center;
         text-align: start;
@@ -135,8 +138,10 @@ export const Title = styled.div`
 
     >p{
         font-size: 1.7rem;
-        text-align:center;
+        text-align: center;
         margin-bottom: 2.4rem;
+        max-height: 10.0rem;
+        color: ${({theme}) => theme.COLORS.GREY_600};
     }
 
     @media(min-width: 1100px){
@@ -161,17 +166,18 @@ export const Title = styled.div`
 export const IngredientsArea = styled.div`
 
     display:flex;
-    justify-content:center;
-    align-items:center;
+    justify-content: center;
 
     gap: 2.0rem;
     flex-wrap: wrap;
-    margin-bottom: 5.2rem;
+    margin-bottom: 2.2rem;
+    width: clamp(10.0rem,30.0rem, 100%);
+
     
     
     >li{
-        display:flex;
         height: 4.5rem;
+        display: flex;
         
         align-items:center;
         text-align:center;
@@ -186,11 +192,17 @@ export const IngredientsArea = styled.div`
     }
         
     
-
-    @media(min-width: 110.0rem){
+    
+    @media(min-width: 1100px){
         align-items: flex-start;
         justify-content: start;
         margin-bottom: 4.8rem;
+        width: clamp(10.0rem,50.0rem, 100%);
+
+        >li ul{
+            font-size: 2.0rem;
+        }
+
 
     }
 `
@@ -202,11 +214,14 @@ export const Submit = styled.div`
     justify-content:center;
     
     gap: 1.6rem;
-
+    width: clamp(10.0rem,30.0rem, 100%);
+    
+    
     >button{
         font-size: 1.4rem;
-        max-width: 25.0rem;
+        
         height: 4.7rem;
+
     }
     
     

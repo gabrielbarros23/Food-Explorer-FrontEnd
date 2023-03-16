@@ -30,8 +30,8 @@ export function Menu(){
         navigate('/new')
     }
 
-    function handleHome(){
-        navigate('/')
+    function handleBack(){
+        navigate(-1)
     }
 
     
@@ -49,7 +49,7 @@ export function Menu(){
     return(
         <Container >
             <Header>
-                <button onClick={handleHome}><AiOutlineClose/></button> <p>Menu</p>
+                <button onClick={handleBack}><AiOutlineClose/></button> <p>Menu</p>
             </Header>
 
             <Content>

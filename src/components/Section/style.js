@@ -3,9 +3,9 @@ import styled from 'styled-components'
 export const Container = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: start;
     
-    height: 40.0rem;
+    height: 50.0rem;
     width: 100%;
 
     gap: 2.4rem;
@@ -15,7 +15,8 @@ export const Container = styled.div`
 
     
     >p{
-        font-size: 1.8rem;
+        font-size: 2.5rem;
+
     }
     
     @media(min-width: 1100px){
@@ -28,6 +29,8 @@ export const Container = styled.div`
         >p{
             width: 110.0rem;
             max-width: 117.0rem;
+            font-size: 2.5rem;
+            font-weight: 500;
         }
     }   
 `
@@ -40,7 +43,7 @@ export const Content = styled.div`
     border-bottom: 3px solid ${({theme}) => theme.COLORS.DARK_900};
     
    
-    height: 34.0rem;
+    height: 40.0rem;
 
     >button{
         display: none;
