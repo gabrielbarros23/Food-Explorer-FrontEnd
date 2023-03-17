@@ -32,6 +32,21 @@ export const Logo = styled.div`
     margin-bottom: 5.0rem;
     font-size: 1.8rem;
 
+    animation: slide-in-left 0.9s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+
+    @keyframes slide-in-left {
+    0% {
+        -webkit-transform: translateX(-1000px);
+            transform: translateX(-1000px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+        opacity: 1;
+    }
+    }
+
 
     > img{
         margin-right: 1.0rem;
@@ -55,6 +70,18 @@ export const Form = styled.form`
     align-items: center;
     width: clamp( 1.9rem, 85.6rem, 100% );
 
+    animation: slide-in-right 0.9s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+   
+    @keyframes slide-in-right {0% {
+            -webkit-transform: translateX(1000px);
+            transform: translateX(1000px);
+            opacity: 0;
+        }100% {
+            -webkit-transform: translateX(0);
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
 
     >div:nth-child(3){
         max-width: 60.0rem;

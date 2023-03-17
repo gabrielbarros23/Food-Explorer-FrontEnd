@@ -14,10 +14,12 @@ export function SingIn(){
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState(false)
     const {singIn} = useAuth()
 
     function handleSubmit(){
-        singIn({email,password})
+        setLoading(true)
+        singIn({email,password}).then(() => setLoading(false)).catch(() => setLoading(false))
     }
 
     return(
@@ -47,7 +49,11 @@ export function SingIn(){
                     onChange={e => setPassword(e.target.value)}
                 />
 
-                <Button title="Entrar" onClick={handleSubmit}/>
+                <Button 
+                    title="Entrar" 
+                    onClick={handleSubmit} 
+                    loading={loading}
+                />
 
                 <Register>
                  <Link to='/register'> Criar uma conta</Link>

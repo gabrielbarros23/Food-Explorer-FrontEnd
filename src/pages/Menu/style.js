@@ -11,6 +11,21 @@ export const Container = styled.div`
     "content"
     "footer";
 
+    animation: slide-in-left 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+
+    @keyframes slide-in-left {
+    0% {
+        -webkit-transform: translateX(-1000px);
+            transform: translateX(-1000px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+        opacity: 1;
+    }
+    }
+
     @media(min-width: 1100px){
         display: none;
     }

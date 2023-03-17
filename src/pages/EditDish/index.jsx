@@ -26,10 +26,13 @@ export function EditDish(){
     const [ingredients, setIngredients] = useState([])
     const [newIngredient, setNewIngredient] = useState([])
     const [description, setDescription] = useState('')
+    const [loading, setLoading] = useState(false)
+
 
     const [dish, setDish] = useState(null)
     const [options, setOptions] = useState([]) 
     const [image, setImage] = useState(null)
+
 
 
     function handleIngredient(){
@@ -71,16 +74,17 @@ export function EditDish(){
 
         const data = JSON.stringify(dataJSON)
 
-        uptadeDish({data, image, id})
+        uptadeDish({data, image, id}).then(() => setLoading(false)).catch(() => setLoading(false))
 
         navigate('/')
     }
 
     async function handleDeleteDish(){
+        setLoading(true)
         const confirm = window.confirm("Deseja deletar o prato?")
 
         if(confirm){
-            await api.delete(`/dishes/${params.id}`)
+            await api.delete(`/dishes/${params.id}`).then(() => setLoading(false)).catch(() => setLoading(false))
             navigate('/')
         }
     }
@@ -98,6 +102,11 @@ export function EditDish(){
             setDish(data)
             setCategories(data.categorie)
             setOptions([data.categorie])
+
+            setTitle(data.title)
+            setPrice(data.price)
+            setIngredients([data.ingredients])
+            setDescription(data.description)
 
             const ShowIngredient = await api.get(`/ingredient/${params.id}`)
             const DataIngredients = ShowIngredient.data
@@ -206,8 +215,8 @@ export function EditDish(){
 
                 <Submit>
 
-                    <Button title='Excluir prato' onClick={() => handleDeleteDish()}/>
-                    <Button title='Salvar alterações' onClick={() => handleSubmit()}/>
+                    <Button title='Excluir prato' onClick={() => handleDeleteDish()} loading={loading}/>
+                    <Button title='Salvar alterações' onClick={() => handleSubmit()} loading={loading}/>
 
                 </Submit>
 

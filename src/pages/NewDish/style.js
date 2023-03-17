@@ -16,11 +16,10 @@ export const Form = styled.form`
     display: grid ;
     grid-area: form;
     padding: 1.0rem 3.2rem 0;
-
     >a{
         display: flex;
         align-items: center;
-
+        
         height: 2.3rem;
         width: 9.0rem;
         font-size: 2.0rem;
@@ -40,10 +39,25 @@ export const Form = styled.form`
         margin-top: 2.2rem;
         color: ${({theme}) => theme.COLORS.LIGHT_300};
     }
-
+    
     @media(min-width: 1100px){
         padding: 4.0rem 12.5rem 9.0rem 12.3rem;
-   }
+        
+        animation: scale-in-center 1s ease forwards;
+
+            @keyframes scale-in-center {
+        0% {
+            -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+            opacity: 1;
+        }
+        100% {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+            opacity: 1;
+        }
+        }
+}
   
 `
 export const IngredientArea = styled.div`
@@ -89,6 +103,7 @@ export const FirstRow = styled.div`
         display: flex;
         align-items: center;
         justify-content: space-between;
+        
         
         >div:nth-child(1){
             width: 23%;

@@ -32,21 +32,41 @@ export const Container = styled.div`
     }
 `
 
-export const Logo = styled.button`
+export const Logo = styled.div`
     
     display:flex;
     align-items:center;
     justify-content: center;
     
-    height: 5.6rem ;
+    height: 5.0rem ;
+    width: 25.6rem;
+    
     font-size: 2.1rem;
     font-weight: 500;
     gap: 1.0rem;
-
+    cursor: pointer;
+    transition: all 0.5s ease;
     >img{
         width: 3.0rem;
-    }
+        transition: all 0.5s ease;
 
+    }
+    
+    
+    @media(min-width: 1100px){
+        width: 20.6rem;
+        :hover{
+            
+            >img{
+                width: 4.0rem;
+            }
+            font-size: 2.5rem;
+            width: 25.6rem;
+            height: 6.6rem ;
+            background: linear-gradient(90deg, rgba(8,28,36,1) 54%, rgba(10,40,52,1) 87%);
+            border-radius: 10px;
+        }
+    }
     
 `
 
@@ -163,8 +183,15 @@ export const Cart = styled.div`
             
             border-radius: 5px;
             font-size: 1.4rem;
+            transition: all 0.5s ease;
+            height: 5.6rem;
 
             background-color: ${({theme}) => theme.COLORS.RED_100};
+
+            :hover{
+                width: 23.5rem;
+            }
+
         }
     }
 `

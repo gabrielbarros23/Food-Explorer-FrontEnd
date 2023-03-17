@@ -25,6 +25,8 @@ export function NewDish(){
     const [description, setDescription] = useState('')
     const [ingredients, setIngredients] = useState([])
     const [categories, setCategories] = useState('Refeição')
+    const [loading, setLoading] = useState(false)
+
 
     const [newIngredient, setNewIngredient] = useState([])
     const [options, setOptions] = useState(['Refeição', 'Bebida', 'Sobremesa'])
@@ -39,7 +41,7 @@ export function NewDish(){
     }, [])
     
     async function handleSubmit(){
-
+        
         if(!title || !description || !categories || !price || !ingredients){
             return alert('Preencha Todos os campos.')
         }
@@ -47,13 +49,15 @@ export function NewDish(){
         if(!image){
             return alert('Selecione uma imagem.')
         }
-
+        
         if(newIngredient.length !== 0 ){
             return alert('Voce não confirmou um ingrediente. clique no mais para adcionar ou limpe o campo.')
         }
 
+        setLoading(true)
+        
         const categorie = categories.replace('çã', 'ca')
-
+        
         const dataJSON = {
             title,
             price,
@@ -61,16 +65,16 @@ export function NewDish(){
             description,
             categorie
         }
-
+        
         const data = JSON.stringify(dataJSON)
-
+        
         
       
         const fileUploadForm = new FormData()
         fileUploadForm.append("image", image)
         fileUploadForm.append("data", data)
 
-        await api.post('/dishes', fileUploadForm)
+        await api.post('/dishes', fileUploadForm).then(() => setLoading(false)).catch(() => setLoading(false))
 
         navigate('/')
 
@@ -198,6 +202,7 @@ export function NewDish(){
                     <Button 
                         title='Salvar prato' 
                         onClick={() =>handleSubmit()}
+                        loading={loading}
                     />
                 </Submit>
 

@@ -14,23 +14,30 @@ export function SingUp(){
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState(false)
+
 
     const navigate = useNavigate()
 
     function handleSubmit(){
+        setLoading(true)
+        
         if(!name || !email || !password){
             return alert("Preencha todos os campos!")
         }
-        
+
         api.post('/users', {name, email, password}).then(() => {
             alert("Usuário cadastrado com sucesso!")
             navigate('/')
+            setLoading(false)
+
         }).catch(error => {
             if(error.response){
                 alert(error.response.data.message)
             }else{
                 alert("Não foi possível cadastrar")
             }
+            setLoading(false)
         })
     }
     
@@ -72,6 +79,7 @@ export function SingUp(){
                 <Button 
                     title="Criar Conta" 
                     onClick={handleSubmit}
+                    loading={loading}
                 />
 
                 <Register>

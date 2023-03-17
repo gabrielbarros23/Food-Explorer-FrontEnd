@@ -7,6 +7,7 @@ import {Footer} from '../../components/Footer'
 import {Banner} from '../../components/Banner'
 import {Section} from '../../components/Section'
 import {Dishes} from '../../components/Dishes'
+import {Menu} from '../../pages/Menu'
 
 
 

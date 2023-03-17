@@ -40,11 +40,9 @@ export const Content = styled.div`
     position: relative;
     justify-content: space-between;
     overflow-x: auto;
-    border-bottom: 3px solid ${({theme}) => theme.COLORS.DARK_900};
+    box-shadow: ${({theme}) => '0 0 10px' + theme.COLORS.DARK_1000};
     
-   
     height: 36.5rem;
-    
 
     >button{
         display: none;

@@ -41,7 +41,7 @@ export function Dishes({data, isAdmin, ...rest}){
     }
     
     return(
-        <Container isAdmin={Admin} {...rest} >
+        <Container isAdmin={Admin} {...rest}>
             
             <Image isAdmin={Admin}>
                 <button onClick={() => handleEdit(Admin)}>{icon}</button>    

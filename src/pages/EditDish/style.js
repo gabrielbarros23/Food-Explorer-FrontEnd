@@ -17,6 +17,8 @@ export const Form = styled.form`
     grid-area: form;
     padding: 1.0rem 3.2rem 0;
 
+    
+
     >a{
         display: flex;
         align-items: center;
@@ -43,6 +45,21 @@ export const Form = styled.form`
 
     @media(min-width: 1100px){
         padding: 4.0rem 12.5rem 9.0rem 12.3rem;
+
+        animation: scale-in-center 1s ease forwards;
+
+            @keyframes scale-in-center {
+        0% {
+            -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+            opacity: 1;
+        }
+        100% {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+            opacity: 1;
+        }
+        }
    }
   
 `

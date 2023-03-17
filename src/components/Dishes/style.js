@@ -8,8 +8,9 @@ export const Container = styled.div`
     height: 36.0rem;
     width: 21.0rem;
 
-    padding: 0rem 2.4rem;
+    padding: 1rem 2.4rem 0;
     margin-right: 1.6rem;
+    
 
     background-color: ${({theme}) => theme.COLORS.DARK_200};
     
@@ -70,6 +71,7 @@ export const Container = styled.div`
             margin-bottom: 1.5rem;
 
             text-align: center;
+            
         }
         >p:nth-child(3){
            display: flex;
@@ -103,6 +105,7 @@ export const Image = styled.div`
     height: 15.8rem;
 
     margin-bottom: 1.2rem;
+
     
     >img{
         width: 13.8rem;

@@ -49,6 +49,7 @@ export function Header({value, onChange}){
                 </Text>
             </Logo>
 
+
             <Input>
                 <input type="text" placeholder='Busque por pratos ou ingredientes' value={value} onChange={onChange} />
             </Input>
