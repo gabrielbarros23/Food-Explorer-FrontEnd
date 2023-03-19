@@ -169,7 +169,7 @@ export const Preview = styled.div`
 
 
             >label{
-                display: none;
+                display: flex;
             }
             
             >img{

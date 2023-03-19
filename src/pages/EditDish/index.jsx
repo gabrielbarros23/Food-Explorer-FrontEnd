@@ -141,11 +141,7 @@ export function EditDish(){
         
     }, [])
 
-    useEffect(() => {
-        if(preview){
-            setPreviewIsNull(false)
-        }
-    }, [preview])
+    
 
     return(
         <Container>
@@ -167,7 +163,7 @@ export function EditDish(){
                             
                             <span>clique para adcionar uma imagem</span>
 
-                            {!previewIsNull && 
+                            {showPreview && 
                                 <label htmlFor="Image">
                                     <AiFillCamera/>
                                     <input type="file" id="Image" onChange={handleImage}/>
