@@ -35,7 +35,6 @@ export function EditDish(){
     const [image, setImage] = useState(null)
 
     const [preview, setPreview] = useState()
-    const [previewIsNull, setPreviewIsNull] = useState(true);
     const [showPreview, setShowPreview] = useState(false);
     const [buttonDisable, setButtonDisable] = useState(false)
 
@@ -159,7 +158,7 @@ export function EditDish(){
                 <h1>Editar prato</h1>
 
                 <FirstRow>
-                    <Preview previewIsNull={previewIsNull} showPreview={showPreview}>
+                    <Preview showPreview={showPreview}>
                         <label htmlFor="Image">
                             <img src={preview} alt=""/>
                             <span><AiFillCamera/></span>
