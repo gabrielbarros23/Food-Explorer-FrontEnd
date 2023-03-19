@@ -73,6 +73,7 @@ export const Text = styled.div`
 
     background: linear-gradient(#091E26, #00131C );
 
+
     >h1{
         width: 20.2rem;
         font-size: 1.8rem;

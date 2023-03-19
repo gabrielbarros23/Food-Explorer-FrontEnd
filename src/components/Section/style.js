@@ -42,6 +42,7 @@ export const Content = styled.div`
     overflow-x: auto;
     box-shadow: ${({theme}) => '0 0 10px' + theme.COLORS.DARK_1000};
     
+    
     height: 36.5rem;
 
     >button{
@@ -82,6 +83,7 @@ export const Dishes = styled.div`
     justify-content: flex-start;
     align-items: center;
     position: absolute;
+    
     
 
     @media(min-width: 1100px){

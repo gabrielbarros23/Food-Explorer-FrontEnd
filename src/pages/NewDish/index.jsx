@@ -1,9 +1,9 @@
-import { Container, Form, IngredientArea, FirstRow, SecondRow, ThirdRow, Submit, Ingredient} from './style'
+import { Container, Form, IngredientArea, FirstRow, SecondRow, ThirdRow, Submit, Ingredient, Preview} from './style'
 import {useAuth} from '../../hooks/auth'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { api } from '../../services/api'
 import {RxCaretLeft} from 'react-icons/rx'
+import {AiFillCamera} from 'react-icons/ai'
 import {FiX} from 'react-icons/fi'
 import {Header} from '../../components/Header'
 import {Footer} from '../../components/Footer'
@@ -32,13 +32,9 @@ export function NewDish(){
     const [options, setOptions] = useState(['Refeição', 'Bebida', 'Sobremesa'])
      
     const [image, setImage] = useState(null)
+    const [preview, setPreview] = useState()
+    const [previewIsNull, setPreviewIsNull] = useState(true);
 
-   
-    useEffect(() => {
-        if(!user.admin){
-            navigate('/')
-        }
-    }, [])
     
     async function handleSubmit(){
         
@@ -67,22 +63,20 @@ export function NewDish(){
         }
         
         const data = JSON.stringify(dataJSON)
-        
-        
-      
-        const fileUploadForm = new FormData()
-        fileUploadForm.append("image", image)
-        fileUploadForm.append("data", data)
-
-        await api.post('/dishes', fileUploadForm).then(() => setLoading(false)).catch(() => setLoading(false))
+       
+        createDish({data, image}).then(() => setLoading(false)).catch(() => setLoading(false))
 
         navigate('/')
-
     }
 
     function handleImage(e){
         const file = e.target.files[0]
         setImage(file)
+        
+        
+        const imagePreview = URL.createObjectURL(file);
+        console.log(imagePreview)
+        setPreview(imagePreview)
     }
 
     function handleIngredient(){
@@ -100,7 +94,18 @@ export function NewDish(){
         setIngredients(updatedIngredient)
     }
 
-    
+    useEffect(() => {
+        if(!user.admin){
+            navigate('/')
+        }
+    }, [])
+
+    useEffect(() => {
+        if(preview){
+            setPreviewIsNull(false)
+        }
+    }, [preview])
+   
     return(
         <Container>
             <Header/>
@@ -112,14 +117,25 @@ export function NewDish(){
 
                 <FirstRow>
 
-                    <InputConfig label={'imagem do prato'}>
+                    <Preview previewIsNull={previewIsNull}>
 
-                        <FileInput 
-                            placeholder={'Selecione imagem'} 
-                            onChange={handleImage}
-                        />
+                        <label htmlFor="Image">
+                            <img src={preview} alt=""/>
+                            <span><AiFillCamera/></span>
+                            <input type="file" id="Image" onChange={handleImage}/>
+                            <span>clique para adcionar uma imagem</span>
 
-                    </InputConfig>
+                            {!previewIsNull && 
+                                <label htmlFor="Image">
+                                    <AiFillCamera/>
+                                    <input type="file" id="Image" onChange={handleImage}/>
+                                </label>
+                            }
+                        </label>
+
+                    </Preview>
+
+                    
 
                     <InputConfig label={'Nome'}>
 
@@ -133,7 +149,6 @@ export function NewDish(){
                         
                     </InputConfig>
 
-                    
                     <InputConfig label={'Categoria'}>
                         
                         <Select 
@@ -143,6 +158,7 @@ export function NewDish(){
                         />
 
                     </InputConfig>
+                    
 
                 </FirstRow>
                 
@@ -153,9 +169,9 @@ export function NewDish(){
 
                         <IngredientArea>
 
-                            {ingredients.map((ingredient) => (
-                                <Ingredient key={ingredient}>
-                                        <p>{ingredient} <button onClick={(e) => handleRemoveIngredient({e,ingredient})}><FiX/></button></p>
+                            {ingredients.map((ingredient, index) => (
+                                <Ingredient key={index}>
+                                    <p>{ingredient} <button onClick={(e) => handleRemoveIngredient({e,ingredient})}><FiX/></button></p>
                                 </Ingredient>
                             ))}
 
@@ -169,6 +185,8 @@ export function NewDish(){
                         </IngredientArea>
 
                     </InputConfig>
+
+                   
 
                     <InputConfig label={'Preço'}>
 

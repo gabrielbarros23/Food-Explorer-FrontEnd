@@ -74,14 +74,17 @@ export const Left = styled.div`
         
         display: grid;
         justify-content: start;
+        align-items: flex-start;
 
         
-        width: clamp(10.0rem, 46.0rem, 100%);
-        height: 60.0rem;
+        width: clamp(10.0rem, 41.0rem, 100%);
+        height: 55.0rem;
+       
 
         >img{
-            height:50.0rem;
-            width: 100%;
+            height:38.9rem;
+            width: clamp(10.0rem, 39.0rem, 100%);
+
         }
 
         >a{
@@ -103,7 +106,7 @@ export const Right = styled.div`
     @media(min-width: 1100px){
         display:flex;
         flex-direction: column;
-        width: 70.0rem;
+        width: 68.7rem;
         height: 60.0rem;
         gap: 0rem;
 
@@ -197,7 +200,7 @@ export const IngredientsArea = styled.div`
         align-items: flex-start;
         justify-content: start;
         margin-bottom: 4.8rem;
-        width: clamp(10.0rem,50.0rem, 100%);
+        width: clamp(10.0rem,70.0rem, 100%);
 
         >li ul{
             font-size: 2.0rem;

@@ -1,10 +1,11 @@
-import { Container, Form, IngredientArea, FirstRow, SecondRow, ThirdRow, Submit, Ingredient} from './style'
+import { Container, Form, IngredientArea, FirstRow, SecondRow, ThirdRow, Submit, Ingredient, Preview} from './style'
 import { useAuth } from '../../hooks/auth'
 import {api} from '../../services/api'
 import { useState, useEffect} from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import {FiX} from 'react-icons/fi'
 import {RxCaretLeft} from 'react-icons/rx'
+import {AiFillCamera} from 'react-icons/ai'
 import {Header} from '../../components/Header'
 import {Footer} from '../../components/Footer'
 import {Input} from '../../components/Input'
@@ -33,6 +34,10 @@ export function EditDish(){
     const [options, setOptions] = useState([]) 
     const [image, setImage] = useState(null)
 
+    const [preview, setPreview] = useState()
+    const [previewIsNull, setPreviewIsNull] = useState(true);
+    const [showPreview, setShowPreview] = useState(false);
+    const [buttonDisable, setButtonDisable] = useState(false)
 
 
     function handleIngredient(){
@@ -49,14 +54,21 @@ export function EditDish(){
         setIngredients(updatedIngredient)
     }
 
+    function handleShowPreview(e){
+        e.preventDefault()
+
+        if(showPreview){
+            setShowPreview(false)
+        }else{
+            setShowPreview(true)
+        }
+    }
+
     function handleSubmit() {
         if(!title || !description || !categories || !price || !ingredients){
             return alert('Preencha Todos os campos.')
         }
 
-        if(!image){
-            return alert('Coloque uma foto.')
-        }
 
         if(newIngredient.length !== 0 ){
             return alert('Voce não confirmou um ingrediente. clique no mais para adcionar ou limpe o campo.')
@@ -75,14 +87,14 @@ export function EditDish(){
         const data = JSON.stringify(dataJSON)
 
         uptadeDish({data, image, id}).then(() => setLoading(false)).catch(() => setLoading(false))
-
+        
         navigate('/')
     }
-
+    
     async function handleDeleteDish(){
         setLoading(true)
         const confirm = window.confirm("Deseja deletar o prato?")
-
+        
         if(confirm){
             await api.delete(`/dishes/${params.id}`).then(() => setLoading(false)).catch(() => setLoading(false))
             navigate('/')
@@ -92,6 +104,12 @@ export function EditDish(){
     function handleImage(e){
         const file = e.target.files[0]
         setImage(file)
+        
+
+        const imagePreview = URL.createObjectURL(file);
+        setPreview(imagePreview)
+        setButtonDisable(true)
+        setShowPreview(true)
     }
 
     
@@ -99,9 +117,13 @@ export function EditDish(){
         async function DishSetup(){
             const dish = await api.get(`/dishes/${params.id}`)
             const data = dish.data
+            const image = `${api.defaults.baseURL}/files/${data.image}`
+            setPreview(image)
+
             setDish(data)
             setCategories(data.categorie)
-            setOptions([data.categorie])
+            const option = data.categorie.replace('ca', 'çã')
+            setOptions([option])
 
             setTitle(data.title)
             setPrice(data.price)
@@ -120,6 +142,12 @@ export function EditDish(){
         
     }, [])
 
+    useEffect(() => {
+        if(preview){
+            setPreviewIsNull(false)
+        }
+    }, [preview])
+
     return(
         <Container>
             <Header/>
@@ -131,15 +159,25 @@ export function EditDish(){
                 <h1>Editar prato</h1>
 
                 <FirstRow>
+                    <Preview previewIsNull={previewIsNull} showPreview={showPreview}>
+                        <label htmlFor="Image">
+                            <img src={preview} alt=""/>
+                            <span><AiFillCamera/></span>
+                            <input type="file" id="Image" onChange={handleImage}/>
 
-                    <InputConfig label={'imagem do prato'}>
+                            
+                            <span>clique para adcionar uma imagem</span>
 
-                        <FileInput 
-                            placeholder={'Selecione imagem'} 
-                            onChange={(e) => handleImage(e)}
-                        />
+                            {!previewIsNull && 
+                                <label htmlFor="Image">
+                                    <AiFillCamera/>
+                                    <input type="file" id="Image" onChange={handleImage}/>
+                                </label>
+                            }
+                        </label>
 
-                    </InputConfig>
+                        <button disabled={buttonDisable} onClick={(e) => handleShowPreview(e)}>Ver Imagem Atual</button>
+                    </Preview>
 
                     <InputConfig label={'Nome'}>
 

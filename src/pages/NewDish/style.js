@@ -4,7 +4,7 @@ export const Container = styled.div`
     display: grid;
     width: 100%;
     height: 100vh;
-    
+
     grid-template-rows: 12.0rem auto 7.3rem;
     grid-template-areas: 
     "header" 
@@ -16,6 +16,7 @@ export const Form = styled.form`
     display: grid ;
     grid-area: form;
     padding: 1.0rem 3.2rem 0;
+
     >a{
         display: flex;
         align-items: center;
@@ -41,7 +42,7 @@ export const Form = styled.form`
     }
     
     @media(min-width: 1100px){
-        padding: 4.0rem 12.5rem 9.0rem 12.3rem;
+        padding: 1.0rem 12.5rem 9.0rem 12.3rem;
         
         animation: scale-in-center 1s ease forwards;
 
@@ -60,11 +61,97 @@ export const Form = styled.form`
 }
   
 `
+
+export const Preview = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.0rem;
+    
+    >label{
+        position: relative;
+        display: flex;
+
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        width: 17.8rem;
+        height: 18.8rem;
+
+        cursor: pointer;
+
+        >input{
+            display: none;
+        }
+
+        >label{
+            position: absolute;
+            display: flex;
+            
+            justify-content: center;
+            align-items: center;
+
+            width: 3.5rem;
+            height: 3.5rem;
+
+            border-radius: 50%;
+            background-color: ${({theme}) => theme.COLORS.LIGHT_700};
+
+            right: 0px;
+            bottom: 2px;
+
+            cursor: pointer;
+
+            >input{
+                display: none;
+            }
+
+            >svg{
+                color: ${({theme}) => theme.COLORS.WHITE};
+            }
+        }
+       
+        >img{
+            position: absolute;
+            width: 18.8rem;
+            height: 18.8rem;
+            
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+            border: 1px white solid;        
+        }
+        
+        >span{
+            display: ${({previewIsNull}) => previewIsNull? 'block': 'none'};
+
+            svg{
+                font-size: 8.0rem;
+            }
+        }
+    }
+   
+    
+    @media(min-width: 1100px){
+        >label{
+            width: 20.8rem;
+            height: 20.8rem;
+            
+            >img{
+                width: 20.8rem;
+                height: 20.8rem;
+            }
+        }
+    }
+`
+
 export const IngredientArea = styled.div`
     display: flex;
 
     width:100%;
     height: auto;
+    min-height: 5.5rem;
+
     padding: 8px;
     gap: 1.6rem;
     
@@ -104,18 +191,14 @@ export const FirstRow = styled.div`
         align-items: center;
         justify-content: space-between;
         
-        
-        >div:nth-child(1){
-            width: 23%;
-        }
-
         >div:nth-child(2){
-            width: 40%;
+            width: 50%;
+        }
+        
+        >div:nth-child(3){
+            width: 20%;
         }
 
-        >div:nth-child(3){
-            width: 27%;
-        }
     }
     
 `
@@ -128,11 +211,12 @@ export const SecondRow = styled.div`
         justify-content: space-between;
         
         >div:nth-child(1){
-            width: 75%;
+            width: 80%;
         }
         >div:nth-child(2){
-            width: 20%;
+            width: 15%;
         }
+       
     }
 
 `

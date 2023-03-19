@@ -67,7 +67,7 @@ export function Details(){
 
             <Header/>
 
-           {data &&  
+           {data &&  dishImage &&
             <Content>
                 <Left>
 

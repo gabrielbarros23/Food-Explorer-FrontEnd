@@ -17,8 +17,6 @@ export const Form = styled.form`
     grid-area: form;
     padding: 1.0rem 3.2rem 0;
 
-    
-
     >a{
         display: flex;
         align-items: center;
@@ -44,7 +42,7 @@ export const Form = styled.form`
     }
 
     @media(min-width: 1100px){
-        padding: 4.0rem 12.5rem 9.0rem 12.3rem;
+        padding: 1.0rem 12.5rem 9.0rem 12.3rem;
 
         animation: scale-in-center 1s ease forwards;
 
@@ -63,11 +61,149 @@ export const Form = styled.form`
    }
   
 `
+export const Preview = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 2.0rem;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.0rem;
+    
+    >button{
+        width: 25.0rem;
+        height: 4.9rem;
+        border: 0;
+        background: none;
+        background-color: ${({theme, showPreview}) => showPreview? theme.COLORS.LIGHT_650 : theme.COLORS.LIGHT_700};
+        opacity: ${({showPreview}) => showPreview? '0.5' : '1'};
+        color: white;
+        border-radius: 10px;
+    }
+    
+    >label{
+        position: relative;
+        display: flex;
+
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border: 1px white solid;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+
+
+        width: 18.8rem;
+        height: 18.8rem;
+
+        cursor: pointer;
+
+        >input{
+            display: none;
+        }
+
+        
+        >img{
+            display: ${({showPreview}) => showPreview ? 'block' : 'none'};
+            width: 18.8rem;
+            height: 18.8rem;
+            
+        }
+        
+        >span{
+            display: ${({showPreview}) => showPreview? 'none' : 'flex'};
+            
+            svg{
+                font-size: 8.0rem;
+            }
+        }
+
+        >label{
+            position: absolute;
+            
+            display: flex;
+            
+            justify-content: center;
+            align-items: center;
+            
+            width: 3.8rem;
+            height: 3.8rem;
+            
+            border-radius: 50%;
+            background-color: ${({theme}) => theme.COLORS.LIGHT_700};
+            
+            right: 0px;
+            bottom: 2px;
+            
+            cursor: pointer;
+            
+            >input{
+                display: none;
+            }
+
+            >svg{
+                font-size: 2.5rem;
+                color: ${({theme}) => theme.COLORS.WHITE};
+            }
+        }
+    }
+   
+    
+    @media(min-width: 1100px){
+        >label{
+            width: 21.0rem;
+            height: 21.0rem;
+            border: 1px white solid;
+
+            @keyframes scale-in-center {
+            0% {
+                -webkit-transform: scale(0);
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                -webkit-transform: scale(1);
+                transform: scale(1);
+                opacity: 1;
+            }
+            }
+
+
+            >label{
+                display: none;
+            }
+            
+            >img{
+                animation: scale-in-center 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+
+                display: ${({showPreview}) => showPreview ? 'block' : 'none'};
+
+                width: 20.7rem;
+                height: 20.7rem;
+            }
+            
+            >span{
+                display: ${({showPreview}) => showPreview? 'none' : 'flex'};
+                animation: scale-in-center 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+
+            }
+            
+            :hover{
+                >span{
+                    display: none;
+                }
+                >img{
+                    display: flex;
+                }
+            }
+        }
+    }
+`
+
 export const IngredientArea = styled.div`
     display: flex;
 
     width:100%;
-    height: auto;
+    min-height: 5.5rem;
     padding: 8px;
     gap: 1.6rem;
     
@@ -117,17 +253,14 @@ export const FirstRow = styled.div`
         align-items: center;
         justify-content: space-between;
         
-        >div:nth-child(1){
-            width: 23%;
-        }
-
         >div:nth-child(2){
-            width: 40%;
+            width: 50%;
         }
 
         >div:nth-child(3){
-            width: 27%;
+            width: 20%;
         }
+
     }
     
 `
@@ -140,10 +273,10 @@ export const SecondRow = styled.div`
         justify-content: space-between;
         
         >div:nth-child(1){
-            width: 75%;
+            width: 80%;
         }
         >div:nth-child(2){
-            width: 20%;
+            width: 15%;
         }
     }
 
