@@ -95,6 +95,20 @@ function AuthProvider({children}) {
         const token = localStorage.getItem('@foodexplorer:token')
         const user = localStorage.getItem('@foodexplorer:user')
 
+        api.interceptors.response.use(
+            response => {
+                return response
+            },
+            error => {
+                if(error.response && error.response.status === 401) {
+
+                localStorage.removeItem('@foodexplorer:token');
+                localStorage.removeItem('@foodexplorer:user');
+                setData({})               
+                    
+            }}
+        )
+
         if(token && user) {
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
