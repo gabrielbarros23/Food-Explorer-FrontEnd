@@ -19,7 +19,7 @@ export const Container = styled.div`
         padding-left: 1.5rem;
 
         cursor: pointer;
-        background-color: ${({theme}) => theme.COLORS.DARK_900};
+        background-color: ${({ theme }) => theme.COLORS.DARK_900};
 
         >svg{
             width: 3.0rem;

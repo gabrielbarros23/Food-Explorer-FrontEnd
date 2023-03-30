@@ -7,7 +7,7 @@ export function Banner(){
             <Content>
 
                 <Image>
-                    <img src={Macaron} alt="" />
+                    <img src={Macaron} alt="Macaron"/>
                 </Image>
                 
                 <Text>

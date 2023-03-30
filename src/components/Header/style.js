@@ -28,12 +28,6 @@ export const Container = styled.div`
         >button:nth-child(1){
             display: none;
         }
-
-        .butao{
-            border: 1px red solid;
-            position: relative;
-        }
-       
     }
 `
 
@@ -51,10 +45,10 @@ export const Logo = styled.div`
     gap: 1.0rem;
     cursor: pointer;
     transition: all 0.5s ease;
+
     >img{
         width: 3.0rem;
         transition: all 0.5s ease;
-
     }
     
     
@@ -65,9 +59,11 @@ export const Logo = styled.div`
             >img{
                 width: 4.0rem;
             }
+
             font-size: 2.5rem;
             width: 25.6rem;
             height: 6.6rem ;
+            
             background: linear-gradient(90deg, rgba(8,28,36,1) 54%, rgba(10,40,52,1) 87%);
             border-radius: 10px;
         }
@@ -257,18 +253,20 @@ export const Search = styled.div`
 
 export const Dish = styled.div`
     display: flex;
-    height: 15.0rem;
-    margin: 1.5rem 0rem;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px grey solid;
-    z-index: 6;
+
+    height: 15.0rem;
+    margin: 1.5rem 0rem;
+
+    border-bottom:${({ theme }) => `1px ${theme.COLORS.GREY_600} solid`};
 
     .image{
        display: flex;
 
        justify-content: center;
        align-items: center;
+
        height: 100%;
        width: 13.0rem;
        
@@ -280,12 +278,12 @@ export const Dish = styled.div`
 
     .text{
         display: flex;
-        cursor: pointer;
-        
         flex-direction: column;
+        
         width: 37.9rem;
         height: 100%;
-
+        
+        cursor: pointer;
 
         >h3{
             height: 3.0rem;
@@ -295,20 +293,24 @@ export const Dish = styled.div`
         } 
         >p{
             display: flex;
+
             font-size: 1.9rem;
             height: 5.7rem;
+
             overflow: hidden;
             text-overflow: ellipsis;
 
-            color: grey;
+            color: ${({ theme }) => theme.COLORS.GREY_600};
         }
         >span{
             display: flex;
             justify-content: baseline;
             align-items: center;
+
             max-width: 41.1rem;
             height: 4.8rem;
             font-size: 2.4rem;
+            
             color: ${({ theme }) => theme.COLORS.BLUE_200};
         }
     }

@@ -1,5 +1,6 @@
 import { Container, Logo, Text, Cart, Input, LeaveIcon, Search, Dish } from './style'
 import { api } from '../../services/api'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/auth'
 import { FcMenu } from 'react-icons/fc'
@@ -8,7 +9,6 @@ import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { Button } from '../Button'
 import logo from '../../assets/Polygon blue.svg'
 import SingOut from '../../assets/SingOut.svg'
-import { useState, useEffect } from 'react'
 
 
 export function Header() {
@@ -23,13 +23,13 @@ export function Header() {
   
   function handleInputFocus () {
     setInputSelected(true);
-  };
+  }
 
   function handleInputBlur ()  {
     setTimeout(() => {
       setInputSelected(false);
     }, 100)
-  };
+  }
 
   function handleNavigate(route){
     if(route === 'new' && !isAdmin){
@@ -48,7 +48,7 @@ export function Header() {
   }
 
   function handleImage (url) {
-    const dishImage =  `${api.defaults.baseURL}/files/${url}`
+    const dishImage = `${api.defaults.baseURL}/files/${url}`
     return dishImage
   }
 
@@ -64,14 +64,18 @@ export function Header() {
   return (
     <Container isAdmin={isAdmin}>
 
-      <button onClick={() => handleNavigate('/menu')}><FcMenu /></button>
+      <button onClick={() => handleNavigate('/menu')}> 
+        <FcMenu/> 
+      </button>
 
       <Logo onClick={() => handleNavigate('/')}>
-        <img src={logo} alt="logo do food explorer" />
+        <img src={logo} alt="logo do food explorer"/>
 
         <Text>
           <p>food explorer</p>
-          <span style={{ display: isAdmin ? 'flex' : 'none' }}>admin</span>
+          <span style={{ display: isAdmin ? 'flex' : 'none' }}>
+            admin
+          </span>
         </Text>
       </Logo>
 
@@ -86,8 +90,7 @@ export function Header() {
         />
           
         <Search style={{display: inputSelected? 'block' : 'none'}}>
-          {
-            data.map((dish) => (
+          {data.map((dish) => (
               <Dish key={dish.id}>
 
                 <div className="image">
@@ -108,8 +111,7 @@ export function Header() {
                 </div>
                 
               </Dish>
-            ))
-          }
+            ))}
         </Search>
       </Input>
 
@@ -127,7 +129,12 @@ export function Header() {
       </Cart>
 
       <LeaveIcon>
-        <button onClick={handleLogOut}><img src={SingOut} alt="Icone de saida" /></button>
+        <button onClick={handleLogOut}>
+          <img 
+            src={SingOut} 
+            alt="Icone de saida"
+          />
+        </button>
       </LeaveIcon>
 
     </Container>

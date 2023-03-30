@@ -13,7 +13,7 @@ export const Container = styled.div`
 
     word-break: normal;
 
-    background-color: ${({theme}) => theme.COLORS.DARK_600};
+    background-color: ${({ theme }) => theme.COLORS.DARK_600};
 `
 
 export const Title = styled.div`
@@ -30,7 +30,7 @@ export const Title = styled.div`
 
     align-items:center;
 
-    color: ${({theme}) => theme.COLORS.LIGHT_700};
+    color: ${({ theme }) => theme.COLORS.LIGHT_700};
     
     @media (max-width: 410px){
         font-size: 1.1rem ;

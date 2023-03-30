@@ -60,7 +60,6 @@ function AuthProvider({children}) {
             const fileUploadForm = new FormData()
             fileUploadForm.append("image", image)
             fileUploadForm.append("data", data)
-
             
             await api.put(`/dishes/${id}`, fileUploadForm)
             alert('Prato atualizado com sucesso.')

@@ -1,69 +1,71 @@
-import {Container, Image, Amount, Market} from './style'
-import {useAuth} from '../../hooks/auth'
-import {api} from '../../services/api'
+import { Container, Image, Amount, Market } from './style'
+import { useAuth } from '../../hooks/auth'
+import { api } from '../../services/api'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import {Button} from '../Button'
-import {BsPencil} from 'react-icons/bs'
-import {AiOutlineHeart, AiOutlineMinus, AiOutlinePlus} from 'react-icons/ai'
+import { Button } from '../Button'
+import { BsPencil } from 'react-icons/bs'
+import { AiOutlineHeart, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 
 
 
-export function Dishes({data, isAdmin, ...rest}){
-    const {user} = useAuth()
-    const [count, setCount] = useState(1)
-    const navigate = useNavigate()
+export function Dishes({ data, isAdmin, ...rest }) {
+  const { user } = useAuth()
+  const [count, setCount] = useState(1)
+  const navigate = useNavigate()
 
-    const Admin = Boolean(user.admin)
-    const icon = Admin? <BsPencil/> : <AiOutlineHeart/>
-    
-    const dishImage = `${api.defaults.baseURL}/files/${data.image}`
-    const ButtonContext = Admin ? 'Detalhes' : 'Incluir'
+  const Admin = Boolean(user.admin)
+  const icon = Admin ? <BsPencil /> : <AiOutlineHeart />
 
-    function HandleCount(val){
-        let updated = val + count
+  const dishImage = `${api.defaults.baseURL}/files/${data.image}`
+  const ButtonContext = Admin ? 'Detalhes' : 'Incluir'
 
-        if(updated <= 0){
-            updated = 1
-        }
+  function HandleCount(val) {
+    let updated = val + count
 
-        setCount(updated)
-    }
-    
-    function handleDetails(id){
-        navigate(`/details/${id}`)
+    if (updated <= 0) {
+      updated = 1
     }
 
-    function handleEdit(admin){
-        if(admin){
-            navigate(`/edit/${data.id}`)
-        }
+    setCount(updated)
+  }
+
+  function handleDetails(id) {
+    navigate(`/details/${id}`)
+  }
+
+  function handleEdit(admin) {
+    if (admin) {
+      navigate(`/edit/${data.id}`)
     }
-    
-    return(
-        <Container isAdmin={Admin} {...rest}>
-            
-            <Image isAdmin={Admin}>
-                <button onClick={() => handleEdit(Admin)}>{icon}</button>    
-                <img src={dishImage} alt="" />
-            </Image>
+  }
 
-            <h1>{data.title}</h1>
+  return (
+    <Container isAdmin={Admin} {...rest}>
 
-            <p>{data.description}</p>
+      <Image isAdmin={Admin}>
+        <button onClick={() => handleEdit(Admin)}>
+          {icon}
+        </button>
+        <img src={dishImage} alt={data.title} />
+      </Image>
 
-            <p>{'R$ ' + data.price}</p>
+      <h1>{data.title}</h1>
 
-            <Market isAdmin={Admin}>
-                <Amount isAdmin={Admin}>
-                    <button onClick={() => HandleCount(-1)}><AiOutlineMinus/></button>
-                    <p>{count}</p>
-                    <button onClick={() => HandleCount(1)}><AiOutlinePlus/></button>
-                </Amount>
+      <p>{data.description}</p>
 
-                <Button title={ButtonContext} onClick={() =>handleDetails(data.id)}/>
-            </Market>
-            
-        </Container>
-    )
+      <p>{'R$ ' + data.price}</p>
+
+      <Market isAdmin={Admin}>
+        <Amount isAdmin={Admin}>
+          <button onClick={() => HandleCount(-1)}><AiOutlineMinus /></button>
+          <p>{count}</p>
+          <button onClick={() => HandleCount(1)}><AiOutlinePlus /></button>
+        </Amount>
+
+        <Button title={ButtonContext} onClick={() => handleDetails(data.id)} />
+      </Market>
+
+    </Container>
+  )
 }
