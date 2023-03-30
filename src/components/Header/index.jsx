@@ -17,22 +17,25 @@ export function Header() {
   const [search, setSearch] = useState('')
   const [data, setData] = useState([])
   const [inputSelected, setInputSelected] = useState(false);
-
-  const handleInputFocus = () => {
+  
+  const navigate = useNavigate()
+  const isAdmin = Boolean(user.admin)
+  
+  function handleInputFocus () {
     setInputSelected(true);
   };
 
-  const handleInputBlur = () => {
-    setInputSelected(false);
+  function handleInputBlur ()  {
+    setTimeout(() => {
+      setInputSelected(false);
+    }, 100)
   };
 
-  const navigate = useNavigate()
-  const isAdmin = Boolean(user.admin)
-
-
-
-  function handleMenu() {
-    navigate('/menu')
+  function handleNavigate(route){
+    if(route === 'new' && !isAdmin){
+      return
+    }
+    navigate(route)
   }
 
   function handleLogOut() {
@@ -40,21 +43,11 @@ export function Header() {
     navigate('/')
   }
 
-  function handleDish() {
-    if (isAdmin) {
-      navigate('/new')
-    }
-  }
-
   function handleDetails(id){
     navigate(`/details/${id}`)
   }
 
-  function navigateToHome() {
-    navigate('/')
-  }
-
-   function handleImage (url) {
+  function handleImage (url) {
     const dishImage =  `${api.defaults.baseURL}/files/${url}`
     return dishImage
   }
@@ -63,9 +56,7 @@ export function Header() {
     async function fecthDishes() {
       const response = await api.get(`/dishes?search=${search}`)
       const data = response.data
-
       setData(data)
-      
     }
     fecthDishes()
   }, [search])
@@ -73,9 +64,9 @@ export function Header() {
   return (
     <Container isAdmin={isAdmin}>
 
-      <button onClick={() => handleMenu()}><FcMenu /></button>
+      <button onClick={() => handleNavigate('/menu')}><FcMenu /></button>
 
-      <Logo onClick={navigateToHome}>
+      <Logo onClick={() => handleNavigate('/')}>
         <img src={logo} alt="logo do food explorer" />
 
         <Text>
@@ -84,7 +75,6 @@ export function Header() {
         </Text>
       </Logo>
 
-
       <Input>
         <input 
           type="text" 
@@ -92,24 +82,31 @@ export function Header() {
           value={search} 
           onChange={(e) => setSearch(e.target.value)} 
           onFocus={handleInputFocus} 
-          onBlur={handleInputBlur} 
+          onBlur={handleInputBlur}
         />
-
-        <Search inputSelected={inputSelected}>
-          {inputSelected &&
+          
+        <Search style={{display: inputSelected? 'block' : 'none'}}>
+          {
             data.map((dish) => (
-              <Dish>
+              <Dish key={dish.id}>
+
                 <div className="image">
                   <img src={handleImage(dish.image)} alt="" />
                 </div>
+
                 <div className="text" onClick={() => handleDetails(dish.id)}>
                   <h3>{dish.title}</h3>
                   <p>{dish.description}</p>
                   <span>R${dish.price}</span>
                 </div>
+
                 <div className="button">
-                  <Button icon={AiOutlineShoppingCart} onClick={() => handleDetails(dish.id)}/>
+                  <Button 
+                    icon={AiOutlineShoppingCart} 
+                    onClick={() => handleDetails(dish.id)}
+                  />
                 </div>
+                
               </Dish>
             ))
           }
@@ -121,7 +118,11 @@ export function Header() {
         <button><BsReceiptCutoff /></button>
         <label>1</label>
 
-        <Button title={isAdmin ? 'Novo Prato' : 'Pedidos(0)'} icon={isAdmin ? '' : BsReceiptCutoff} onClick={() => handleDish()} />
+        <Button 
+          title={isAdmin ? 'Novo Prato' : 'Pedidos(0)'} 
+          icon={isAdmin ? '' : BsReceiptCutoff} 
+          onClick={() => handleNavigate('/new')} 
+        />
 
       </Cart>
 

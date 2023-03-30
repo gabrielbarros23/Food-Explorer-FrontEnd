@@ -233,19 +233,18 @@ export const Input = styled.div`
 `
 
 export const Search = styled.div`
-    display: ${({ inputSelected }) => inputSelected ? 'block' : 'none'};
     position: absolute;
     overflow: hidden;
     overflow-y: auto;
 
-    bottom: -370px;
+    bottom: -50.0rem;
     width: 59.1rem;
-    height: 37.1rem;
+    height: 50.1rem;
 
     background-color: ${({ theme }) => theme.COLORS.DARK_700};
     border-radius: 0 0 5px 5px;
 
-    z-index: 3;
+    z-index: 5;
 
     ::-webkit-scrollbar{
         background-color: #1d1d1d;
@@ -263,6 +262,8 @@ export const Dish = styled.div`
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px grey solid;
+    z-index: 6;
+
     .image{
        display: flex;
 
@@ -306,8 +307,8 @@ export const Dish = styled.div`
             justify-content: baseline;
             align-items: center;
             max-width: 41.1rem;
-            height: 2.8rem;
-            font-size: 2.9rem;
+            height: 4.8rem;
+            font-size: 2.4rem;
             color: ${({ theme }) => theme.COLORS.BLUE_200};
         }
     }
