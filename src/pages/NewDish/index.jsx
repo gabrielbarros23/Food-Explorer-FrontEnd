@@ -50,6 +50,11 @@ export function NewDish(){
             return alert('Voce não confirmou um ingrediente. clique no mais para adcionar ou limpe o campo.')
         }
 
+        const Confirm = window.confirm('deseja atualizar o prato?')
+        if(!Confirm){
+            return
+        }
+
         setLoading(true)
         
         const categorie = categories.replace('çã', 'ca')

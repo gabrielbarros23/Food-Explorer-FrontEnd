@@ -107,7 +107,7 @@ export const Right = styled.div`
         display:flex;
         flex-direction: column;
         width: 68.7rem;
-        height: 60.0rem;
+        max-height: 60.0rem;
         gap: 0rem;
 
 
@@ -143,8 +143,18 @@ export const Title = styled.div`
         font-size: 1.7rem;
         text-align: center;
         margin-bottom: 2.4rem;
-        max-height: 10.0rem;
+        max-height: 11.0rem;
+        overflow: hidden;
+        overflow-y: auto;
         color: ${({theme}) => theme.COLORS.GREY_600};
+
+        ::-webkit-scrollbar{
+            background-color: #1d1d1d;
+            width: 0.9rem;
+        }
+        ::-webkit-scrollbar-thumb{
+            background-color: #5b5b5b;
+        }
     }
 
     @media(min-width: 1100px){
@@ -169,13 +179,12 @@ export const Title = styled.div`
 export const IngredientsArea = styled.div`
 
     display:flex;
-    justify-content: center;
+    justify-content: baseline;
 
-    gap: 2.0rem;
+    gap: 1.0rem;
     flex-wrap: wrap;
     margin-bottom: 2.2rem;
-    width: clamp(10.0rem,30.0rem, 100%);
-
+    width: clamp(10.0rem,40.0rem, 100%);
     
     
     >li{

@@ -6,28 +6,28 @@ export function Section({title,quantity, children}){
     const [currentScrollPosition, setCurrentScrollPosition] = useState(0)
     const position = useRef(0)
 
-    let scrollAmount = 800
+    let scrollAmount = 320
 
     const dishesAmount = quantity.length
     let maxScroll  
-     
+    
     if(dishesAmount <= 3){
-
+        
         maxScroll = 0
         
     }else{
         if(dishesAmount == 4){
             maxScroll = -130
-
+            
         }else{
             maxScroll = -130
-            maxScroll += -1 * (320  *(dishesAmount - 4 ))
-
+            maxScroll += -1 * (314  *(dishesAmount - 4 ))
+            
         }
     }
     
     
-        
+    
     function scrollHorizontally(val){
         position.current += (val * scrollAmount)
         

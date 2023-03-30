@@ -73,6 +73,11 @@ export function EditDish(){
             return alert('Voce não confirmou um ingrediente. clique no mais para adcionar ou limpe o campo.')
         }
 
+        const Confirm = window.confirm('deseja atualizar o prato?')
+        if(!Confirm){
+            return
+        }
+
         const dataJSON = {
             title,
             price,
@@ -84,6 +89,8 @@ export function EditDish(){
         const id = params.id
 
         const data = JSON.stringify(dataJSON)
+
+        
 
         uptadeDish({data, image, id}).then(() => setLoading(false)).catch(() => setLoading(false))
         

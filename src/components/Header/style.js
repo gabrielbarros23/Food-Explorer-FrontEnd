@@ -6,7 +6,7 @@ export const Container = styled.div`
 
     display: flex;
     justify-content: space-between;
-    background-color: ${({theme}) => theme.COLORS.DARK_700};
+    background-color: ${({ theme }) => theme.COLORS.DARK_700};
 
     height: 12.0rem;
     padding: 0 1.5rem;
@@ -27,6 +27,11 @@ export const Container = styled.div`
         
         >button:nth-child(1){
             display: none;
+        }
+
+        .butao{
+            border: 1px red solid;
+            position: relative;
         }
        
     }
@@ -77,12 +82,12 @@ export const Text = styled.div`
     gap: 1.0rem;
 
     >span{
-        display: ${({isAdmin}) => isAdmin ? 'flex' : 'none'};
+        display: ${({ isAdmin }) => isAdmin ? 'flex' : 'none'};
         font-size: 1.5rem;
-        color: ${({theme}) => theme.COLORS.BLUE_200};
+        color: ${({ theme }) => theme.COLORS.BLUE_200};
     }
     >p{
-        color:${({theme}) => theme.COLORS.WHITE}
+        color:${({ theme }) => theme.COLORS.WHITE}
     }
 
     @media(min-width: 1100px){
@@ -94,8 +99,8 @@ export const Text = styled.div`
         gap: 0rem;
 
         >span{
-            display: ${({isAdmin}) => isAdmin ? 'visible' : 'none'};
-            color: ${({theme}) => theme.COLORS.BLUE_200};
+            display: ${({ isAdmin }) => isAdmin ? 'visible' : 'none'};
+            color: ${({ theme }) => theme.COLORS.BLUE_200};
         }
 
     }
@@ -130,10 +135,10 @@ export const Cart = styled.div`
     align-items:center;
     text-align:center;
 
-    visibility: ${({isAdmin}) => isAdmin ? 'hidden' : 'visible'};
+    visibility: ${({ isAdmin }) => isAdmin ? 'hidden' : 'visible'};
     
     >button:nth-child(1){
-        display: ${({isAdmin}) => isAdmin ? 'none' : 'flex'};
+        display: ${({ isAdmin }) => isAdmin ? 'none' : 'flex'};
         
         font-size: 3.0rem;
         
@@ -143,7 +148,7 @@ export const Cart = styled.div`
         
         background: none;
         border: none;
-        color: ${({theme}) => theme.COLORS.WHITE};
+        color: ${({ theme }) => theme.COLORS.WHITE};
     }
 
     >button:nth-child(3){
@@ -160,7 +165,7 @@ export const Cart = styled.div`
         top: 0;
         right: 0;
 
-        background-color: ${({theme}) => theme.COLORS.RED_100};
+        background-color: ${({ theme }) => theme.COLORS.RED_100};
         border-radius: 50%;
     }
 
@@ -186,7 +191,7 @@ export const Cart = styled.div`
             transition: all 0.5s ease;
             height: 5.6rem;
 
-            background-color: ${({theme}) => theme.COLORS.RED_100};
+            background-color: ${({ theme }) => theme.COLORS.RED_100};
 
             :hover{
                 width: 23.5rem;
@@ -201,9 +206,13 @@ export const Input = styled.div`
     display: none;
 
     @media(min-width: 1100px){
+        position: relative;
         display: flex;
+        flex-direction: column;
         width: 59.1rem;
-
+        
+        height: 4.8rem;
+        
         >input{
             width:100%;
             height: 4.8rem;
@@ -211,12 +220,101 @@ export const Input = styled.div`
 
             border-radius: 5px;
             border: none;
-            background-color: ${({theme}) => theme.COLORS.DARK_900};
-            color: ${({theme}) => theme.COLORS.WHITE};
+            background-color: ${({ theme }) => theme.COLORS.DARK_900};
+            color: ${({ theme }) => theme.COLORS.WHITE};
 
             ::placeholder{
                 padding: 0 14.4rem;
             }
         }
+
+
+    }
+`
+
+export const Search = styled.div`
+    display: ${({ inputSelected }) => inputSelected ? 'block' : 'none'};
+    position: absolute;
+    overflow: hidden;
+    overflow-y: auto;
+
+    bottom: -370px;
+    width: 59.1rem;
+    height: 37.1rem;
+
+    background-color: ${({ theme }) => theme.COLORS.DARK_700};
+    border-radius: 0 0 5px 5px;
+
+    z-index: 3;
+
+    ::-webkit-scrollbar{
+        background-color: #1d1d1d;
+        width: 0.9rem;
+    }
+    ::-webkit-scrollbar-thumb{
+        background-color: #5b5b5b;
+    }
+`
+
+export const Dish = styled.div`
+    display: flex;
+    height: 15.0rem;
+    margin: 1.5rem 0rem;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px grey solid;
+    .image{
+       display: flex;
+
+       justify-content: center;
+       align-items: center;
+       height: 100%;
+       width: 13.0rem;
+       
+        >img{
+            width: 13.0rem;
+            height: 13.0rem;
+        }
+    }
+
+    .text{
+        display: flex;
+        cursor: pointer;
+        
+        flex-direction: column;
+        width: 37.9rem;
+        height: 100%;
+
+
+        >h3{
+            height: 3.0rem;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        } 
+        >p{
+            display: flex;
+            font-size: 1.9rem;
+            height: 5.7rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            color: grey;
+        }
+        >span{
+            display: flex;
+            justify-content: baseline;
+            align-items: center;
+            max-width: 41.1rem;
+            height: 2.8rem;
+            font-size: 2.9rem;
+            color: ${({ theme }) => theme.COLORS.BLUE_200};
+        }
+    }
+    .button{
+        display: flex;
+        flex-direction: center;
+        align-items: center;
+        width: 6.0rem;
     }
 `

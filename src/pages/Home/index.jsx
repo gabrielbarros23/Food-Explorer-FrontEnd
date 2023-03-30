@@ -7,7 +7,6 @@ import {Footer} from '../../components/Footer'
 import {Banner} from '../../components/Banner'
 import {Section} from '../../components/Section'
 import {Dishes} from '../../components/Dishes'
-import {Menu} from '../../pages/Menu'
 
 
 
@@ -20,9 +19,6 @@ export function Home() {
     const [drinks, setDrinks] = useState([])
     const [desserts, setDesserts] = useState([])
     const [data, setData] = useState([])
-
-
-
 
     async function dishesSetup(){
         const drink = await searchCategory('Bebida')
@@ -50,7 +46,8 @@ export function Home() {
         }
         fecthDishes()
     }, [search])
-
+    
+    
     return(
         <Container>
             <Header value={search} onChange={e => setSearch(e.target.value)}/>
@@ -58,20 +55,6 @@ export function Home() {
             <Content>
                 <Banner/>
 
-                {search && 
-                    <Section title='Resultado da pesquisa' quantity={data}>
-                        
-                    {data.map((data) => (
-                        <Dishes
-                            key={data.id}
-                            data={data}
-                        />
-                    ))}
-                        
-                    </Section>
-                }
-                
-               
                 <Section title='Refeições' quantity={meal}>
                        
                     {meal.map((meal) => (
@@ -80,6 +63,8 @@ export function Home() {
                         data={meal}
                     />
                     ))}
+                   
+                  
 
                 </Section>
 

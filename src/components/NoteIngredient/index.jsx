@@ -12,7 +12,7 @@ export function NoteIngredient({ isNew=false , value, onClick, ...rest}) {
             />
 
             <button type='button' onClick={onClick} > 
-                {isNew ? <FiPlus/> : <FiX/>}
+                {<FiPlus/>}
             </button>
             
         </Container>
