@@ -6,7 +6,7 @@ export function Section({title,quantity, children}){
     const [currentScrollPosition, setCurrentScrollPosition] = useState(0)
     const position = useRef(0)
 
-    let scrollAmount = 320
+    let scrollAmount = 800
 
     const dishesAmount = quantity.length
     let maxScroll  
