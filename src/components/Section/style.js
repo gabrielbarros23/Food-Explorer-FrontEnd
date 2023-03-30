@@ -40,8 +40,7 @@ export const Content = styled.div`
     position: relative;
     justify-content: space-between;
     overflow-x: auto;
-    box-shadow: ${({theme}) => '0 0 10px' + theme.COLORS.DARK_1000};
-    
+    box-shadow: ${({ theme }) => '0 0 10px' + theme.COLORS.DARK_1000};
     
     height: 36.5rem;
 
@@ -56,19 +55,19 @@ export const Content = styled.div`
 
         max-width: 127.0rem;
         gap: 2.0rem;
-        
+      
         align-items: center;
         overflow: hidden;
 
         >button{
-            display: flex;
+            display: ${({ currentLoading }) => currentLoading ? 'none' : 'flex'};
             
             width: 3.0rem;
             z-index: 1;
             
             
             color: ${({ theme }) => theme.COLORS.WHITE};
-            background: ${({theme}) => theme.COLORS.DARK_600};
+            background: ${({ theme }) => theme.COLORS.DARK_600};
             border: none;
 
             >svg{
@@ -80,15 +79,11 @@ export const Content = styled.div`
 
 export const Dishes = styled.div`
     display: flex;
-    justify-content: flex-start;
+    justify-content: ${({ loading }) => loading ? 'center' : 'center'};
     align-items: center;
-    position: absolute;
-    
-    
+    position: ${({ loading }) => loading ? 'static' : 'absolute'};
 
     @media(min-width: 1100px){
         max-width: 89.1rem;
     }
-    
-
 `

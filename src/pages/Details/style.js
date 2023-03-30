@@ -179,7 +179,7 @@ export const Title = styled.div`
 export const IngredientsArea = styled.div`
 
     display:flex;
-    justify-content: baseline;
+    justify-content: center;
 
     gap: 1.0rem;
     flex-wrap: wrap;

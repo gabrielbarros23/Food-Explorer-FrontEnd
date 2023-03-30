@@ -1,101 +1,113 @@
-import {Container, Content} from './style'
-import {api} from '../../services/api'
-import {useAuth} from '../../hooks/auth'
-import {useState, useEffect} from 'react'
-import {Header} from '../../components/Header'
-import {Footer} from '../../components/Footer'
-import {Banner} from '../../components/Banner'
-import {Section} from '../../components/Section'
-import {Dishes} from '../../components/Dishes'
+import { Container, Content } from './style'
+import { Ring } from '@uiball/loaders'
+import { useAuth } from '../../hooks/auth'
+import { useState, useEffect } from 'react'
+import { Header, Footer, Banner, Section, Dishes } from '../../components'
 
 
 
+   export function Home() {
+      const { searchCategory } = useAuth()
 
-export function Home() {
-    const {searchCategory} = useAuth()
+      const [meal, setMeal] = useState([])
+      const [drinks, setDrinks] = useState([])
+      const [desserts, setDesserts] = useState([])
+      const [loading, setLoading] = useState(true)
 
-    const [search, setSearch] = useState('')
-    const [meal, setMeal] = useState([])
-    const [drinks, setDrinks] = useState([])
-    const [desserts, setDesserts] = useState([])
-    const [data, setData] = useState([])
+      async function dishesSetup() {
+         const drink = await searchCategory('Bebida')
+         const meal = await searchCategory('Refeicao')
+         const desserts = await searchCategory('Sobremesa')
 
-    async function dishesSetup(){
-        const drink = await searchCategory('Bebida')
-        const meal = await searchCategory('Refeicao')
-        const desserts = await searchCategory('Sobremesa')
+         setDrinks(drink.data)
+         setMeal(meal.data)
+         setDesserts(desserts.data)
+      }
+
+      useEffect(() => {
+         dishesSetup().then(() => setLoading(false))
+
+      }, [])
 
 
-        setDrinks(drink.data)
-        setMeal(meal.data)
-        setDesserts(desserts.data)
-        
-    }
-    
-    useEffect(() =>{
-        dishesSetup()
-      
-    }, [])
-    
-    useEffect(() => {
-        async function fecthDishes () {
-            const response = await api.get(`/dishes?search=${search}`)
-            const data = response.data
-
-            setData(data)
-        }
-        fecthDishes()
-    }, [search])
-    
-    
-    return(
-        <Container>
-            <Header value={search} onChange={e => setSearch(e.target.value)}/>
+      return (
+         <Container>
+            <Header />
 
             <Content>
-                <Banner/>
+               <Banner />
 
-                <Section title='Refeições' quantity={meal}>
-                       
-                    {meal.map((meal) => (
-                    <Dishes
-                        key={meal.id}
-                        data={meal}
-                    />
-                    ))}
-                   
-                  
+               <Section title='Refeições' quantity={meal} setloading={loading}>
 
-                </Section>
+                  {
+                     loading ?
+                        <Ring
+                           size={60}
+                           lineWeight={5}
+                           speed={2}
+                           color="white"
 
-                
-                    
-                <Section title='Sobremesas' quantity={desserts}>
-                    
-                    { desserts.map((dessert) => (
-                        <Dishes 
-                            key={dessert.id}
-                            data={dessert}
                         />
-                    ))}
-                    
-                </Section>
+                        :
+                        meal.map((meal) => (
+                           <Dishes
+                              key={meal.id}
+                              data={meal}
+                           />
+                        ))
 
-                <Section title='Bebidas' quantity={drinks}>
-                    
-                    { drinks.map((drink) => (
-                        <Dishes 
-                            key={drink.id}
-                            data={drink}
+                  }
+
+               </Section>
+
+            <Section title='Sobremesas' quantity={desserts} setloading={loading}>
+
+               {
+                  loading ?
+                     <Ring
+                        size={60}
+                        lineWeight={5}
+                        speed={2}
+                        color="white"
+
+                     />
+                     :
+                     desserts.map((dessert) => (
+                        <Dishes
+                           key={dessert.id}
+                           data={dessert}
                         />
-                    ))}
-                    
-                </Section>
-               
-            </Content>
+                     ))
+               }
 
-            <Footer/>
+            </Section>
 
-        </Container>
-    )
+            <Section title='Bebidas' quantity={drinks} setloading={loading}>
+
+               {
+                  loading ?
+                     <Ring
+                        size={60}
+                        lineWeight={5}
+                        speed={2}
+                        color="white"
+
+                     />
+                     :
+                     drinks.map((drink) => (
+                        <Dishes
+                           key={drink.id}
+                           data={drink}
+                        />
+                     ))
+               }
+
+            </Section>
+
+         </Content>
+
+         <Footer />
+
+      </Container>
+   )
 }

@@ -12,25 +12,28 @@ export const Container = styled.div`
     margin-right: 1.6rem;
     
 
-    background-color: ${({theme}) => theme.COLORS.DARK_200};
+    background-color: ${({ theme }) => theme.COLORS.DARK_200};
     
     >h1{
-        display: flex;
         justify-content: center;
         text-align: center;
 
         font-size: 1.4rem;
         
         height: 3.1rem;
-        
         width: 19.2rem;
-        overflow: hidden;
-        margin-bottom: 1.0rem;
-
+        
         font-size: 1.7rem;
         font-weight: 500;
+        
+        margin-bottom: 1.0rem;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 
     }
+
 
     >p:nth-child(4){
         display: flex;
@@ -41,7 +44,7 @@ export const Container = styled.div`
         margin-bottom: 2.0rem;
 
         
-        color: ${({theme}) => theme.COLORS.BLUE_200};
+        color: ${({ theme }) => theme.COLORS.BLUE_200};
     }
     >p:nth-child(3){
        display: none;
@@ -51,7 +54,7 @@ export const Container = styled.div`
         width: 16.2rem;
         height: 4.2rem;
         
-        display: ${({isAdmin}) => isAdmin? 'none' : 'flex'};
+        display: ${({ isAdmin }) => isAdmin ? 'none' : 'flex'};
     }
     
     
@@ -126,7 +129,7 @@ export const Image = styled.div`
 
         border: none;
         background: none;
-        color: ${({theme}) => theme.COLORS.WHITE};
+        color: ${({ theme }) => theme.COLORS.WHITE};
     }
 
     @media(min-width: 1100px){
@@ -149,7 +152,7 @@ export const Image = styled.div`
 
 export const Amount = styled.div`
 
-    display: ${({isAdmin}) => isAdmin? 'none' : 'flex'};
+    display: ${({ isAdmin }) => isAdmin ? 'none' : 'flex'};
     
     justify-content: center;
     align-items: center;
@@ -165,7 +168,7 @@ export const Amount = styled.div`
         
         border: none;
         background: none;
-        color: ${({theme}) => theme.COLORS.WHITE};
+        color: ${({ theme }) => theme.COLORS.WHITE};
 
         >svg{
             font-size: 2.0rem;
@@ -192,7 +195,7 @@ export const Market = styled.div`
     
     @media(min-width: 1100px){
         button{
-            width: ${({isAdmin}) => isAdmin? '22.0rem' : '100%'};
+            width: ${({ isAdmin }) => isAdmin ? '22.0rem' : '100%'};
         }
         flex-direction: row;
         gap: 2.0rem;

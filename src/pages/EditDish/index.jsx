@@ -1,25 +1,17 @@
-import { Container, Form, IngredientArea, FirstRow, SecondRow, ThirdRow, Submit, Ingredient, Preview} from './style'
+import { Container, Form, IngredientArea, FirstRow, SecondRow, ThirdRow, Submit, Ingredient, Preview } from './style'
 import { useAuth } from '../../hooks/auth'
-import {api} from '../../services/api'
-import { useState, useEffect} from 'react'
+import { api } from '../../services/api'
+import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import {FiX} from 'react-icons/fi'
-import {RxCaretLeft} from 'react-icons/rx'
-import {AiFillCamera} from 'react-icons/ai'
-import {Header} from '../../components/Header'
-import {Footer} from '../../components/Footer'
-import {Input} from '../../components/Input'
-import {Button} from '../../components/Button'
-import {FileInput} from '../../components/FileInput'
-import {Select} from '../../components/Select'
-import {NoteIngredient} from '../../components/NoteIngredient'
-import {Textarea} from '../../components/Textarea'
-import {InputConfig} from '../../components/InputConfig'
+import { FiX } from 'react-icons/fi'
+import { RxCaretLeft } from 'react-icons/rx'
+import { AiFillCamera } from 'react-icons/ai'
+import { TextArea, InputConfig, Select, NoteIngredient, Button, Input, Footer, Header } from '../../components'
 
-export function EditDish(){
+export function EditDish() {
     const navigate = useNavigate()
-	const params = useParams()
-    const {uptadeDish} = useAuth()
+    const params = useParams()
+    const { uptadeDish } = useAuth()
 
     const [title, setTitle] = useState('')
     const [price, setPrice] = useState('')
@@ -31,7 +23,7 @@ export function EditDish(){
 
 
     const [dish, setDish] = useState(null)
-    const [options, setOptions] = useState([]) 
+    const [options, setOptions] = useState([])
     const [image, setImage] = useState(null)
 
     const [preview, setPreview] = useState()
@@ -39,42 +31,41 @@ export function EditDish(){
     const [buttonDisable, setButtonDisable] = useState(false)
 
 
-    function handleIngredient(){
-        if(newIngredient.length == 0){
+    function handleIngredient() {
+        if (newIngredient.length == 0) {
             return alert('Preencha para adcionar o ingrediente')
         }
-        setIngredients( prevState => [...prevState, newIngredient])
+        setIngredients(prevState => [...prevState, newIngredient])
         setNewIngredient([])
     }
 
-    function handleRemoveIngredient({e, ingredient}){
+    function handleRemoveIngredient({ e, ingredient }) {
         e.preventDefault()
         const updatedIngredient = ingredients.filter(e => e !== ingredient)
         setIngredients(updatedIngredient)
     }
 
-    function handleShowPreview(e){
+    function handleShowPreview(e) {
         e.preventDefault()
 
-        if(showPreview){
+        if (showPreview) {
             setShowPreview(false)
-        }else{
+        } else {
             setShowPreview(true)
         }
     }
 
     function handleSubmit() {
-        if(!title || !description || !categories || !price || !ingredients){
+        if (!title || !description || !categories || !price || !ingredients) {
             return alert('Preencha Todos os campos.')
         }
 
-
-        if(newIngredient.length !== 0 ){
+        if (newIngredient.length !== 0) {
             return alert('Voce não confirmou um ingrediente. clique no mais para adcionar ou limpe o campo.')
         }
 
         const Confirm = window.confirm('deseja atualizar o prato?')
-        if(!Confirm){
+        if (!Confirm) {
             return
         }
 
@@ -90,27 +81,24 @@ export function EditDish(){
 
         const data = JSON.stringify(dataJSON)
 
-        
+        uptadeDish({ data, image, id }).then(() => setLoading(false)).catch(() => setLoading(false))
 
-        uptadeDish({data, image, id}).then(() => setLoading(false)).catch(() => setLoading(false))
-        
         navigate('/')
     }
-    
-    async function handleDeleteDish(){
+
+    async function handleDeleteDish() {
         setLoading(true)
         const confirm = window.confirm("Deseja deletar o prato?")
-        
-        if(confirm){
+
+        if (confirm) {
             await api.delete(`/dishes/${params.id}`).then(() => setLoading(false)).catch(() => setLoading(false))
             navigate('/')
         }
     }
 
-    function handleImage(e){
+    function handleImage(e) {
         const file = e.target.files[0]
         setImage(file)
-        
 
         const imagePreview = URL.createObjectURL(file);
         setPreview(imagePreview)
@@ -118,9 +106,9 @@ export function EditDish(){
         setShowPreview(true)
     }
 
-    
+
     useEffect(() => {
-        async function DishSetup(){
+        async function DishSetup() {
             const dish = await api.get(`/dishes/${params.id}`)
             const data = dish.data
             const image = `${api.defaults.baseURL}/files/${data.image}`
@@ -138,132 +126,132 @@ export function EditDish(){
 
             const ShowIngredient = await api.get(`/ingredient/${params.id}`)
             const DataIngredients = ShowIngredient.data
-            
+
             const ingredients = DataIngredients.map((data) => {
                 return data.ingredient
             })
             setIngredients(ingredients)
         }
         DishSetup()
-        
+
     }, [])
 
-    
 
-    return(
+
+    return (
         <Container>
-            <Header/>
+            <Header />
 
-            {dish && 
-            <Form>
-                <Link to='/'><RxCaretLeft/>voltar</Link>
+            {dish &&
+                <Form>
+                    <Link to='/'><RxCaretLeft />voltar</Link>
 
-                <h1>Editar prato</h1>
+                    <h1>Editar prato</h1>
 
-                <FirstRow>
-                    <Preview showPreview={showPreview}>
-                        <label htmlFor="Image">
-                            <img src={preview} alt=""/>
-                            <span><AiFillCamera/></span>
-                            <input type="file" id="Image" onChange={handleImage}/>
+                    <FirstRow>
+                        <Preview showPreview={showPreview}>
+                            <label htmlFor="Image">
+                                <img src={preview} alt="" />
+                                <span><AiFillCamera /></span>
+                                <input type="file" id="Image" onChange={handleImage} />
 
-                            
-                            <span>clique para adcionar uma imagem</span>
 
-                            {showPreview && 
-                                <label htmlFor="Image">
-                                    <AiFillCamera/>
-                                    <input type="file" id="Image" onChange={handleImage}/>
-                                </label>
-                            }
-                        </label>
+                                <span>clique para adcionar uma imagem</span>
 
-                        <button disabled={buttonDisable} onClick={(e) => handleShowPreview(e)}>Ver Imagem Atual</button>
-                    </Preview>
+                                {showPreview &&
+                                    <label htmlFor="Image">
+                                        <AiFillCamera />
+                                        <input type="file" id="Image" onChange={handleImage} />
+                                    </label>
+                                }
+                            </label>
 
-                    <InputConfig label={'Nome'}>
+                            <button disabled={buttonDisable} onClick={(e) => handleShowPreview(e)}>Ver Imagem Atual</button>
+                        </Preview>
 
-                        <Input 
-                            type="text" 
-                            id="name" 
-                            placeholder={dish.title}
-                            value={title}
-                            onChange={e => setTitle(e.target.value)}
-                        />
-                        
-                    </InputConfig>
-                    
-                    <InputConfig label={'Categoria'}>
-                        
-                        <Select 
-                            options={options} 
-                            defaultValue={categories} 
-                        />
+                        <InputConfig label={'Nome'}>
 
-                    </InputConfig>
-
-                </FirstRow>
-                
-                <SecondRow>
-
-                    <InputConfig label={'Ingredientes'}>
-
-                        <IngredientArea>
-
-                            {ingredients.map((ingredient) => (
-                                <Ingredient key={ingredient}>
-                                    <p> {ingredient} <button onClick={(e) => handleRemoveIngredient({e,ingredient})}><FiX/></button></p>
-                                </Ingredient>
-                            ))}
-
-                            
-                            <NoteIngredient  
-                                placeholder="Adicionar"
-                                value={newIngredient}
-                                onChange={(e) => setNewIngredient(e.target.value)}
-                                onClick={() => handleIngredient()}
+                            <Input
+                                type="text"
+                                id="name"
+                                placeholder={dish.title}
+                                value={title}
+                                onChange={e => setTitle(e.target.value)}
                             />
 
-                        </IngredientArea>
+                        </InputConfig>
 
-                    </InputConfig>
+                        <InputConfig label={'Categoria'}>
 
-                    <InputConfig label={'Preço'}>
+                            <Select
+                                options={options}
+                                defaultValue={categories}
+                            />
 
-                        <Input 
-                            type="number" 
-                            placeholder={dish.price} 
-                            value={price} 
-                            onChange={e => setPrice(e.target.value)}
-                        />
+                        </InputConfig>
 
-                    </InputConfig>
+                    </FirstRow>
 
-                </SecondRow>
+                    <SecondRow>
 
-                <ThirdRow>
+                        <InputConfig label={'Ingredientes'}>
 
-                    <InputConfig label={'Descrição'}>
-                        <Textarea 
-                            placeholder={dish.description} 
-                            defaultValue={description} 
-                            onChange={e => setDescription(e.target.value)}
-                        />
-                    </InputConfig>
-                    
-                </ThirdRow>
+                            <IngredientArea>
 
-                <Submit>
+                                {ingredients.map((ingredient, index) => (
+                                    <Ingredient key={index}>
+                                        <p> {ingredient} <button onClick={(e) => handleRemoveIngredient({ e, ingredient })}><FiX /></button></p>
+                                    </Ingredient>
+                                ))}
 
-                    <Button title='Excluir prato' onClick={() => handleDeleteDish()} loading={loading}/>
-                    <Button title='Salvar alterações' onClick={() => handleSubmit()} loading={loading}/>
 
-                </Submit>
+                                <NoteIngredient
+                                    placeholder="Adicionar"
+                                    value={newIngredient}
+                                    onChange={(e) => setNewIngredient(e.target.value)}
+                                    onClick={() => handleIngredient()}
+                                />
 
-            </Form>
-        }
+                            </IngredientArea>
 
-            <Footer/>
+                        </InputConfig>
+
+                        <InputConfig label={'Preço'}>
+
+                            <Input
+                                type="number"
+                                placeholder={dish.price}
+                                value={price}
+                                onChange={e => setPrice(e.target.value)}
+                            />
+
+                        </InputConfig>
+
+                    </SecondRow>
+
+                    <ThirdRow>
+
+                        <InputConfig label={'Descrição'}>
+                            <TextArea
+                                placeholder={dish.description}
+                                defaultValue={description}
+                                onChange={e => setDescription(e.target.value)}
+                            />
+                        </InputConfig>
+
+                    </ThirdRow>
+
+                    <Submit>
+
+                        <Button title='Excluir prato' onClick={() => handleDeleteDish()} loading={loading} />
+                        <Button title='Salvar alterações' onClick={() => handleSubmit()} loading={loading} />
+
+                    </Submit>
+
+                </Form>
+            }
+
+            <Footer />
         </Container>
     )
 }

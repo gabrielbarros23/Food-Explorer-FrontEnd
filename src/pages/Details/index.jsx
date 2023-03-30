@@ -1,123 +1,125 @@
-import {Container, Content, Left, Right, IngredientsArea, Amount, Submit, Title} from './style'
-import { api } from '../../services/api'
+import { Container, Content, Left, Right, IngredientsArea, Amount, Submit, Title } from './style'
 import { useState, useEffect } from 'react'
-import { useAuth } from '../../hooks/auth'
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import {RxCaretLeft} from 'react-icons/rx'
-import {AiOutlineMinus, AiOutlinePlus} from 'react-icons/ai'
-import {Footer} from '../../components/Footer'
-import {Header} from '../../components/Header'
-import {Button} from '../../components/Button'
+import { api } from '../../services/api'
+import { useAuth } from '../../hooks/auth'
+import { RxCaretLeft } from 'react-icons/rx'
+import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
+import { Footer, Header, Button } from '../../components'
 
 
 
 
-export function Details(){
-    const {user} = useAuth()
-    const isAdmin = Boolean(user.admin)
-    const params = useParams()
-    const navigate = useNavigate()
 
-    const [data, setData] = useState(null)
-    const [ingredients, setIngredients] = useState([])
-    const [dishImage, setDishImage] = useState() 
-    const [count, setCount] = useState(1)
-    const [buttonContext, setButtonContext] = useState('') 
-    
-    function handleEdit() {
-        if(Boolean(user.admin)){
-            navigate(`/edit/${params.id}`)
-        }
-    }
+export function Details() {
+   const { user } = useAuth()
+   const isAdmin = Boolean(user.admin)
+   const params = useParams()
+   const navigate = useNavigate()
 
-    function HandleCount(val){
-        let numberUpdated = val + count
+   const [data, setData] = useState(null)
+   const [ingredients, setIngredients] = useState([])
+   const [dishImage, setDishImage] = useState()
+   const [count, setCount] = useState(1)
+   const [buttonContext, setButtonContext] = useState('')
 
-        if(numberUpdated <= 0){
-            numberUpdated = 1
-        }
+   function handleEdit() {
+      if (Boolean(user.admin)) {
+         navigate(`/edit/${params.id}`)
+      }
+   }
 
-        setCount(numberUpdated)
-    }
+   function HandleCount(val) {
+      let numberUpdated = val + count
 
-    useEffect(() => {
-        async function DataSetup(){
-            const dish = await api.get(`/dishes/${params.id}`)
-            const data = dish.data
-            setData(data)
-            
-            const ShowIngredient = await api.get(`/ingredient/${params.id}`)
-            const DataIngredients = ShowIngredient.data
-            
-            const ingredients = DataIngredients.map((data) => {
-                return data.ingredient
-            })
-            setIngredients(ingredients)
+      if (numberUpdated <= 0) {
+         numberUpdated = 1
+      }
+      const context = Boolean(user.admin) ? 'Editar prato' : `incluir ∙ R$ ${(numberUpdated * data.price).toFixed(2)}`
 
-            const image = `${api.defaults.baseURL}/files/${data.image}`
-            setDishImage(image)
+      setCount(numberUpdated)
+      setButtonContext(context)
 
-            const context = Boolean(user.admin)? 'Editar prato' : `incluir ∙ R$ ${data.price}`
-            setButtonContext(context)
-        }
-        DataSetup()
-    }, [])
-    return(
-        <Container>
+   }
 
-            <Header/>
+   useEffect(() => {
+      async function DataSetup() {
+         const dish = await api.get(`/dishes/${params.id}`)
+         const data = dish.data
+         setData(data)
 
-           {data &&  dishImage &&
+         const ShowIngredient = await api.get(`/ingredient/${params.id}`)
+         const DataIngredients = ShowIngredient.data
+
+         const ingredients = DataIngredients.map((data) => {
+            return data.ingredient
+         })
+         setIngredients(ingredients)
+
+         const image = `${api.defaults.baseURL}/files/${data.image}`
+         setDishImage(image)
+
+         const context = Boolean(user.admin) ? 'Editar prato' : `incluir ∙ R$ ${data.price}`
+         setButtonContext(context)
+      }
+      DataSetup()
+   }, [])
+   return (
+      <Container>
+
+         <Header />
+
+         {data && 
             <Content>
-                <Left>
+               <Left>
 
-                    <Link to='/'>
-                        <RxCaretLeft/>
-                        <p>voltar</p>
-                    </Link>
+                  <Link to='/'>
+                     <RxCaretLeft />
+                     <p>voltar</p>
+                  </Link>
 
-                    <img src={dishImage} alt={data.title} />
+                  <img src={dishImage} alt={data.title} />
 
-                </Left>
+               </Left>
 
-                <Right>
+               <Right>
 
-                    <Title>
-                        <h1>{data.title}</h1>
+                  <Title>
+                     <h1>{data.title}</h1>
 
-                        <p>{data.description}</p>
-                    </Title>
+                     <p>{data.description}</p>
+                  </Title>
 
 
-                    <IngredientsArea>
+                  <IngredientsArea>
 
-                        {ingredients.map((ingredient) => (
-                            <li key={ingredient}>
-                               <ul>{ingredient}</ul>
-                            </li>
-                        ))}
+                     {ingredients.map((ingredient, index) => (
+                        <li key={index}>
+                           <ul>{ingredient}</ul>
+                        </li>
+                     ))}
 
-                    </IngredientsArea>
+                  </IngredientsArea>
 
-                    <Submit >
-                        
-                        <Amount  isAdmin={isAdmin}>
+                  <Submit >
 
-                            <button onClick={() =>HandleCount(-1)}><AiOutlineMinus/></button>
-                            <span>{count}</span>
-                            <button onClick={() =>HandleCount(1)}><AiOutlinePlus/></button>
+                     <Amount isAdmin={isAdmin}>
 
-                        </Amount>
+                        <button onClick={() => HandleCount(-1)}><AiOutlineMinus /></button>
+                        <span>{count}</span>
+                        <button onClick={() => HandleCount(1)}><AiOutlinePlus /></button>
 
-                        <Button title={buttonContext} onClick={() => handleEdit()}/>
+                     </Amount>
 
-                    </Submit>
-                    
-                </Right>
+                     <Button title={buttonContext} onClick={() => handleEdit()} />
+
+                  </Submit>
+
+               </Right>
 
             </Content>}
 
-            <Footer/>
-        </Container>
-    )
+         <Footer />
+      </Container>
+   )
 }

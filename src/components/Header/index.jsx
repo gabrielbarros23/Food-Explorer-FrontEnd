@@ -32,7 +32,7 @@ export function Header() {
   }
 
   function handleNavigate(route){
-    if(route === 'new' && !isAdmin){
+    if(route === '/new' && !isAdmin){
       return
     }
     navigate(route)
