@@ -3,10 +3,10 @@ import { useAuth } from '../../hooks/auth'
 import { api } from '../../services/api'
 import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
+import { Textarea, InputConfig, Select, NewIngredientButton, Button, Input, Footer, Header } from '../../components'
 import { FiX } from 'react-icons/fi'
 import { RxCaretLeft } from 'react-icons/rx'
 import { AiFillCamera } from 'react-icons/ai'
-import { TextArea, InputConfig, Select, NewIngredientButton, Button, Input, Footer, Header } from '../../components'
 
 export function EditDish() {
   const navigate = useNavigate()
@@ -232,7 +232,7 @@ export function EditDish() {
           <ThirdRow>
 
             <InputConfig label={'Descrição'}>
-              <TextArea
+              <Textarea
                 placeholder={dish.description}
                 defaultValue={dishDescription}
                 onChange={event => setDishDescription(event.target.value)}

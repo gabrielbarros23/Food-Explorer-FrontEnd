@@ -1,14 +1,14 @@
 import { Container, Form, IngredientArea, FirstRow, SecondRow, ThirdRow, Submit, Ingredient, Preview } from './style'
+import { Header, Footer, Input, Button, Select, NewIngredientButton, Textarea, InputConfig } from '../../components'
 import { useAuth } from '../../hooks/auth'
 import { Link, useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { RxCaretLeft } from 'react-icons/rx'
 import { AiFillCamera } from 'react-icons/ai'
 import { FiX } from 'react-icons/fi'
-import { Header, Footer, Input, Button, Select, NewIngredientButton, TextArea, InputConfig } from '../../components'
 
 export function NewDish() {
-  const { createDish, user } = useAuth()
+  const { createDish } = useAuth()
   const navigate = useNavigate()
 
   const [dishTitle, setDishTitle] = useState('')
@@ -187,7 +187,7 @@ export function NewDish() {
 
           <InputConfig label={'Descrição'}>
 
-            <TextArea
+            <Textarea
               placeholder='Fale brevemente sobre o prato, seus ingredientes e composição'
               defaultValue={dishDescription}
               onChange={e => setDishDescription(e.target.value)}

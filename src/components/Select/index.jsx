@@ -1,5 +1,4 @@
 import { Container } from './style'
-import { useState } from 'react'
 
 export function Select({ options, value, onChange }) {
 

@@ -8,5 +8,5 @@ export { InputConfig } from './InputConfig';
 export { NewIngredientButton } from './NewIngredientButton';
 export { Section } from './Section';
 export { Select } from './Select';
-export { TextArea } from './TextArea';
+export { Textarea } from './Textarea';
 export { DishesFavorites } from './DishesFavorites';
