@@ -39,6 +39,19 @@ export const Left = styled.div`
     height: fit-content;
     width: clamp(30.0rem, 60.0rem, 80%);
 
+    >button{
+        background: none;
+        border: none;
+        color: ${({theme}) => theme.COLORS.WHITE};
+        width: 10.0rem;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        font-size: 2.0rem;
+        >svg{
+            font-size: 2.5rem;
+        }
+    }
     
     >a{
         display:flex;

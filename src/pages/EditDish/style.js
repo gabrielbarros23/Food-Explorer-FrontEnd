@@ -74,8 +74,8 @@ export const Preview = styled.div`
         height: 4.9rem;
         border: 0;
         background: none;
-        background-color: ${({theme, showPreview}) => showPreview? theme.COLORS.LIGHT_650 : theme.COLORS.LIGHT_700};
-        opacity: ${({showPreview}) => showPreview? '0.5' : '1'};
+        background-color: ${({theme, showImagePreview}) => showImagePreview? theme.COLORS.LIGHT_650 : theme.COLORS.LIGHT_700};
+        opacity: ${({showImagePreview}) => showImagePreview? '0.5' : '1'};
         color: white;
         border-radius: 10px;
     }
@@ -103,14 +103,14 @@ export const Preview = styled.div`
 
         
         >img{
-            display: ${({showPreview}) => showPreview ? 'block' : 'none'};
+            display: ${({showImagePreview}) => showImagePreview ? 'block' : 'none'};
             width: 18.8rem;
             height: 18.8rem;
             
         }
         
         >span{
-            display: ${({showPreview}) => showPreview? 'none' : 'flex'};
+            display: ${({showImagePreview}) => showImagePreview? 'none' : 'flex'};
             
             svg{
                 font-size: 8.0rem;
@@ -175,14 +175,14 @@ export const Preview = styled.div`
             >img{
                 animation: scale-in-center 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 
-                display: ${({showPreview}) => showPreview ? 'block' : 'none'};
+                display: ${({showImagePreview}) => showImagePreview ? 'block' : 'none'};
 
                 width: 20.7rem;
                 height: 20.7rem;
             }
             
             >span{
-                display: ${({showPreview}) => showPreview? 'none' : 'flex'};
+                display: ${({showImagePreview}) => showImagePreview? 'none' : 'flex'};
                 animation: scale-in-center 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 
             }
@@ -292,33 +292,33 @@ export const ThirdRow = styled.div`
 
 export const Ingredient = styled.div`
     display: flex;
+    justify-content: center;
+    align-items: center;
     
     height: 3.5rem;
+    gap: 1.0rem;
+    padding: 8px 10px;
+
     border-radius: 5px;
     background-color: ${({theme}) => theme.COLORS.LIGHT_600};
-    >p{
+
+    >button{
         display: flex;
-        justify-content: center;
         align-items: center;
-        gap: 1.0rem;
+        justify-content: center;
 
-        padding: 8px 10px;
-
-        >button{
-            display: flex;
-            background: none;
-            border: none;
-            justify-content: center;
-            align-items: center;
-
-            width: 2.0rem;
-            height: 3.0rem;
-            >svg{
-                color: ${({theme}) => theme.COLORS.WHITE};
-            }
-           
+        width: 2.0rem;
+        height: 3.0rem;
+        
+        background: none;
+        border: none;
+        
+        >svg{
+            color: ${({theme}) => theme.COLORS.WHITE};
         }
-
+        
     }
+
+    
 `
 

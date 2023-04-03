@@ -5,67 +5,107 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { Button } from '../Button'
 import { BsPencil } from 'react-icons/bs'
-import { AiOutlineHeart, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
+import { AiFillStar, AiOutlineStar, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
+import { useEffect } from 'react'
+
+export function Dishes({ data, ...rest }) {
+   const { user, FavoritesClass } = useAuth()
+   const favorites = new FavoritesClass
+   const Admin = Boolean(user.admin)
+
+   const [quantity, setQuantity] = useState(1)
+
+   const [icon, setIcon] = useState()
+   const [iconSetupTrigger, setIconSetupTrigger] = useState(1)
+
+   const navigate = useNavigate()
+
+   const dishImage = `${api.defaults.baseURL}/files/${data.image}`
+   const ButtonContext = Admin ? 'Detalhes' : 'Incluir'
+
+   function HandleQuantity(val) {
+
+      const updated = val + quantity
+      updated <= 0 ? setQuantity(1) : setQuantity(updated)
+
+   }
+
+   function handleDetails(id) {
+      navigate(`/details/${id}`)
+   }
+
+   async function handleIconFunction() {
+
+      if (Admin) {
+         return navigate(`/edit/${data.id}`)
+      }
+
+      const userFavorites = await favorites.GetFavoritesByUserId().then((response) => response.data)
+
+      const dishFavoriteId = userFavorites.find(favorites => favorites.dish_id === data.id)
+
+      if (dishFavoriteId) {
+         await favorites.DeleteFavorites(dishFavoriteId.id)
+         return setIconSetupTrigger(prevState => prevState + 1)
+      }
+
+      const dish_id = data.id
+      const dish_title = data.title
+
+      await favorites.CreateFavorites(dish_id, dish_title)
+      setIconSetupTrigger(prevState => prevState + 1)
+   }
 
 
+   useEffect(() => {
+      async function IconSetup() {
+         if (Admin) {
+            return setIcon(<BsPencil />)
+         }
 
-export function Dishes({ data, isAdmin, ...rest }) {
-  const { user } = useAuth()
-  const [count, setCount] = useState(1)
-  const navigate = useNavigate()
+         const userFavorites = await favorites.GetFavoritesByUserId().then(response => response.data)
 
-  const Admin = Boolean(user.admin)
-  const icon = Admin ? <BsPencil /> : <AiOutlineHeart />
+         const favorite = userFavorites.find(favorite => favorite.dish_id == data.id)
 
-  const dishImage = `${api.defaults.baseURL}/files/${data.image}`
-  const ButtonContext = Admin ? 'Detalhes' : 'Incluir'
+         setIcon(favorite ? <AiFillStar style={{ color: 'yellow' }} /> : <AiOutlineStar />)
+      }
+      IconSetup()
+   }, [iconSetupTrigger])
 
-  function HandleCount(val) {
-    let updated = val + count
+   return (
+      <Container isAdmin={Admin} {...rest}>
 
-    if (updated <= 0) {
-      updated = 1
-    }
+         <Image isAdmin={Admin}>
 
-    setCount(updated)
-  }
+            <button onClick={() => handleIconFunction()}>
+               {icon}
+            </button>
 
-  function handleDetails(id) {
-    navigate(`/details/${id}`)
-  }
+            <img
+               src={dishImage}
+               alt={data.title}
+            />
 
-  function handleEdit(admin) {
-    if (admin) {
-      navigate(`/edit/${data.id}`)
-    }
-  }
+         </Image>
 
-  return (
-    <Container isAdmin={Admin} {...rest}>
+         <h1>{data.title}</h1>
 
-      <Image isAdmin={Admin}>
-        <button onClick={() => handleEdit(Admin)}>
-          {icon}
-        </button>
-        <img src={dishImage} alt={data.title} />
-      </Image>
+         <p>{data.description}</p>
 
-      <h1>{data.title}</h1>
+         <p>{'R$ ' + data.price}</p>
 
-      <p>{data.description}</p>
+         <Market isAdmin={Admin}>
 
-      <p>{'R$ ' + data.price}</p>
+            <Amount isAdmin={Admin}>
+               <button onClick={() => HandleQuantity(-1)}><AiOutlineMinus /></button>
+               <p>{quantity}</p>
+               <button onClick={() => HandleQuantity(1)}><AiOutlinePlus /></button>
+            </Amount>
 
-      <Market isAdmin={Admin}>
-        <Amount isAdmin={Admin}>
-          <button onClick={() => HandleCount(-1)}><AiOutlineMinus /></button>
-          <p>{count}</p>
-          <button onClick={() => HandleCount(1)}><AiOutlinePlus /></button>
-        </Amount>
+            <Button title={ButtonContext} onClick={() => handleDetails(data.id)} />
+         </Market>
 
-        <Button title={ButtonContext} onClick={() => handleDetails(data.id)} />
-      </Market>
 
-    </Container>
-  )
+      </Container>
+   )
 }

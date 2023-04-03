@@ -5,224 +5,209 @@ import { useState, useEffect } from 'react'
 import { RxCaretLeft } from 'react-icons/rx'
 import { AiFillCamera } from 'react-icons/ai'
 import { FiX } from 'react-icons/fi'
-import { Header, Footer, Input, Button, Select, NoteIngredient, TextArea, InputConfig } from '../../components'
-
-
+import { Header, Footer, Input, Button, Select, NewIngredientButton, TextArea, InputConfig } from '../../components'
 
 export function NewDish() {
-    const { createDish, user } = useAuth()
-    const navigate = useNavigate()
+  const { createDish, user } = useAuth()
+  const navigate = useNavigate()
 
-    const [title, setTitle] = useState('')
-    const [price, setPrice] = useState('')
-    const [description, setDescription] = useState('')
-    const [ingredients, setIngredients] = useState([])
-    const [categories, setCategories] = useState('Refeição')
-    const [loading, setLoading] = useState(false)
+  const [dishTitle, setDishTitle] = useState('')
+  const [dishPrice, setDishPrice] = useState('')
+  const [dishDescription, setDishDescription] = useState('')
+  const [dishIngredients, setDishIngredients] = useState([])
+  const [dishCategory, setDishCategory] = useState('Selecione uma categoria')
 
-    const [newIngredient, setNewIngredient] = useState([])
-    const [options, setOptions] = useState(['Refeição', 'Bebida', 'Sobremesa'])
+  const [newIngredient, setNewIngredient] = useState([])
+  const options = ['Selecione uma categoria', 'Refeição', 'Bebida', 'Sobremesa']
+  const [loading, setLoading] = useState(false)
 
-    const [image, setImage] = useState(null)
-    const [preview, setPreview] = useState()
-    const [previewIsNull, setPreviewIsNull] = useState(true);
+  const [dishImage, setDishImage] = useState(null)
+  const [imagePreview, setImagePreview] = useState(null)
 
-    async function handleSubmit() {
+  async function handleSubmit() {
 
-        if (!title || !description || !categories || !price || !ingredients) {
-            return alert('Preencha Todos os campos.')
-        }
-
-        if (!image) {
-            return alert('Selecione uma imagem.')
-        }
-
-        if (newIngredient.length !== 0) {
-            return alert('Voce não confirmou um ingrediente. clique no mais para adcionar ou limpe o campo.')
-        }
-
-        const Confirm = window.confirm('deseja atualizar o prato?')
-        if (!Confirm) {
-            return
-        }
-
-        setLoading(true)
-
-        const categorie = categories.replace('çã', 'ca')
-
-        const dataJSON = {
-            title,
-            price,
-            ingredients,
-            description,
-            categorie
-        }
-
-        const data = JSON.stringify(dataJSON)
-
-        createDish({ data, image }).then(() => setLoading(false)).catch(() => setLoading(false))
-
-        navigate('/')
+    if (!dishTitle || !dishDescription || !dishCategory || !dishPrice || !dishIngredients) {
+      return alert('Preencha Todos os campos.')
     }
 
-    function handleImage(e) {
-        const file = e.target.files[0]
-        setImage(file)
-
-
-        const imagePreview = URL.createObjectURL(file);
-        console.log(imagePreview)
-        setPreview(imagePreview)
+    if (!dishImage) {
+      return alert('Selecione uma dishImagem.')
     }
 
-    function handleIngredient() {
-        if (newIngredient.length == 0) {
-            return alert('Preencha para adcionar o ingrediente')
-        }
-        setIngredients(prevState => [...prevState, newIngredient])
-        setNewIngredient([])
+    if (newIngredient.length !== 0) {
+      return alert('Voce não confirmou um ingrediente. clique no mais para adcionar ou limpe o campo.')
     }
 
-
-    function handleRemoveIngredient({ e, ingredient }) {
-        e.preventDefault()
-        const updatedIngredient = ingredients.filter(e => e !== ingredient)
-        setIngredients(updatedIngredient)
+    if (dishCategory == 'Selecione uma categoria') {
+      return alert('Selecione uma categoria')
     }
 
-    useEffect(() => {
-        if (!user.admin) {
-            navigate('/')
-        }
-    }, [])
+    const Confirm = window.confirm('Deseja criar o prato?')
+    if (!Confirm) {
+      return
+    }
 
-    useEffect(() => {
-        if (preview) {
-            setPreviewIsNull(false)
-        }
-    }, [preview])
+    setLoading(true)
 
-    return (
-        <Container>
-            <Header />
+    const categorie = dishCategory.replace('Refeição', 'Refeicao')
 
-            <Form>
-                <Link to='/'><RxCaretLeft />voltar</Link>
+    const dataJSON = {
+      title: dishTitle,
+      price: dishPrice,
+      ingredients: dishIngredients,
+      description: dishDescription,
+      categorie
+    }
 
-                <h1>Novo Prato</h1>
+    const data = JSON.stringify(dataJSON)
 
-                <FirstRow>
+    createDish({ data, image: dishImage }).then(() => navigate('/')).catch(() => setLoading(false))
 
-                    <Preview previewIsNull={previewIsNull}>
+  }
 
-                        <label htmlFor="Image">
-                            <img src={preview} alt="" />
-                            <span><AiFillCamera /></span>
-                            <input type="file" id="Image" onChange={handleImage} />
-                            <span>clique para adcionar uma imagem</span>
+  function handledishImage(e) {
+    const file = e.target.files[0]
+    setDishImage(file)
 
-                            {!previewIsNull &&
-                                <label htmlFor="Image">
-                                    <AiFillCamera />
-                                    <input type="file" id="Image" onChange={handleImage} />
-                                </label>
-                            }
-                        </label>
+    const dishImagePreview = URL.createObjectURL(file);
+    setImagePreview(dishImagePreview)
+  }
 
-                    </Preview>
+  function handleIngredient() {
+    if (newIngredient.length == 0) {
+      return alert('Preencha para adcionar o ingrediente')
+    }
+    setDishIngredients(prevState => [...prevState, newIngredient])
+    setNewIngredient([])
+  }
 
 
+  function handleRemoveIngredient({ event, ingredient: ingredientTargetRemove }) {
+    event.preventDefault()
 
-                    <InputConfig label={'Nome'}>
+    const updatedIngredients = dishIngredients.filter(actualIngredient => actualIngredient !== ingredientTargetRemove)
 
-                        <Input
-                            type="text"
-                            id="name"
-                            placeholder="Ex: Salada Ceasar"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                        />
+    setDishIngredients(updatedIngredients)
+  }
 
-                    </InputConfig>
+  return (
+    <Container>
+      <Header />
 
-                    <InputConfig label={'Categoria'}>
+      <Form>
+        <Link to='/'><RxCaretLeft />voltar</Link>
 
-                        <Select
-                            options={options}
-                            value={categories}
-                            onChange={e => setCategories(e.target.value)}
-                        />
+        <h1>Novo Prato</h1>
 
-                    </InputConfig>
+        <FirstRow>
 
+          <Preview imagePreviewIsNull={!imagePreview} >
 
-                </FirstRow>
+            <label htmlFor="dishImage">
+              <img src={imagePreview} alt={imagePreview ? 'dishImage do prato' : undefined} />
+              <span><AiFillCamera /></span>
+              <input type="file" id="dishImage" onChange={handledishImage} />
+              <span>clique para adcionar uma dishImagem</span>
 
+              {imagePreview &&
+                <label htmlFor="dishImage">
+                  <AiFillCamera />
+                </label>
+              }
+            </label>
 
-                <SecondRow>
-
-                    <InputConfig label={'Ingredientes'}>
-
-                        <IngredientArea>
-
-                            {ingredients.map((ingredient, index) => (
-                                <Ingredient key={index}>
-                                    <p>{ingredient} <button onClick={(e) => handleRemoveIngredient({ e, ingredient })}><FiX /></button></p>
-                                </Ingredient>
-                            ))}
-
-                            <NoteIngredient
-                                placeholder="Adicionar"
-                                value={newIngredient}
-                                onChange={(e) => setNewIngredient(e.target.value)}
-                                onClick={() => handleIngredient()}
-                            />
-
-                        </IngredientArea>
-
-                    </InputConfig>
+          </Preview>
 
 
 
-                    <InputConfig label={'Preço'}>
+          <InputConfig label={'Nome'}>
 
-                        <Input
-                            type="number"
-                            placeholder="Ex: 20,99"
-                            name="price"
-                            value={price}
-                            onChange={e => setPrice(e.target.value)}
-                        />
+            <Input
+              type="text"
+              id="name"
+              placeholder="Ex: Salada Ceasar"
+              value={dishTitle}
+              onChange={(e) => setDishTitle(e.target.value)}
+            />
 
-                    </InputConfig>
+          </InputConfig>
 
-                </SecondRow>
+          <InputConfig label={'Categoria'}>
 
-                <ThirdRow>
+            <Select
+              options={options}
+              value={dishCategory}
+              onChange={e => setDishCategory(e.target.value)}
+            />
 
-                    <InputConfig label={'Descrição'}>
+          </InputConfig>
 
-                        <TextArea
-                            placeholder='Fale brevemente sobre o prato, seus ingredientes e composição'
-                            defaultValue={description}
-                            onChange={e => setDescription(e.target.value)}
-                        />
+        </FirstRow>
 
-                    </InputConfig>
 
-                </ThirdRow>
+        <SecondRow>
 
-                <Submit>
-                    <Button
-                        title='Salvar prato'
-                        onClick={() => handleSubmit()}
-                        loading={loading}
-                    />
-                </Submit>
+          <InputConfig label={'Ingredientes'}>
 
-            </Form>
+            <IngredientArea>
 
-            <Footer />
-        </Container>
-    )
+              {dishIngredients.map((ingredient, index) => (
+                <Ingredient key={index}>
+                  {ingredient} 
+                  <button onClick={(event) => handleRemoveIngredient({ event, ingredient })}> <FiX /> </button>
+                </Ingredient>
+              ))}
+
+              <NewIngredientButton
+                placeholder="Adicionar"
+                value={newIngredient}
+                onChange={(e) => setNewIngredient(e.target.value)}
+                onClick={() => handleIngredient()}
+              />
+
+            </IngredientArea>
+
+          </InputConfig>
+
+
+          <InputConfig label={'Preço'}>
+
+            <Input
+              type="number"
+              placeholder="Ex: 20,99"
+              value={dishPrice}
+              onChange={e => setDishPrice(e.target.value)}
+            />
+
+          </InputConfig>
+
+        </SecondRow>
+
+        <ThirdRow>
+
+          <InputConfig label={'Descrição'}>
+
+            <TextArea
+              placeholder='Fale brevemente sobre o prato, seus ingredientes e composição'
+              defaultValue={dishDescription}
+              onChange={e => setDishDescription(e.target.value)}
+            />
+
+          </InputConfig>
+
+        </ThirdRow>
+
+        <Submit>
+          <Button
+            title='Salvar prato'
+            onClick={() => handleSubmit()}
+            loading={loading}
+          />
+        </Submit>
+
+      </Form>
+
+      <Footer />
+    </Container>
+  )
 }

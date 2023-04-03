@@ -40,9 +40,18 @@ export const Content = styled.div`
     position: relative;
     justify-content: space-between;
     overflow-x: auto;
+    overflow-y: hidden;
     box-shadow: ${({ theme }) => '0 0 10px' + theme.COLORS.DARK_1000};
     
     height: 36.5rem;
+
+    ::-webkit-scrollbar{
+        background-color: #1d1d1d;
+        height: 0.9rem;
+    }
+    ::-webkit-scrollbar-thumb{
+        background-color: #5b5b5b;
+    }
 
     >button{
         display: none;
@@ -60,7 +69,7 @@ export const Content = styled.div`
         overflow: hidden;
 
         >button{
-            display: ${({ currentLoading }) => currentLoading ? 'none' : 'flex'};
+            display: ${({ loadingIsTrue }) => loadingIsTrue ? 'none' : 'flex'};
             
             width: 3.0rem;
             z-index: 1;

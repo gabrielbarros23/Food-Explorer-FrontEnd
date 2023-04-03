@@ -1,14 +1,11 @@
 import { Container, Content, Left, Right, IngredientsArea, Amount, Submit, Title } from './style'
 import { useState, useEffect } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { api } from '../../services/api'
 import { useAuth } from '../../hooks/auth'
 import { RxCaretLeft } from 'react-icons/rx'
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 import { Footer, Header, Button } from '../../components'
-
-
-
 
 
 export function Details() {
@@ -17,77 +14,79 @@ export function Details() {
    const params = useParams()
    const navigate = useNavigate()
 
-   const [data, setData] = useState(null)
+   const [dish, setDish] = useState(null)
    const [ingredients, setIngredients] = useState([])
    const [dishImage, setDishImage] = useState()
    const [count, setCount] = useState(1)
    const [buttonContext, setButtonContext] = useState('')
 
    function handleEdit() {
-      if (Boolean(user.admin)) {
+      if (isAdmin) {
          navigate(`/edit/${params.id}`)
       }
+   }
+
+   function handleBack() {
+      navigate(-1)
    }
 
    function HandleCount(val) {
       let numberUpdated = val + count
 
-      if (numberUpdated <= 0) {
-         numberUpdated = 1
-      }
-      const context = Boolean(user.admin) ? 'Editar prato' : `incluir ∙ R$ ${(numberUpdated * data.price).toFixed(2)}`
-
       setCount(numberUpdated)
+      if (numberUpdated <= 0) {
+         return setCount(1)
+      }
+
+      const context = Boolean(user.admin) ? 'Editar prato' : `incluir ∙ R$ ${(numberUpdated * dish.price).toFixed(2)}`
       setButtonContext(context)
 
    }
 
    useEffect(() => {
-      async function DataSetup() {
-         const dish = await api.get(`/dishes/${params.id}`)
-         const data = dish.data
-         setData(data)
+      async function DishSetup() {
+         const dish = await api.get(`/dishes/${params.id}`).then(response => response.data)
+         setDish(dish)
 
-         const ShowIngredient = await api.get(`/ingredient/${params.id}`)
-         const DataIngredients = ShowIngredient.data
+         const DataIngredients = await api.get(`/ingredient/${params.id}`).then(response => response.data)
 
          const ingredients = DataIngredients.map((data) => {
             return data.ingredient
          })
          setIngredients(ingredients)
 
-         const image = `${api.defaults.baseURL}/files/${data.image}`
+         const image = `${api.defaults.baseURL}/files/${dish.image}`
          setDishImage(image)
 
-         const context = Boolean(user.admin) ? 'Editar prato' : `incluir ∙ R$ ${data.price}`
+         const context = Boolean(user.admin) ? 'Editar prato' : `incluir ∙ R$ ${dish.price}`
          setButtonContext(context)
       }
-      DataSetup()
+
+      DishSetup()
    }, [])
    return (
       <Container>
 
          <Header />
-
-         {data && 
+         {dish && dishImage &&
             <Content>
                <Left>
 
-                  <Link to='/'>
+                  <button onClick={handleBack}>
                      <RxCaretLeft />
                      <p>voltar</p>
-                  </Link>
+                  </button>
 
-                  <img src={dishImage} alt={data.title} />
+                  <img src={dishImage} alt={dish.title} />
 
                </Left>
 
                <Right>
 
                   <Title>
-                     <h1>{data.title}</h1>
+                     <h1>{dish.title}</h1>
 
-                     <p>{data.description}</p>
+                     <p>{dish.description}</p>
                   </Title>
 
 
@@ -117,7 +116,8 @@ export function Details() {
 
                </Right>
 
-            </Content>}
+            </Content>
+         }
 
          <Footer />
       </Container>

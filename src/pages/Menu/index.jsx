@@ -7,7 +7,6 @@ import { BsSearch } from 'react-icons/bs'
 import { AiOutlineClose } from 'react-icons/ai'
 import { Footer, Input, Section, Dishes } from '../../components'
 
-
 export function Menu() {
 
     const { singOut, user } = useAuth()
@@ -20,11 +19,10 @@ export function Menu() {
     function handleLogOut() {
         singOut()
         navigate('/')
-
     }
 
-    function handleNewDish() {
-        navigate('/new')
+    function handleNavigate(route) {
+        navigate(route)
     }
 
     function handleBack() {
@@ -71,15 +69,23 @@ export function Menu() {
                     </Section>
                 }
 
-                <Links isAdmin={isAdmin}>
+                <Links >
+                    {isAdmin &&
+                        <button className='link' onClick={() => handleNavigate('/new')}>
+                            Novo prato
+                        </button>
+                    }
 
-                    <button className='link' onClick={() => handleNewDish()}>
-                        Novo prato
-                    </button>
+                    {!isAdmin &&
+                        <button className='link' onClick={() => handleNavigate('/favorites')}>
+                            Favoritos
+                        </button>
+                    }
 
                     <button className='link' onClick={() => handleLogOut()}>
                         Sair
                     </button>
+
 
                 </Links>
 

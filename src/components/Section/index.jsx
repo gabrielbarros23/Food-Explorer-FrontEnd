@@ -1,48 +1,44 @@
 import { Container, Content, Dishes } from './style'
 import { RxCaretLeft, RxCaretRight } from 'react-icons/rx'
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { useEffect } from 'react'
 
-export function Section({ title, quantity, children, setloading }) {
+export function Section({ title, dishQuantity, children, setloading }) {
     const [currentScrollPosition, setCurrentScrollPosition] = useState(0)
-    const [currentLoading, setCurrentLoading] = useState(true)
-    const position = useRef(0)
+    const [loadingIsTrue, setLoadingIsTrue] = useState(true)
 
     let scrollAmount = 800
 
-    const dishesAmount = quantity.length
+    const dishesAmount = dishQuantity.length
     let maxScroll
 
-    if (dishesAmount <= 3) {
-
+    if(dishesAmount <= 3){
         maxScroll = 0
+    }
 
-    } else {
-        if (dishesAmount == 4) {
-            maxScroll = -130
-
-        } else {
-            maxScroll = -130
-            maxScroll += -1 * (314 * (dishesAmount - 4))
-
-        }
+    if(dishesAmount <= 4){
+        maxScroll = -130
+    }else{
+        maxScroll = -130 + (-1 * (314 * (dishesAmount - 4)))
     }
 
     function scrollHorizontally(val) {
-        position.current += (val * scrollAmount)
+       const direction = (val * scrollAmount)
+       const scroll = direction + currentScrollPosition
 
-        if (position.current > 0) {
-            position.current = 0
-        }
-        if (position.current < maxScroll) {
-            position.current = maxScroll
+        if (scroll > 0) {
+            return setCurrentScrollPosition(0)
         }
 
-        setCurrentScrollPosition(position.current)
+        if (scroll < maxScroll) {
+            return setCurrentScrollPosition(maxScroll)
+        }
+
+        setCurrentScrollPosition(scroll)
     }
 
     useEffect(() => {
-            setCurrentLoading(setloading)
+        setLoadingIsTrue(setloading)
     }, [setloading])
     
 
@@ -51,10 +47,9 @@ export function Section({ title, quantity, children, setloading }) {
             <p>{title}</p>
 
             <Content 
-                currentLoading={currentLoading} 
+                loadingIsTrue={loadingIsTrue} 
                 style={{
-                    justifyContent: currentLoading? 'center' : 'space-between',
-                    
+                    justifyContent: loadingIsTrue? 'center' : 'space-between',
                 }}
             >
                 <button onClick={() => scrollHorizontally(1)}><RxCaretLeft /> </button>
@@ -65,8 +60,8 @@ export function Section({ title, quantity, children, setloading }) {
                     style={{ 
                         left: currentScrollPosition, 
                         transition: '1s',
-                        position: currentLoading? 'static' : 'absolute',
-                        justifyContent: currentLoading? 'center' : 'flex-start'
+                        position: loadingIsTrue? 'static' : 'absolute',
+                        justifyContent: loadingIsTrue? 'center' : 'flex-start'
                     }} 
                 >
                     {children}

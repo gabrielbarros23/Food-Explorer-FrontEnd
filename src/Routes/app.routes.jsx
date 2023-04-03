@@ -5,6 +5,7 @@ import { EditDish } from '../pages/EditDish'
 import { Home } from '../pages/Home'
 import { Menu } from '../pages/Menu'
 import { Details } from '../pages/Details'
+import { Favorites } from '../pages/Favorites'
 
 export function AppRoutes() {
 
@@ -17,7 +18,8 @@ export function AppRoutes() {
         <Route path="/new" element={<NewDish/> } key={'NewDish'}/>, 
         <Route path="/edit/:id" element={<EditDish/>} key={'EditDish'} />, 
         <Route path="/details/:id" element={<Details/>} key={'Details'} />,
-        <Route path="/menu" element={<Menu/>} key={'Menu'} />
+        <Route path="/menu" element={<Menu/>} key={'Menu'} />,
+
     ]
     
     
@@ -25,7 +27,8 @@ export function AppRoutes() {
     const userRoute = [
         <Route path="/" element={<Home/>} key={'Home'}/>, 
         <Route path="/details/:id" element={<Details/>} key={'Details'}/>, 
-        <Route path="/menu" element={<Menu/>} key={'Menu'}/>
+        <Route path="/menu" element={<Menu/>} key={'Menu'}/>,
+        <Route path="/favorites" element={<Favorites/>} key={'Favorites'}/>
     ]
 
     return (

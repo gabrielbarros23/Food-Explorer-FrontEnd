@@ -7,7 +7,8 @@ export const Container = styled.div`
     display: flex;
     justify-content: space-between;
     background-color: ${({ theme }) => theme.COLORS.DARK_700};
-
+    
+    width: 100%;
     height: 12.0rem;
     padding: 0 1.5rem;
     
@@ -36,9 +37,11 @@ export const Logo = styled.div`
     display:flex;
     align-items:center;
     justify-content: center;
+
     
     height: 5.0rem ;
-    width: 25.6rem;
+    width:clap(10.0rem, 24.0rem, 100%);
+
     
     font-size: 2.1rem;
     font-weight: 500;
@@ -53,7 +56,8 @@ export const Logo = styled.div`
     
     
     @media(min-width: 1100px){
-        width: 20.6rem;
+        width:29.6rem;
+        
         :hover{
             
             >img{
@@ -118,11 +122,11 @@ export const LeaveIcon = styled.div`
     }
 `
 
-export const Cart = styled.div`
-   
+export const AlternativeInput = styled.div`
     display: flex;
-    flex-direction: column;
     position: relative;
+
+    gap: 20px;
 
     width: 3.7rem;
     height: 5.5rem;
@@ -132,53 +136,56 @@ export const Cart = styled.div`
     text-align:center;
 
     visibility: ${({ isAdmin }) => isAdmin ? 'hidden' : 'visible'};
+
+    .cart{
+
+        >button{
+            display: ${({ isAdmin }) => isAdmin ? 'none' : 'flex'};
+            
+            font-size: 3.0rem;
+            
+            justify-content:center;
+            align-items:center;
+            text-align:center;
+            
+            background: none;
+            border: none;
+            color: ${({ theme }) => theme.COLORS.WHITE};
+        }
     
-    >button:nth-child(1){
-        display: ${({ isAdmin }) => isAdmin ? 'none' : 'flex'};
-        
-        font-size: 3.0rem;
-        
-        justify-content:center;
-        align-items:center;
-        text-align:center;
-        
-        background: none;
-        border: none;
-        color: ${({ theme }) => theme.COLORS.WHITE};
+        >label{
+            position: absolute;
+            
+            height: 2.5rem;
+            width: 2.5rem;
+            top: 0;
+            right: 0;
+    
+            background-color: ${({ theme }) => theme.COLORS.RED_100};
+            border-radius: 50%;
+        }
     }
 
     >button:nth-child(3){
         display: none;
     }
 
-    
-    
-    >label{
-        position: absolute;
-        
-        height: 2.5rem;
-        width: 2.5rem;
-        top: 0;
-        right: 0;
-
-        background-color: ${({ theme }) => theme.COLORS.RED_100};
-        border-radius: 50%;
+    .favorite{
+       display:none;
     }
 
 
     @media(min-width: 1100px){
         
         visibility: visible;
-        width: 21.6rem;
+        width: clamp(5.0rem, 40.6rem, 100%);
+        gap: 20px;
+        margin-right: 7px;
 
-        >button:nth-child(1){
+        .cart{
             display: none;
         }
 
-        >label{
-            display: none;
-        }
-        
         >button:nth-child(3){
             display: flex;
             
@@ -186,27 +193,50 @@ export const Cart = styled.div`
             font-size: 1.4rem;
             transition: all 0.5s ease;
             height: 5.6rem;
-
+            width: 18.5rem;
+            
             background-color: ${({ theme }) => theme.COLORS.RED_100};
 
             :hover{
-                width: 23.5rem;
+                width: 22.5rem;
             }
 
+        }
+
+        .favorite{
+            display: ${({ isAdmin }) => isAdmin ? 'none' : 'flex'};
+            >button{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+                border-radius: 5px;
+                font-size: 1.4rem;
+                transition: all 0.5s ease;
+                height: 5.6rem;
+                width: 15.5rem;
+
+                background-color: ${({ theme }) => theme.COLORS.YELLOW_610};
+
+                :hover{
+                    width: 19.5rem;
+                }
+            }
         }
     }
 `
 
-export const Input = styled.div`
+export const Search = styled.div`
 
     display: none;
 
     @media(min-width: 1100px){
-        position: relative;
         display: flex;
         flex-direction: column;
-        width: 59.1rem;
-        
+        position: relative;
+
+        margin-right: 7px;
+        width: clamp(1.0rem, 59.1rem, 100%);
         height: 4.8rem;
         
         >input{
@@ -218,36 +248,32 @@ export const Input = styled.div`
             border: none;
             background-color: ${({ theme }) => theme.COLORS.DARK_900};
             color: ${({ theme }) => theme.COLORS.WHITE};
-
-            ::placeholder{
-                padding: 0 14.4rem;
-            }
         }
 
 
     }
 `
 
-export const Search = styled.div`
+export const Dropdown = styled.div`
     position: absolute;
     overflow: hidden;
     overflow-y: auto;
 
     bottom: -50.0rem;
-    width: 59.1rem;
+    width: clamp(1.0rem, 59.1rem, 100%);
     height: 50.1rem;
-
+    
     background-color: ${({ theme }) => theme.COLORS.DARK_700};
     border-radius: 0 0 5px 5px;
-
     z-index: 5;
 
     ::-webkit-scrollbar{
-        background-color: #1d1d1d;
+        background-color: ${({ theme }) => theme.COLORS.GREY_100};
         width: 0.9rem;
     }
+
     ::-webkit-scrollbar-thumb{
-        background-color: #5b5b5b;
+        background-color: ${({ theme }) => theme.COLORS.LIGHT_600};
     }
 `
 
@@ -258,8 +284,11 @@ export const Dish = styled.div`
 
     height: 15.0rem;
     margin: 1.5rem 0rem;
+    width: 100%;
 
     border-bottom:${({ theme }) => `1px ${theme.COLORS.GREY_600} solid`};
+
+    
 
     .image{
        display: flex;
@@ -269,6 +298,8 @@ export const Dish = styled.div`
 
        height: 100%;
        width: 13.0rem;
+
+       cursor: pointer;
        
         >img{
             width: 13.0rem;
@@ -276,21 +307,24 @@ export const Dish = styled.div`
         }
     }
 
+    
     .text{
         display: flex;
         flex-direction: column;
         
-        width: 37.9rem;
         height: 100%;
-        
+        width: 37.9rem;
         cursor: pointer;
 
         >h3{
             height: 3.0rem;
+
             overflow: hidden;
             white-space: nowrap;
+
             text-overflow: ellipsis;
         } 
+
         >p{
             display: flex;
 
@@ -302,6 +336,7 @@ export const Dish = styled.div`
 
             color: ${({ theme }) => theme.COLORS.GREY_600};
         }
+
         >span{
             display: flex;
             justify-content: baseline;
@@ -314,10 +349,18 @@ export const Dish = styled.div`
             color: ${({ theme }) => theme.COLORS.BLUE_200};
         }
     }
+
     .button{
         display: flex;
         flex-direction: center;
         align-items: center;
         width: 6.0rem;
     }
+
+    @media(max-width:1220px){
+        .text{
+            width: 23.0rem;
+        }
+    }
+    
 `

@@ -1,6 +1,6 @@
 import { Container } from './style'
 
-export function InputConfig({ icon: Icon, label, children, ...rest}) {
+export function InputConfig({ label, children, ...rest}) {
     return(
         <Container>
             <label htmlFor="">{label}</label>

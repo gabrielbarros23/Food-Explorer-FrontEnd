@@ -80,9 +80,6 @@ export const Content = styled.div`
 export const Links = styled.div`
     width: 100%;
 
-    >button:nth-child(1){
-        display: ${({isAdmin}) => isAdmin ? 'flex' : 'none'};
-    }
 
     .link{
         display: flex;

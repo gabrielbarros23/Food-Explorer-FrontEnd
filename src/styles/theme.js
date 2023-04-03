@@ -20,10 +20,12 @@ export default {
       RED_100: "#750310",
       TOMATO_400: "#AB4D55",
 
+      GREY_100: "#1d1d1d",
       GREY_600: "#76797B",
 
       BLUE_200: "#81F3FF",
 
+      YELLOW_610: "#D2A232",
    
     }
   }

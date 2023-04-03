@@ -1,19 +1,15 @@
-import {Container} from './style'
-import {useState } from 'react'
+import { Container } from './style'
+import { useState } from 'react'
 
-export function Select({options, value, onChange, disabled}){
+export function Select({ options, value, onChange }) {
 
-    const [newOptions, setNewOptions] = useState(options) 
-
-
-
-    return(
+    return (
         <Container>
-                <select id='category' value={value} onChange={onChange} >
-                    {newOptions.map((index) => (
-                        <option key={index} value={index}>{index}</option>
-                    ))}
-                </select>
+            <select id='category' value={value} onChange={onChange} >
+                {options.map((index) => (
+                    <option key={index} value={index}>{index}</option>
+                ))}
+            </select>
         </Container>
     )
 }

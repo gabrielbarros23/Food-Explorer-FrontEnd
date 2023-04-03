@@ -123,7 +123,7 @@ export const Preview = styled.div`
         }
         
         >span{
-            display: ${({previewIsNull}) => previewIsNull? 'block': 'none'};
+            display: ${({imagePreviewIsNull}) => imagePreviewIsNull? 'block': 'none'};
 
             svg{
                 font-size: 8.0rem;
@@ -231,35 +231,34 @@ export const ThirdRow = styled.div`
 
 export const Ingredient = styled.div`
     display: flex;
+    justify-content: center;
+    align-items: center;
     
     height: 3.5rem;
+    gap: 1.0rem;
+    padding: 8px 1.0rem;
+
     border-radius: 5px;
     background-color: ${({theme}) => theme.COLORS.LIGHT_600};
     list-style: none;
-    >p{
+
+
+    >button{
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 1.0rem;
 
-        padding: 8px 1.0rem;
+        width: 2.0rem;
+        height: 3.0rem;
 
-        >button{
-            display: flex;
-            background: none;
-            border: none;
-            justify-content: center;
-            align-items: center;
+        background: none;
+        border: none;
 
-            width: 2.0rem;
-            height: 3.0rem;
-            >svg{
-                color: ${({theme}) => theme.COLORS.WHITE};
-            }
-            
+        >svg{
+            color: ${({theme}) => theme.COLORS.WHITE};
         }
-
     }
+
 
 `
 

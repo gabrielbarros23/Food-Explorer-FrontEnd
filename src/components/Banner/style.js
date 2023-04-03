@@ -43,6 +43,11 @@ export const Image = styled.div`
     height: 15.0rem;
     
     z-index: 1;
+    
+    @media(max-width: 400px){
+        width: 1.0rem;
+        height: 12.0rem;
+    }
 
     @media(min-width: 1100px){
         position: relative;
