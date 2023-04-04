@@ -11,15 +11,15 @@ import logo from '../../assets/Polygon blue.svg'
 
 
 export function SingIn() {
-
+    
+    const { Login } = useAuth()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
-    const { singIn } = useAuth()
 
     function handleSubmit() {
         setLoading(true)
-        singIn({ email, password }).catch(() => setLoading(false))
+        Login({ email, password }).catch(() => setLoading(false))
     }
 
     return (

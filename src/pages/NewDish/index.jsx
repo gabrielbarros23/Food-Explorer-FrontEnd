@@ -10,6 +10,7 @@ import { FiX } from 'react-icons/fi'
 export function NewDish() {
   const { createDish } = useAuth()
   const navigate = useNavigate()
+  
 
   const [dishTitle, setDishTitle] = useState('')
   const [dishPrice, setDishPrice] = useState('')
@@ -102,7 +103,7 @@ export function NewDish() {
         <FirstRow>
 
           <Preview imagePreviewIsNull={!imagePreview} >
-
+            
             <label htmlFor="dishImage">
               <img src={imagePreview} alt={imagePreview ? 'dishImage do prato' : undefined} />
               <span><AiFillCamera /></span>

@@ -6,7 +6,7 @@ export const AuthContext = createContext({})
 function AuthProvider({ children }) {
     const [data, setData] = useState({})
 
-    async function singIn({ email, password }) {
+    async function Login({ email, password }) {
         try {
             const response = await api.post('/sessions', { email, password })
             const { token, user } = response.data
@@ -19,9 +19,9 @@ function AuthProvider({ children }) {
             setData({ user, token })
         } catch (error) {
             if (error.response) {
-                alert(error.response.data.message)
+                throw alert(error.response.data.message)
             } else {
-                alert('Não foi possível entrar.')
+                throw alert('Não foi possível entrar.')
             }
         }
     }
@@ -29,12 +29,14 @@ function AuthProvider({ children }) {
     async function singUp({ name, email, password }) {
         try {
             await api.post('/users', { name, email, password });
+
             alert('Conta criada com sucesso!');
         } catch (error) {
+
             if (error.response) {
-                alert(error.response.data.message)
+                throw alert(error.response.data.message)
             } else {
-                alert('Não foi possível editar o prato.')
+                throw alert('Não foi possível editar o prato.')
             }
         }
     }
@@ -59,9 +61,9 @@ function AuthProvider({ children }) {
             alert('Prato feito com sucesso.')
         } catch (error) {
             if (error.response) {
-                alert(error.response.data.message)
+                throw alert(error.response.data.message)
             } else {
-                alert('Não foi possível criar o prato.')
+                throw alert('Não foi possível criar o prato.')
             }
         }
     }
@@ -76,9 +78,9 @@ function AuthProvider({ children }) {
             alert('Prato atualizado com sucesso.')
         } catch (error) {
             if (error.response) {
-                alert(error.response.data.message)
+                throw alert(error.response.data.message)
             } else {
-                console.log('Não foi possível editar o prato.')
+                throw alert('Não foi possível editar o prato.')
             }
         }
     }
@@ -93,9 +95,9 @@ function AuthProvider({ children }) {
 
         } catch (error) {
             if (error.response) {
-                alert(error.response.data.message)
+                throw alert(error.response.data.message)
             } else {
-                alert('Não foi possível buscar o prato.')
+                throw alert('Não foi possível buscar o prato.')
             }
         }
     }
@@ -103,16 +105,43 @@ function AuthProvider({ children }) {
     class FavoritesClass {
 
         async GetFavoritesByUserId() {
-            const id = data.user.id
-            return await api.get(`/favorites/${id}`)
+            try{
+                const id = data.user.id
+                return await api.get(`/favorites/${id}`)
+
+            }catch(error){
+                if (error.response) {
+                    throw alert(error.response.data.message)
+                } else {
+                    throw alert('Não foi possível buscar os prato favoritos do usuário.')
+                }
+            }
         }
 
         async CreateFavorites(dish_id, dish_title) {
-            return await api.post('/favorites', { dish_id, dish_title })
+            try{
+                return await api.post('/favorites', { dish_id, dish_title })
+            }
+            catch(error){
+                if (error.response) {
+                    throw alert(error.response.data.message)
+                } else {
+                    throw alert('Não foi possivel adicionar o prato aos favoritos.')
+                }
+            }
         }
 
         async DeleteFavorites(favorite_id) {
-            return await api.delete(`/favorites/${favorite_id}`)
+            try{
+                return await api.delete(`/favorites/${favorite_id}`)
+            }
+            catch(error){
+                if (error.response) {
+                    throw alert(error.response.data.message)
+                } else {
+                    throw alert('Não foi possível deletar o prato dos favoritos.')
+                }
+            }
         }
 
     }
@@ -121,6 +150,19 @@ function AuthProvider({ children }) {
         const token = localStorage.getItem('@foodexplorer:token')
         const user = localStorage.getItem('@foodexplorer:user')
 
+        api.interceptors.response.use(
+            response => {
+                return response
+            },
+            error => {
+                if(error.response && error.response.status === 401 && error.response.data.message === 'JWT Token Expirado') {
+                    localStorage.removeItem('@foodexplorer:token');
+                    localStorage.removeItem('@foodexplorer:user');
+                    setData({})   
+                }
+                return Promise.reject(error);
+            }
+        )
 
         if (token && user) {
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`
@@ -131,7 +173,7 @@ function AuthProvider({ children }) {
     }, [])
 
     return (
-        <AuthContext.Provider value={{ singIn, singOut, searchCategory, createDish, uptadeDish, FavoritesClass, singUp, user: data.user }}>
+        <AuthContext.Provider value={{ Login, singOut, searchCategory, createDish, uptadeDish, FavoritesClass, singUp, user: data.user }}>
             {children}
         </AuthContext.Provider>
     )
