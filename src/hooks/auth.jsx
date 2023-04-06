@@ -155,7 +155,7 @@ function AuthProvider({ children }) {
                 return response
             },
             error => {
-                if(error.response && error.response.status === 401 && error.response.data.message === 'JWT Token Expirado') {
+                if(error.response && error.response.status === 401 && error.response.data.message === 'Token Expirado') {
                     localStorage.removeItem('@foodexplorer:token');
                     localStorage.removeItem('@foodexplorer:user');
                     setData({})   
