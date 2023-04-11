@@ -33,9 +33,6 @@ export const Header = memo(
       }
    
       function handleNavigate(route) {
-         if (route === '/new' && !isAdmin) {
-            return
-         }
          navigate(route)
       }
    
@@ -133,7 +130,7 @@ export const Header = memo(
                <Button
                   title={isAdmin ? 'Novo Prato' : 'Pedidos(0)'}
                   icon={isAdmin ? '' : BsReceiptCutoff}
-                  onClick={() => handleNavigate('/new')}
+                  onClick={() => handleNavigate(isAdmin? '/new' : '/cart')}
                />
    
             </AlternativeInput>
@@ -142,7 +139,7 @@ export const Header = memo(
                <button onClick={handleLogOut}>
                   <img
                      src={SingOut}
-                     alt="Icone de saida"
+                     alt="Ícone de saída"
                   />
                </button>
             </LeaveIcon>

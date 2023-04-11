@@ -34,6 +34,16 @@ export function Dishes({ data, ...rest }) {
       navigate(`/details/${id}`)
    }
 
+   async function handleCart(dish_id){
+      let promises = []
+      
+      for(let i = 0; i < quantity; i++){
+         promises.push(api.post(`carts/${dish_id}`))
+      }
+      console.log(promises)
+      await Promise.all(promises)
+   }
+
    async function handleIconFunction() {
 
       if (Admin) {
@@ -84,6 +94,7 @@ export function Dishes({ data, ...rest }) {
             <img
                src={dishImage}
                alt={data.title}
+               onClick={() => handleDetails(data.id)}
             />
 
          </Image>
@@ -102,7 +113,7 @@ export function Dishes({ data, ...rest }) {
                <button onClick={() => HandleQuantity(1)}><AiOutlinePlus /></button>
             </Amount>
 
-            <Button title={ButtonContext} onClick={() => handleDetails(data.id)} />
+            <Button title={ButtonContext} onClick={() => handleCart(data.id)} />
          </Market>
 
 

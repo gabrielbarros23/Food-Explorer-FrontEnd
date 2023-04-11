@@ -108,11 +108,11 @@ export const Image = styled.div`
     height: 15.8rem;
 
     margin-bottom: 1.2rem;
-
-    
     >img{
         width: 13.8rem;
         height: 13.8rem;
+        cursor: pointer;
+
     }
 
     >button{
@@ -130,6 +130,7 @@ export const Image = styled.div`
         border: none;
         background: none;
         color: ${({ theme }) => theme.COLORS.WHITE};
+        z-index: 2;
     }
 
     @media(min-width: 1100px){

@@ -6,6 +6,7 @@ import { Home } from '../pages/Home'
 import { Menu } from '../pages/Menu'
 import { Details } from '../pages/Details'
 import { Favorites } from '../pages/Favorites'
+import {Cart} from '../pages/Cart'
 
 export function AppRoutes() {
 
@@ -28,7 +29,9 @@ export function AppRoutes() {
         <Route path="/" element={<Home/>} key={'Home'}/>, 
         <Route path="/details/:id" element={<Details/>} key={'Details'}/>, 
         <Route path="/menu" element={<Menu/>} key={'Menu'}/>,
-        <Route path="/favorites" element={<Favorites/>} key={'Favorites'}/>
+        <Route path="/favorites" element={<Favorites/>} key={'Favorites'}/>,
+        <Route path="/cart" element={<Cart/>} key={'Cart'}/>
+        
     ]
 
     return (
