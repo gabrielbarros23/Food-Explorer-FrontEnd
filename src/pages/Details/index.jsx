@@ -67,7 +67,7 @@ export function Details() {
       }
 
       DishSetup()
-   }, [])
+   }, [params])
    return (
       <Container>
 
