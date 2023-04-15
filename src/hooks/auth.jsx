@@ -69,7 +69,7 @@ function AuthProvider({ children }) {
         }
     }
 
-    async function uptadeDish({ data, image, id }) {
+    async function updateDish({ data, image, id }) {
         try {
             const fileUploadForm = new FormData()
             fileUploadForm.append("image", image)
@@ -204,7 +204,7 @@ function AuthProvider({ children }) {
     }, [])
 
     return (
-        <AuthContext.Provider value={{ Login, singOut, searchCategory, createDish, uptadeDish, CartClass, FavoritesClass, singUp, triggerToUpdateCartIcon, user: data.user }}>
+        <AuthContext.Provider value={{ Login, singOut, searchCategory, createDish, updateDish, CartClass, FavoritesClass, singUp, triggerToUpdateCartIcon, user: data.user }}>
             {children}
         </AuthContext.Provider>
     )

@@ -10,7 +10,7 @@ import { AiFillCamera } from 'react-icons/ai'
 export function EditDish() {
   const navigate = useNavigate()
   const params = useParams()
-  const { uptadeDish } = useAuth()
+  const { updateDish } = useAuth()
   const [dish, setDish] = useState(null)
 
   const [dishTitle, setDishTitle] = useState('')
@@ -80,7 +80,7 @@ export function EditDish() {
 
     const id = params.id
 
-    uptadeDish({ data: dataDish, image: dishImage, id }).then(() => navigate('/')).catch(() => setLoading(false))
+    updateDish({ data: dataDish, image: dishImage, id }).then(() => navigate('/')).catch(() => setLoading(false))
     
   }
 
