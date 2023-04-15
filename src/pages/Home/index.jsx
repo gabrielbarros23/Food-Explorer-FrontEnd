@@ -11,6 +11,7 @@ export function Home() {
    const [drinks, setDrinks] = useState([])
    const [desserts, setDesserts] = useState([])
    const [loading, setLoading] = useState(true)
+   const [triggerToUpdateCartIcon, setTriggerToUpdateCartIcon] = useState(1)
 
    async function dishesSetup() {
       const drink = await searchCategory('Bebida')

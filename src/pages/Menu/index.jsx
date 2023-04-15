@@ -32,13 +32,13 @@ export function Menu() {
 
 
     useEffect(() => {
-        async function fecthDishes() {
+        async function fetchDishes() {
             const response = await api.get(`/dishes?search=${search}`)
             const data = response.data
 
             setData(data)
         }
-        fecthDishes()
+        fetchDishes()
     }, [search])
 
     return (
@@ -57,7 +57,7 @@ export function Menu() {
                 />
 
                 {search &&
-                    <Section title='Resultado' quantity={data}>
+                    <Section title='Resultado' dishQuantity={data}>
 
                         {data.map((dish) => (
                             <Dishes
@@ -70,6 +70,10 @@ export function Menu() {
                 }
 
                 <Links >
+                    <button className='link' onClick={() => handleNavigate('/')}>
+                        Inicio
+                    </button>
+
                     {isAdmin &&
                         <button className='link' onClick={() => handleNavigate('/new')}>
                             Novo prato

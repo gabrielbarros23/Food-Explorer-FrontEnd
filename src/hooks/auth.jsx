@@ -5,6 +5,7 @@ export const AuthContext = createContext({})
 
 function AuthProvider({ children }) {
     const [data, setData] = useState({})
+    const [triggerToUpdateCartIcon, setTriggerToUpdateCartIcon] = useState(1)
 
     async function Login({ email, password }) {
         try {
@@ -102,6 +103,36 @@ function AuthProvider({ children }) {
         }
     }
 
+    class CartClass{
+        async addItemToCart({dish_id, quantity}){
+            let promises = []
+            
+            for(let i = 0; i < quantity; i++){
+               promises.push(api.post(`carts/${dish_id}`))
+            }
+               
+            await Promise.all(promises)
+            .then(setTriggerToUpdateCartIcon(prevState => prevState + 1))
+            
+        }
+
+        async handleDeleteItem(cart_id){
+            try{
+              await api.delete(`/carts/${cart_id}`)
+              setTriggerToUpdateCartIcon(prevState => prevState + 1)
+        
+            }catch (error) {
+              if (error.response) {
+                throw alert(error.response.data.message)
+              } else {
+                throw alert('Não foi possível apagar o item do carrinho')
+              }
+            }
+          }
+
+
+    }
+
     class FavoritesClass {
 
         async GetFavoritesByUserId() {
@@ -126,7 +157,7 @@ function AuthProvider({ children }) {
                 if (error.response) {
                     throw alert(error.response.data.message)
                 } else {
-                    throw alert('Não foi possivel adicionar o prato aos favoritos.')
+                    throw alert('Não foi possível adicionar o prato aos favoritos.')
                 }
             }
         }
@@ -173,7 +204,7 @@ function AuthProvider({ children }) {
     }, [])
 
     return (
-        <AuthContext.Provider value={{ Login, singOut, searchCategory, createDish, uptadeDish, FavoritesClass, singUp, user: data.user }}>
+        <AuthContext.Provider value={{ Login, singOut, searchCategory, createDish, uptadeDish, CartClass, FavoritesClass, singUp, triggerToUpdateCartIcon, user: data.user }}>
             {children}
         </AuthContext.Provider>
     )

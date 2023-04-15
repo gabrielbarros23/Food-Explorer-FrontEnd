@@ -2,10 +2,9 @@ import { Container, Form, IngredientArea, FirstRow, SecondRow, ThirdRow, Submit,
 import { useAuth } from '../../hooks/auth'
 import { api } from '../../services/api'
 import { useState, useEffect } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
-import { Textarea, InputConfig, Select, NewIngredientButton, Button, Input, Footer, Header } from '../../components'
+import { useParams, useNavigate } from 'react-router-dom'
+import { Textarea, InputConfig, Select, NewIngredientButton, Button, Input, Footer, Header, BackButton} from '../../components'
 import { FiX } from 'react-icons/fi'
-import { RxCaretLeft } from 'react-icons/rx'
 import { AiFillCamera } from 'react-icons/ai'
 
 export function EditDish() {
@@ -32,7 +31,7 @@ export function EditDish() {
 
   function handleCreateIngredient() {
     if (newIngredientButton.length == 0) {
-      return alert('Preencha para adcionar o ingrediente')
+      return alert('Preencha para adicionar o ingrediente')
     }
     setDishIngredients(prevState => [...prevState, newIngredientButton])
     setNewIngredientButton([])
@@ -82,7 +81,6 @@ export function EditDish() {
     const id = params.id
 
     uptadeDish({ data: dataDish, image: dishImage, id }).then(() => navigate('/')).catch(() => setLoading(false))
-
     
   }
 
@@ -143,7 +141,7 @@ export function EditDish() {
 
       {dish &&
         <Form>
-          <Link to='/'><RxCaretLeft />voltar</Link>
+          <BackButton onClick={() => navigate('/')}/>
 
           <h1>Editar prato</h1>
 

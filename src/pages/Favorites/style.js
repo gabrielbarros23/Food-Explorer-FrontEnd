@@ -14,7 +14,6 @@ export const Container = styled.div`
 `
 
 export const Content = styled.div`
-    display: grid;
     grid-area:content;
     padding: 2.0rem 0rem 0rem 4.0rem;
 

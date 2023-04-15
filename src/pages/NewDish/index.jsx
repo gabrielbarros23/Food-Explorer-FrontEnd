@@ -1,9 +1,8 @@
 import { Container, Form, IngredientArea, FirstRow, SecondRow, ThirdRow, Submit, Ingredient, Preview } from './style'
-import { Header, Footer, Input, Button, Select, NewIngredientButton, Textarea, InputConfig } from '../../components'
+import { Header, Footer, Input, Button, Select, NewIngredientButton, Textarea, InputConfig, BackButton } from '../../components'
 import { useAuth } from '../../hooks/auth'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import { RxCaretLeft } from 'react-icons/rx'
 import { AiFillCamera } from 'react-icons/ai'
 import { FiX } from 'react-icons/fi'
 
@@ -96,7 +95,7 @@ export function NewDish() {
       <Header />
 
       <Form>
-        <Link to='/'><RxCaretLeft />voltar</Link>
+        <BackButton onClick={() => navigate('/')}/>
 
         <h1>Novo Prato</h1>
 
