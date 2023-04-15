@@ -11,6 +11,7 @@ export const Container = styled.div`
     width: 100%;
     height: 12.0rem;
     padding: 0 1.5rem;
+    gap: 20px;
     
     align-items:center; 
     
@@ -166,7 +167,11 @@ export const AlternativeInput = styled.div`
         }
     }
 
-    >button:nth-child(3){
+    .desktopCart{
+        display: none;
+    }
+
+    .history{
         display: none;
     }
 
@@ -178,23 +183,49 @@ export const AlternativeInput = styled.div`
     @media(min-width: 1100px){
         
         visibility: visible;
-        width: clamp(5.0rem, 40.6rem, 100%);
-        gap: 20px;
-        margin-right: 7px;
+        width: clamp(2.0rem, 50.6rem, 100%);
+        justify-content: space-between;
+
 
         .cart{
             display: none;
         }
 
-        >button:nth-child(3){
+        .history{
+            display: ${({ isAdmin }) => isAdmin ? 'none' : 'flex'};
+            >button{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+                border-radius: 5px;
+                font-size: 1.4rem;
+                transition: all 0.5s ease;
+                height: 5.6rem;
+                width: 15.5rem;
+
+                background-color: ${({ theme }) => theme.COLORS.LIGHT_600};
+
+                :hover{
+                    width: 19.5rem;
+                }
+            }
+        }
+
+        .desktopCart{
+            display: ${({ isAdmin }) => isAdmin ? 'none' : 'flex'};
+
+            >button{
             display: flex;
+            justify-content: center;
+            align-items: center;
             
             border-radius: 5px;
             font-size: 1.4rem;
             transition: all 0.5s ease;
             height: 5.6rem;
-            width: 18.5rem;
-            
+            width: 15.5rem;
+
             background-color: ${({ theme }) => theme.COLORS.RED_100};
 
             :hover{
@@ -202,6 +233,9 @@ export const AlternativeInput = styled.div`
             }
 
         }
+        }
+
+        
 
         .favorite{
             display: ${({ isAdmin }) => isAdmin ? 'none' : 'flex'};
@@ -235,7 +269,6 @@ export const Search = styled.div`
         flex-direction: column;
         position: relative;
 
-        margin-right: 7px;
         width: clamp(1.0rem, 59.1rem, 100%);
         height: 4.8rem;
         
@@ -283,16 +316,14 @@ export const Dish = styled.div`
     align-items: center;
 
     height: 15.0rem;
-    margin: 1.5rem 0rem;
     width: 100%;
 
-    border-bottom:${({ theme }) => `1px ${theme.COLORS.GREY_600} solid`};
+    border-bottom:${({ theme }) => `1px ${theme.COLORS.LIGHT_600} solid`};
 
-    
 
     .image{
        display: flex;
-
+       
        justify-content: center;
        align-items: center;
 
@@ -307,22 +338,24 @@ export const Dish = styled.div`
         }
     }
 
-    
     .text{
         display: flex;
         flex-direction: column;
-        
+        flex: 1;
+        justify-content: space-between;
+
         height: 100%;
-        width: 37.9rem;
+        max-width: 37.9rem;
+
         cursor: pointer;
 
         >h3{
-            height: 3.0rem;
-
+            display: flex;
+            align-items: center;
+            height: 10.0rem;
+            width: 100%;
             overflow: hidden;
-            white-space: nowrap;
-
-            text-overflow: ellipsis;
+        
         } 
 
         >p{
@@ -332,7 +365,9 @@ export const Dish = styled.div`
             height: 5.7rem;
 
             overflow: hidden;
-            text-overflow: ellipsis;
+            
+            width: 100%;
+            border: 1px red solid;
 
             color: ${({ theme }) => theme.COLORS.GREY_600};
         }
@@ -342,7 +377,8 @@ export const Dish = styled.div`
             justify-content: baseline;
             align-items: center;
 
-            max-width: 41.1rem;
+            width: 100%;
+
             height: 4.8rem;
             font-size: 2.4rem;
             
@@ -357,10 +393,5 @@ export const Dish = styled.div`
         width: 6.0rem;
     }
 
-    @media(max-width:1220px){
-        .text{
-            width: 23.0rem;
-        }
-    }
     
 `

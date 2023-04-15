@@ -13,15 +13,21 @@ import SingOut from '../../assets/SingOut.svg'
 
 export const Header = memo(
    function Header({}) {
-      const { user, singOut, triggerToUpdateCartIcon } = useAuth()
+      const { user, singOut, triggerToUpdateCartIcon, CartClass } = useAuth()
    
       const [search, setSearch] = useState('')
       const [dish, setDish] = useState([])
       const [searchSelected, setSearchSelected] = useState(false);
       const [cart, setCart] = useState(null) 
+      const cartFunction = new CartClass
    
       const navigate = useNavigate()
       const isAdmin = Boolean(user.admin)
+
+      async function handleAddItemToCart({dish_id, quantity}){
+         await cartFunction.addItemToCart({dish_id, quantity})
+       
+      }
    
       function handleSearchFocus() {
          setSearchSelected(true);
@@ -112,14 +118,13 @@ export const Header = memo(
    
                         <div className="text" onClick={() => handleNavigate(`/details/${dish.id}`)}>
                            <h3>{dish.title}</h3>
-                           <p>{dish.description}</p>
                            <span>R${dish.price}</span>
                         </div>
    
                         <div className="button">
                            <Button
                               icon={AiOutlineShoppingCart}
-                              onClick={() => handleNavigate(`/details/${dish.id}`)}
+                              onClick={() => handleAddItemToCart({dish_id:dish.id, quantity:1})}
                            />
                         </div>
    
@@ -129,6 +134,13 @@ export const Header = memo(
             </Search>
    
             <AlternativeInput isAdmin={isAdmin} >
+
+               <div className="history">
+                  <Button 
+                     title='Pedidos'
+                     onClick={() => handleNavigate()}
+                  />
+               </div>
    
                <div className="favorite">
                   <Button
@@ -142,12 +154,14 @@ export const Header = memo(
                   <button><BsReceiptCutoff /></button>
                   <label>{cart? cart.length : '0'}</label>
                </div>
-
-               <Button
-                  title={isAdmin ? 'Novo Prato' : cart? `Pedidos (${cart.length})`: `Pedidos (0)`}
-                  icon={isAdmin ? '' : BsReceiptCutoff}
-                  onClick={() => handleNavigate(isAdmin? '/new' : '/cart')}
-               />
+               
+               <div className="desktopCart">
+                  <Button
+                     title={isAdmin ? 'Novo Prato' : cart? `Carrinho (${cart.length})`: `Carrinho (0)`}
+                     icon={isAdmin ? '' : BsReceiptCutoff}
+                     onClick={() => handleNavigate(isAdmin? '/new' : '/cart')}
+                  />
+               </div>
    
             </AlternativeInput>
    
