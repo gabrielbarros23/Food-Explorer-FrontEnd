@@ -135,7 +135,7 @@ export const Header = memo(
    
             <AlternativeInput isAdmin={isAdmin} >
 
-               <div className="history">
+               <div className="historyAndOrder">
                   <Button 
                      title='Pedidos'
                      onClick={() => handleNavigate()}
@@ -150,12 +150,12 @@ export const Header = memo(
                   />
                </div>
    
-               <div className="cart" onClick={() => handleNavigate('/cart')}>
+               <div className="cartMobile" onClick={() => handleNavigate('/cart')}>
                   <button><BsReceiptCutoff /></button>
                   <label>{cart? cart.length : '0'}</label>
                </div>
                
-               <div className="desktopCart">
+               <div className="newDishAndCartDesktop">
                   <Button
                      title={isAdmin ? 'Novo Prato' : cart? `Carrinho (${cart.length})`: `Carrinho (0)`}
                      icon={isAdmin ? '' : BsReceiptCutoff}
