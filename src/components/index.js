@@ -12,3 +12,5 @@ export { Textarea } from "./Textarea";
 export { DishesFavorites } from "./DishesFavorites";
 export { DishesCart } from "./DishesCart";
 export { BackButton } from "./BackButton";
+export { TableDishControllers } from "./TableDishControllers";
+export { TableDishHistory } from "./TableDishHistory";

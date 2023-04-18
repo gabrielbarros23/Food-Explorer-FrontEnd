@@ -6,6 +6,7 @@ export const AuthContext = createContext({})
 function AuthProvider({ children }) {
     const [data, setData] = useState({})
     const [triggerToUpdateCartIcon, setTriggerToUpdateCartIcon] = useState(1)
+    const [triggerUpdateOrder, setTriggerUpdateOrder] = useState(1)
 
     async function Login({ email, password }) {
         try {
@@ -49,7 +50,11 @@ function AuthProvider({ children }) {
             localStorage.removeItem('@foodexplorer:token')
             localStorage.removeItem('@foodexplorer:user')
             setData({})
+            return true
+        }else{
+            return false
         }
+
     }
 
     async function createDish({ data, image }) {
@@ -102,6 +107,36 @@ function AuthProvider({ children }) {
             }
         }
     }
+
+    async function handleStatusUpdate({status, order_number}){
+        try{
+            if(status === 'Pendente'){
+                await api.put('/orders', {status:0, order_number})
+                await api.put('/history', {status:0, order_number})
+            }
+            if(status === 'Preparando'){
+                await api.put('/orders', {status:1, order_number})
+                await api.put('/history', {status:1, order_number})
+            }
+            if(status === 'Entregue'){
+                const confirm = window.confirm("Deseja finalizar o pedido?")
+                if(confirm){
+                    await api.delete(`/orders/${order_number}`)
+                    await api.put('/history', {status:2, order_number})
+                }else{
+                    return
+                }
+            }
+            setTriggerUpdateOrder(prevState => prevState + 1)
+        }catch (error){
+            if(error.response){
+                throw alert(error.response.data.message)
+            }else{
+                throw alert('não foi possível mudar o status do pedido')
+            }
+        }
+    }
+    
 
     class CartClass{
         async addItemToCart({dish_id, quantity}){
@@ -204,7 +239,7 @@ function AuthProvider({ children }) {
     }, [])
 
     return (
-        <AuthContext.Provider value={{ Login, singOut, searchCategory, createDish, updateDish, CartClass, FavoritesClass, singUp, triggerToUpdateCartIcon, user: data.user }}>
+        <AuthContext.Provider value={{ Login, singOut, searchCategory, createDish, updateDish, CartClass, FavoritesClass, singUp, triggerToUpdateCartIcon, handleStatusUpdate, triggerUpdateOrder, user: data.user }}>
             {children}
         </AuthContext.Provider>
     )

@@ -67,7 +67,6 @@ export const Content = styled.div`
       
         align-items: center;
         overflow: hidden;
-
         >button{
             display: ${({ loadingIsTrue }) => loadingIsTrue ? 'none' : 'flex'};
             
@@ -88,11 +87,12 @@ export const Content = styled.div`
 
 export const Dishes = styled.div`
     display: flex;
-    justify-content: ${({ loading }) => loading ? 'center' : 'center'};
     align-items: center;
     position: ${({ loading }) => loading ? 'static' : 'absolute'};
+    
 
     @media(min-width: 1100px){
         max-width: 89.1rem;
+
     }
 `

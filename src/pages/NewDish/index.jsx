@@ -31,11 +31,11 @@ export function NewDish() {
     }
 
     if (!dishImage) {
-      return alert('Selecione uma dishImagem.')
+      return alert('Selecione uma imagem.')
     }
 
     if (newIngredient.length !== 0) {
-      return alert('Voce não confirmou um ingrediente. clique no mais para adcionar ou limpe o campo.')
+      return alert('Voce não confirmou um ingrediente. clique no mais para adicionar ou limpe o campo.')
     }
 
     if (dishCategory == 'Selecione uma categoria') {
@@ -65,7 +65,7 @@ export function NewDish() {
 
   }
 
-  function handledishImage(e) {
+  function handleDishImage(e) {
     const file = e.target.files[0]
     setDishImage(file)
 
@@ -75,7 +75,7 @@ export function NewDish() {
 
   function handleIngredient() {
     if (newIngredient.length == 0) {
-      return alert('Preencha para adcionar o ingrediente')
+      return alert('Preencha para adicionar o ingrediente')
     }
     setDishIngredients(prevState => [...prevState, newIngredient])
     setNewIngredient([])
@@ -106,8 +106,8 @@ export function NewDish() {
             <label htmlFor="dishImage">
               <img src={imagePreview} alt={imagePreview ? 'dishImage do prato' : undefined} />
               <span><AiFillCamera /></span>
-              <input type="file" id="dishImage" onChange={handledishImage} />
-              <span>clique para adcionar uma dishImagem</span>
+              <input type="file" id="dishImage" onChange={handleDishImage} />
+              <span>clique para adicionar uma imagem</span>
 
               {imagePreview &&
                 <label htmlFor="dishImage">

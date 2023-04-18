@@ -39,10 +39,13 @@ export const Header = memo(
          }, 100)
       }
    
-      function handleNavigate(route) {
+      async function handleNavigate(route) {
          if(route == '/singOut'){
-            singOut()
-            return navigate('/')
+            const success = singOut()
+            if(success){
+               navigate('/')
+            }
+            return
          }
 
          navigate(route)
@@ -138,7 +141,7 @@ export const Header = memo(
                <div className="historyAndOrder">
                   <Button 
                      title='Pedidos'
-                     onClick={() => handleNavigate()}
+                     onClick={() => handleNavigate(isAdmin ? '/order' : '/history')}
                   />
                </div>
    

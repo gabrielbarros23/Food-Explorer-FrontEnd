@@ -1,18 +1,18 @@
 import {Container, Content} from './style'
 import { useEffect, useState } from 'react'
-import { Header, Footer, TableDishControllers } from '../../components'
+import { Header, Footer, TableDishHistory } from '../../components'
 import { api } from '../../services/api'
 import { useAuth } from '../../hooks/auth'
 
 
-export function Order(){
-  const [orders, setOrders] = useState([])
+export function History(){
+  const [history, setHistory] = useState([])
   const {triggerUpdateOrder} = useAuth()
 
   useEffect(() => {
     async function GetOrders(){
-      const order = await api.get('/orders').then(response => response.data)
-      setOrders(order)
+      const order = await api.get('/history').then(response => response.data)
+      setHistory(order)
     }
     GetOrders()
   }, [triggerUpdateOrder])
@@ -22,8 +22,8 @@ export function Order(){
 
       <Content>
         <h1>Pedidos</h1>
-        {orders && 
-          <TableDishControllers order={orders}/>
+        {history && 
+          <TableDishHistory history={history}/>
         }
       </Content>
 

@@ -82,6 +82,8 @@ export function Cart(){
       const order_number = await api.post('/orders', {dish_id}).then(response => response.data)
       await api.post('history', {dish_id, order_number})
       await api.delete('carts')
+      alert('Compra feita com sucesso!.')
+      navigate('/history')
       
     }catch (error) {
       if (error.response) {

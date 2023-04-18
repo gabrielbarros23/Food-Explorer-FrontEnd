@@ -58,7 +58,7 @@ export function EditDish() {
     }
 
     if (newIngredientButton.length !== 0) {
-      return alert('Voce não confirmou um ingrediente. clique no mais para adcionar ou limpe o campo.')
+      return alert('Voce não confirmou um ingrediente. clique no mais para adicionar ou limpe o campo.')
     }
 
     const Confirm = window.confirm('deseja atualizar o prato?')
@@ -152,7 +152,7 @@ export function EditDish() {
                 <img src={imagePreview} alt="Preview do prato" />
                 <span><AiFillCamera /></span>
                 <input type="file" id="Image" onChange={handleImage} />
-                <span>clique para adcionar uma imagem</span>
+                <span>clique para adicionar uma imagem</span>
 
                 {showImagePreview &&
                   <label htmlFor="Image">

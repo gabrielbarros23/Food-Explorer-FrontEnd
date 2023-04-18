@@ -75,6 +75,12 @@ export function Menu() {
                     </button>
 
                     {isAdmin &&
+                        <button className='link' onClick={() => handleNavigate('/order')}>
+                            Pedidos
+                        </button>
+                    }
+
+                    {isAdmin &&
                         <button className='link' onClick={() => handleNavigate('/new')}>
                             Novo prato
                         </button>
