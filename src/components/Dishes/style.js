@@ -11,9 +11,38 @@ export const Container = styled.div`
     padding: 1rem 2.4rem 0;
     margin-right: 1.6rem;
     
-
     background-color: ${({ theme }) => theme.COLORS.DARK_200};
-    
+    animation: ${({shakeAnimation}) => shakeAnimation? 'shake-horizontal 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both' : 'none'} ;
+
+   @keyframes shake-horizontal {
+        0%,
+        100% {
+            -webkit-transform: translateX(0);
+            transform: translateX(0);
+        }
+        10%,
+        30%,
+        50%,
+        70% {
+            -webkit-transform: translateX(-10px);
+            transform: translateX(-10px);
+        }
+        20%,
+        40%,
+        60% {
+            -webkit-transform: translateX(10px);
+            transform: translateX(10px);
+        }
+        80% {
+            -webkit-transform: translateX(8px);
+            transform: translateX(8px);
+        }
+        90% {
+            -webkit-transform: translateX(-8px);
+            transform: translateX(-8px);
+        }
+    }
+
     >h1{
         justify-content: center;
         text-align: center;
@@ -32,6 +61,8 @@ export const Container = styled.div`
         text-overflow: ellipsis;
         white-space: nowrap;
 
+        cursor: pointer;
+
     }
 
 
@@ -43,11 +74,14 @@ export const Container = styled.div`
         font-size: 2.2rem;
         margin-bottom: 2.0rem;
 
-        
         color: ${({ theme }) => theme.COLORS.BLUE_200};
+
+        cursor: pointer;
+
     }
     >p:nth-child(3){
        display: none;
+       cursor: pointer;
     }
     
     >button{
@@ -68,30 +102,39 @@ export const Container = styled.div`
         
         >h1{
             width: 100%;
+            height: 4.0rem;
 
             font-weight: 700;
             font-size: 2.0rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 0rem;
 
             text-align: center;
             
         }
         >p:nth-child(3){
            display: flex;
-           height: 4.0rem;
-           overflow: hidden;
+           height: 4.6rem;
            
-           margin-bottom: 1.5rem;
            justify-content: center;
            text-align: center;
+
+           overflow: hidden;
+           margin-bottom: 0rem;
+           
            font-size: 1.4rem;
            
            width: 25.0rem;
         }
 
         >p:nth-child(4){
-            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            height: 4.8rem;
             width: 100%;
+
+            margin-bottom: 1.5rem;
             font-size: 2.3rem;
         }
     }
@@ -108,11 +151,11 @@ export const Image = styled.div`
     height: 15.8rem;
 
     margin-bottom: 1.2rem;
-
-    
     >img{
         width: 13.8rem;
         height: 13.8rem;
+        cursor: pointer;
+
     }
 
     >button{
@@ -130,6 +173,7 @@ export const Image = styled.div`
         border: none;
         background: none;
         color: ${({ theme }) => theme.COLORS.WHITE};
+        z-index: 2;
     }
 
     @media(min-width: 1100px){

@@ -1,5 +1,5 @@
 import { Container, Content } from './style'
-import { Header, Footer, DishesFavorites } from '../../components'
+import { Header, Footer, DishesFavorites, BackButton } from '../../components'
 import { useAuth } from '../../hooks/auth'
 import { api } from '../../services/api'
 import { useEffect } from 'react'
@@ -53,7 +53,7 @@ export function Favorites() {
             <Header />
 
             <Content>
-                <button onClick={handleBack}> <RxCaretLeft /> Voltar </button>
+                <BackButton onClick={handleBack}/>
                 <h1>Meus Favoritos</h1>
 
                 {dishes.length == 0 ?

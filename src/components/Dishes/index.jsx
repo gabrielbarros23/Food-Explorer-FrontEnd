@@ -9,13 +9,16 @@ import { AiFillStar, AiOutlineStar, AiOutlineMinus, AiOutlinePlus } from 'react-
 import { useEffect } from 'react'
 
 export function Dishes({ data, ...rest }) {
-   const { user, FavoritesClass } = useAuth()
+   const { user, FavoritesClass, CartClass } = useAuth()
    const favorites = new FavoritesClass
+   const cart = new CartClass 
    const Admin = Boolean(user.admin)
+   
 
    const [quantity, setQuantity] = useState(1)
+   const [shakeAnimation, setShakeAnimation] = useState(false)
 
-   const [icon, setIcon] = useState()
+   const [icon, setIcon] = useState(<AiOutlineStar />)
    const [iconSetupTrigger, setIconSetupTrigger] = useState(1)
 
    const navigate = useNavigate()
@@ -33,6 +36,16 @@ export function Dishes({ data, ...rest }) {
    function handleDetails(id) {
       navigate(`/details/${id}`)
    }
+
+   async function handleAddItemToCart({dish_id, quantity}){
+      await cart.addItemToCart({dish_id, quantity})
+      setShakeAnimation(true)
+      setTimeout(() => {
+         setShakeAnimation(false)
+      }, 1000);
+   }
+
+   
 
    async function handleIconFunction() {
 
@@ -73,7 +86,7 @@ export function Dishes({ data, ...rest }) {
    }, [iconSetupTrigger])
 
    return (
-      <Container isAdmin={Admin} {...rest}>
+      <Container isAdmin={Admin} shakeAnimation={shakeAnimation} {...rest}>
 
          <Image isAdmin={Admin}>
 
@@ -84,15 +97,16 @@ export function Dishes({ data, ...rest }) {
             <img
                src={dishImage}
                alt={data.title}
+               onClick={() => handleDetails(data.id)}
             />
 
          </Image>
 
-         <h1>{data.title}</h1>
+         <h1 onClick={() => handleDetails(data.id)}>{data.title}</h1>
 
-         <p>{data.description}</p>
+         <p onClick={() => handleDetails(data.id)}>{data.description}</p>
 
-         <p>{'R$ ' + data.price}</p>
+         <p onClick={() => handleDetails(data.id)}>{'R$ ' + data.price}</p>
 
          <Market isAdmin={Admin}>
 
@@ -102,7 +116,7 @@ export function Dishes({ data, ...rest }) {
                <button onClick={() => HandleQuantity(1)}><AiOutlinePlus /></button>
             </Amount>
 
-            <Button title={ButtonContext} onClick={() => handleDetails(data.id)} />
+            <Button title={ButtonContext} onClick={() => handleAddItemToCart({dish_id:data.id, quantity}).then(setQuantity(1))} />
          </Market>
 
 

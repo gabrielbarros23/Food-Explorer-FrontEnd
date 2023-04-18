@@ -2,16 +2,15 @@ import { Container, Form, IngredientArea, FirstRow, SecondRow, ThirdRow, Submit,
 import { useAuth } from '../../hooks/auth'
 import { api } from '../../services/api'
 import { useState, useEffect } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
-import { Textarea, InputConfig, Select, NewIngredientButton, Button, Input, Footer, Header } from '../../components'
+import { useParams, useNavigate } from 'react-router-dom'
+import { Textarea, InputConfig, Select, NewIngredientButton, Button, Input, Footer, Header, BackButton} from '../../components'
 import { FiX } from 'react-icons/fi'
-import { RxCaretLeft } from 'react-icons/rx'
 import { AiFillCamera } from 'react-icons/ai'
 
 export function EditDish() {
   const navigate = useNavigate()
   const params = useParams()
-  const { uptadeDish } = useAuth()
+  const { updateDish } = useAuth()
   const [dish, setDish] = useState(null)
 
   const [dishTitle, setDishTitle] = useState('')
@@ -32,7 +31,7 @@ export function EditDish() {
 
   function handleCreateIngredient() {
     if (newIngredientButton.length == 0) {
-      return alert('Preencha para adcionar o ingrediente')
+      return alert('Preencha para adicionar o ingrediente')
     }
     setDishIngredients(prevState => [...prevState, newIngredientButton])
     setNewIngredientButton([])
@@ -59,7 +58,7 @@ export function EditDish() {
     }
 
     if (newIngredientButton.length !== 0) {
-      return alert('Voce não confirmou um ingrediente. clique no mais para adcionar ou limpe o campo.')
+      return alert('Voce não confirmou um ingrediente. clique no mais para adicionar ou limpe o campo.')
     }
 
     const Confirm = window.confirm('deseja atualizar o prato?')
@@ -81,8 +80,7 @@ export function EditDish() {
 
     const id = params.id
 
-    uptadeDish({ data: dataDish, image: dishImage, id }).then(() => navigate('/')).catch(() => setLoading(false))
-
+    updateDish({ data: dataDish, image: dishImage, id }).then(() => navigate('/')).catch(() => setLoading(false))
     
   }
 
@@ -143,7 +141,7 @@ export function EditDish() {
 
       {dish &&
         <Form>
-          <Link to='/'><RxCaretLeft />voltar</Link>
+          <BackButton onClick={() => navigate('/')}/>
 
           <h1>Editar prato</h1>
 
@@ -154,7 +152,7 @@ export function EditDish() {
                 <img src={imagePreview} alt="Preview do prato" />
                 <span><AiFillCamera /></span>
                 <input type="file" id="Image" onChange={handleImage} />
-                <span>clique para adcionar uma imagem</span>
+                <span>clique para adicionar uma imagem</span>
 
                 {showImagePreview &&
                   <label htmlFor="Image">

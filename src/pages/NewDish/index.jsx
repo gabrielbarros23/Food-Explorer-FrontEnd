@@ -1,9 +1,8 @@
 import { Container, Form, IngredientArea, FirstRow, SecondRow, ThirdRow, Submit, Ingredient, Preview } from './style'
-import { Header, Footer, Input, Button, Select, NewIngredientButton, Textarea, InputConfig } from '../../components'
+import { Header, Footer, Input, Button, Select, NewIngredientButton, Textarea, InputConfig, BackButton } from '../../components'
 import { useAuth } from '../../hooks/auth'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import { RxCaretLeft } from 'react-icons/rx'
 import { AiFillCamera } from 'react-icons/ai'
 import { FiX } from 'react-icons/fi'
 
@@ -32,11 +31,11 @@ export function NewDish() {
     }
 
     if (!dishImage) {
-      return alert('Selecione uma dishImagem.')
+      return alert('Selecione uma imagem.')
     }
 
     if (newIngredient.length !== 0) {
-      return alert('Voce não confirmou um ingrediente. clique no mais para adcionar ou limpe o campo.')
+      return alert('Voce não confirmou um ingrediente. clique no mais para adicionar ou limpe o campo.')
     }
 
     if (dishCategory == 'Selecione uma categoria') {
@@ -66,7 +65,7 @@ export function NewDish() {
 
   }
 
-  function handledishImage(e) {
+  function handleDishImage(e) {
     const file = e.target.files[0]
     setDishImage(file)
 
@@ -76,7 +75,7 @@ export function NewDish() {
 
   function handleIngredient() {
     if (newIngredient.length == 0) {
-      return alert('Preencha para adcionar o ingrediente')
+      return alert('Preencha para adicionar o ingrediente')
     }
     setDishIngredients(prevState => [...prevState, newIngredient])
     setNewIngredient([])
@@ -96,7 +95,7 @@ export function NewDish() {
       <Header />
 
       <Form>
-        <Link to='/'><RxCaretLeft />voltar</Link>
+        <BackButton onClick={() => navigate('/')}/>
 
         <h1>Novo Prato</h1>
 
@@ -107,8 +106,8 @@ export function NewDish() {
             <label htmlFor="dishImage">
               <img src={imagePreview} alt={imagePreview ? 'dishImage do prato' : undefined} />
               <span><AiFillCamera /></span>
-              <input type="file" id="dishImage" onChange={handledishImage} />
-              <span>clique para adcionar uma dishImagem</span>
+              <input type="file" id="dishImage" onChange={handleDishImage} />
+              <span>clique para adicionar uma imagem</span>
 
               {imagePreview &&
                 <label htmlFor="dishImage">

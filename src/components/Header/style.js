@@ -1,7 +1,6 @@
 import styled from "styled-components"
 
 export const Container = styled.div`
-
     grid-area: header;
 
     display: flex;
@@ -11,6 +10,7 @@ export const Container = styled.div`
     width: 100%;
     height: 12.0rem;
     padding: 0 1.5rem;
+    gap: 20px;
     
     align-items:center; 
     
@@ -33,15 +33,12 @@ export const Container = styled.div`
 `
 
 export const Logo = styled.div`
-    
     display:flex;
     align-items:center;
     justify-content: center;
-
     
     height: 5.0rem ;
     width:clap(10.0rem, 24.0rem, 100%);
-
     
     font-size: 2.1rem;
     font-weight: 500;
@@ -54,12 +51,10 @@ export const Logo = styled.div`
         transition: all 0.5s ease;
     }
     
-    
     @media(min-width: 1100px){
         width:29.6rem;
         
         :hover{
-            
             >img{
                 width: 4.0rem;
             }
@@ -76,7 +71,6 @@ export const Logo = styled.div`
 `
 
 export const Text = styled.div`
-
     display:flex;
     align-items:center;
     gap: 1.0rem;
@@ -86,12 +80,12 @@ export const Text = styled.div`
         font-size: 1.5rem;
         color: ${({ theme }) => theme.COLORS.BLUE_200};
     }
+
     >p{
         color:${({ theme }) => theme.COLORS.WHITE}
     }
 
     @media(min-width: 1100px){
-        
         display:flex;
         flex-direction: column;
         align-items: flex-end;
@@ -102,132 +96,11 @@ export const Text = styled.div`
             display: ${({ isAdmin }) => isAdmin ? 'visible' : 'none'};
             color: ${({ theme }) => theme.COLORS.BLUE_200};
         }
-
     }
     
-`
-
-export const LeaveIcon = styled.div`
-    
-    display: none;
-
-    @media(min-width: 1100px){
-        
-        display: flex;
-
-        >button{
-            background: none;
-            border: none;
-        }
-    }
-`
-
-export const AlternativeInput = styled.div`
-    display: flex;
-    position: relative;
-
-    gap: 20px;
-
-    width: 3.7rem;
-    height: 5.5rem;
-
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-
-    visibility: ${({ isAdmin }) => isAdmin ? 'hidden' : 'visible'};
-
-    .cart{
-
-        >button{
-            display: ${({ isAdmin }) => isAdmin ? 'none' : 'flex'};
-            
-            font-size: 3.0rem;
-            
-            justify-content:center;
-            align-items:center;
-            text-align:center;
-            
-            background: none;
-            border: none;
-            color: ${({ theme }) => theme.COLORS.WHITE};
-        }
-    
-        >label{
-            position: absolute;
-            
-            height: 2.5rem;
-            width: 2.5rem;
-            top: 0;
-            right: 0;
-    
-            background-color: ${({ theme }) => theme.COLORS.RED_100};
-            border-radius: 50%;
-        }
-    }
-
-    >button:nth-child(3){
-        display: none;
-    }
-
-    .favorite{
-       display:none;
-    }
-
-
-    @media(min-width: 1100px){
-        
-        visibility: visible;
-        width: clamp(5.0rem, 40.6rem, 100%);
-        gap: 20px;
-        margin-right: 7px;
-
-        .cart{
-            display: none;
-        }
-
-        >button:nth-child(3){
-            display: flex;
-            
-            border-radius: 5px;
-            font-size: 1.4rem;
-            transition: all 0.5s ease;
-            height: 5.6rem;
-            width: 18.5rem;
-            
-            background-color: ${({ theme }) => theme.COLORS.RED_100};
-
-            :hover{
-                width: 22.5rem;
-            }
-
-        }
-
-        .favorite{
-            display: ${({ isAdmin }) => isAdmin ? 'none' : 'flex'};
-            >button{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                
-                border-radius: 5px;
-                font-size: 1.4rem;
-                transition: all 0.5s ease;
-                height: 5.6rem;
-                width: 15.5rem;
-
-                background-color: ${({ theme }) => theme.COLORS.YELLOW_610};
-
-                :hover{
-                    width: 19.5rem;
-                }
-            }
-        }
-    }
 `
 
 export const Search = styled.div`
-
     display: none;
 
     @media(min-width: 1100px){
@@ -235,7 +108,6 @@ export const Search = styled.div`
         flex-direction: column;
         position: relative;
 
-        margin-right: 7px;
         width: clamp(1.0rem, 59.1rem, 100%);
         height: 4.8rem;
         
@@ -283,16 +155,14 @@ export const Dish = styled.div`
     align-items: center;
 
     height: 15.0rem;
-    margin: 1.5rem 0rem;
     width: 100%;
 
-    border-bottom:${({ theme }) => `1px ${theme.COLORS.GREY_600} solid`};
+    border-bottom:${({ theme }) => `1px ${theme.COLORS.LIGHT_600} solid`};
 
-    
 
     .image{
        display: flex;
-
+       
        justify-content: center;
        align-items: center;
 
@@ -307,22 +177,24 @@ export const Dish = styled.div`
         }
     }
 
-    
     .text{
         display: flex;
         flex-direction: column;
-        
+        flex: 1;
+        justify-content: space-between;
+
         height: 100%;
-        width: 37.9rem;
+        max-width: 37.9rem;
+
         cursor: pointer;
 
         >h3{
-            height: 3.0rem;
-
-            overflow: hidden;
-            white-space: nowrap;
-
-            text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+            height: 10.0rem;
+            width: 100%;
+            padding-top: 1.0rem;
+        
         } 
 
         >p{
@@ -332,7 +204,9 @@ export const Dish = styled.div`
             height: 5.7rem;
 
             overflow: hidden;
-            text-overflow: ellipsis;
+            
+            width: 100%;
+            border: 1px red solid;
 
             color: ${({ theme }) => theme.COLORS.GREY_600};
         }
@@ -342,7 +216,8 @@ export const Dish = styled.div`
             justify-content: baseline;
             align-items: center;
 
-            max-width: 41.1rem;
+            width: 100%;
+
             height: 4.8rem;
             font-size: 2.4rem;
             
@@ -357,10 +232,154 @@ export const Dish = styled.div`
         width: 6.0rem;
     }
 
-    @media(max-width:1220px){
-        .text{
-            width: 23.0rem;
-        }
-    }
     
 `
+
+export const AlternativeInput = styled.div`
+    display: flex;
+    position: relative;
+
+    gap: 10px;
+
+    width: 3.7rem;
+    height: 5.5rem;
+
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+
+    visibility: ${({ isAdmin }) => isAdmin ? 'hidden' : 'visible'};
+
+    .cartMobile{
+        >button{
+            display: ${({ isAdmin }) => isAdmin ? 'none' : 'flex'};
+            justify-content:center;
+            align-items:center;
+            text-align:center;
+            
+            font-size: 3.0rem;
+            
+            background: none;
+            border: none;
+            color: ${({ theme }) => theme.COLORS.WHITE};
+        }
+    
+        >label{
+            position: absolute;
+            
+            height: 2.5rem;
+            width: 2.5rem;
+            top: 0;
+            right: 0;
+    
+            background-color: ${({ theme }) => theme.COLORS.RED_100};
+            border-radius: 50%;
+        }
+    }
+
+    .newDishAndCartDesktop{
+        display: none;
+    }
+
+    .historyAndOrder{
+        display: none;
+    }
+
+    .favorite{
+       display:none;
+    }
+
+
+    @media(min-width: 1100px){
+        visibility: visible;
+        width: clamp(1.0rem, 50.6rem, 50.6rem);
+        justify-content: center;
+
+        .cartMobile{
+            display: none;
+        }
+
+        .historyAndOrder{
+            display: flex;
+            
+            >button{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+                border-radius: 5px;
+                font-size: 1.4rem;
+                transition: all 0.5s ease;
+                height: 5.6rem;
+                width: 15.5rem;
+
+                background-color: ${({ theme }) => theme.COLORS.LIGHT_600};
+
+                :hover{
+                    width: 19.5rem;
+                }
+            }
+        }
+
+        .newDishAndCartDesktop{
+            display: flex;
+
+            >button{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+                border-radius: 5px;
+                font-size: 1.4rem;
+                transition: all 0.5s ease;
+                height: 5.6rem;
+                width: 15.5rem;
+
+                background-color: ${({ theme }) => theme.COLORS.RED_100};
+
+                :hover{
+                    width: 22.5rem;
+                }
+            }
+        }
+
+        
+
+        .favorite{
+            display: ${({ isAdmin }) => isAdmin ? 'none' : 'flex'};
+
+            >button{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+                height: 5.6rem;
+                width: 15.5rem;
+
+                border-radius: 5px;
+                font-size: 1.4rem;
+                transition: all 0.5s ease;
+                
+                background-color: ${({ theme }) => theme.COLORS.YELLOW_610};
+
+                :hover{
+                    width: 19.5rem;
+                }
+            }
+        }
+    }
+`
+
+export const LeaveIcon = styled.div`
+    display: none;
+
+    @media(min-width: 1100px){
+        display: flex;
+
+        >button{
+            background: none;
+            border: none;
+        }
+    }
+`
+

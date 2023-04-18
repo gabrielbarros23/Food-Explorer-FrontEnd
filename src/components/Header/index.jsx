@@ -12,15 +12,22 @@ import SingOut from '../../assets/SingOut.svg'
 
 
 export const Header = memo(
-   function Header() {
-      const { user, singOut } = useAuth()
+   function Header({}) {
+      const { user, singOut, triggerToUpdateCartIcon, CartClass } = useAuth()
    
       const [search, setSearch] = useState('')
       const [dish, setDish] = useState([])
       const [searchSelected, setSearchSelected] = useState(false);
+      const [cart, setCart] = useState(null) 
+      const cartFunction = new CartClass
    
       const navigate = useNavigate()
       const isAdmin = Boolean(user.admin)
+
+      async function handleAddItemToCart({dish_id, quantity}){
+         await cartFunction.addItemToCart({dish_id, quantity})
+       
+      }
    
       function handleSearchFocus() {
          setSearchSelected(true);
@@ -32,21 +39,18 @@ export const Header = memo(
          }, 100)
       }
    
-      function handleNavigate(route) {
-         if (route === '/new' && !isAdmin) {
+      async function handleNavigate(route) {
+         if(route == '/singOut'){
+            const success = singOut()
+            if(success){
+               navigate('/')
+            }
             return
          }
+
          navigate(route)
       }
    
-      function handleLogOut() {
-         singOut()
-         navigate('/')
-      }
-   
-      function handleDetails(id) {
-         navigate(`/details/${id}`)
-      }
    
       function handleImage(url) {
          const dishImage = `${api.defaults.baseURL}/files/${url}`
@@ -54,12 +58,30 @@ export const Header = memo(
       }
    
       useEffect(() => {
-         async function fecthDishes() {
+         async function fetchDishes() {
             const dish = await api.get(`/dishes?search=${search}`).then(response => response.data)
             setDish(dish)
          }
-         fecthDishes()
+         fetchDishes()
       }, [search])
+
+      useEffect(() => { 
+         async function getCartByUserId(){
+            try{
+              const cart = await api.get('/carts').then(response => response.data)
+              
+              setCart(cart)
+      
+            }catch (error) {
+              if (error.response) {
+                throw alert(error.response.data.message)
+              } else {
+                throw alert('Não foi possível buscar o item do carrinho')
+              }
+            }
+          }
+          getCartByUserId()
+      }, [triggerToUpdateCartIcon])
    
       return (
          <Container isAdmin={isAdmin}>
@@ -93,20 +115,19 @@ export const Header = memo(
                   {dish.map((dish) => (
                      <Dish key={dish.id}>
    
-                        <div className="image" onClick={() => handleDetails(dish.id)}>
+                        <div className="image" onClick={() => handleNavigate(`/details/${dish.id}`)}>
                            <img src={handleImage(dish.image)} alt="" />
                         </div>
    
-                        <div className="text" onClick={() => handleDetails(dish.id)}>
+                        <div className="text" onClick={() => handleNavigate(`/details/${dish.id}`)}>
                            <h3>{dish.title}</h3>
-                           <p>{dish.description}</p>
                            <span>R${dish.price}</span>
                         </div>
    
                         <div className="button">
                            <Button
                               icon={AiOutlineShoppingCart}
-                              onClick={() => handleDetails(dish.id)}
+                              onClick={() => handleAddItemToCart({dish_id:dish.id, quantity:1})}
                            />
                         </div>
    
@@ -116,6 +137,13 @@ export const Header = memo(
             </Search>
    
             <AlternativeInput isAdmin={isAdmin} >
+
+               <div className="historyAndOrder">
+                  <Button 
+                     title='Pedidos'
+                     onClick={() => handleNavigate(isAdmin ? '/order' : '/history')}
+                  />
+               </div>
    
                <div className="favorite">
                   <Button
@@ -125,24 +153,26 @@ export const Header = memo(
                   />
                </div>
    
-               <div className="cart">
+               <div className="cartMobile" onClick={() => handleNavigate('/cart')}>
                   <button><BsReceiptCutoff /></button>
-                  <label>1</label>
+                  <label>{cart? cart.length : '0'}</label>
                </div>
-   
-               <Button
-                  title={isAdmin ? 'Novo Prato' : 'Pedidos(0)'}
-                  icon={isAdmin ? '' : BsReceiptCutoff}
-                  onClick={() => handleNavigate('/new')}
-               />
+               
+               <div className="newDishAndCartDesktop">
+                  <Button
+                     title={isAdmin ? 'Novo Prato' : cart? `Carrinho (${cart.length})`: `Carrinho (0)`}
+                     icon={isAdmin ? '' : BsReceiptCutoff}
+                     onClick={() => handleNavigate(isAdmin? '/new' : '/cart')}
+                  />
+               </div>
    
             </AlternativeInput>
    
             <LeaveIcon>
-               <button onClick={handleLogOut}>
+               <button onClick={() => handleNavigate('/singOut')}>
                   <img
                      src={SingOut}
-                     alt="Icone de saida"
+                     alt="Ícone de saída"
                   />
                </button>
             </LeaveIcon>

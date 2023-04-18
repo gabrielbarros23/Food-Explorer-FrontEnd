@@ -1,15 +1,14 @@
 import { Container, Content, Left, Right, IngredientsArea, Amount, Submit, Title } from './style'
+import { Footer, Header, Button, BackButton } from '../../components'
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { api } from '../../services/api'
 import { useAuth } from '../../hooks/auth'
-import { RxCaretLeft } from 'react-icons/rx'
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
-import { Footer, Header, Button } from '../../components'
 
 
 export function Details() {
-   const { user } = useAuth()
+   const { user, CartClass } = useAuth()
    const isAdmin = Boolean(user.admin)
    const params = useParams()
    const navigate = useNavigate()
@@ -19,12 +18,9 @@ export function Details() {
    const [dishImage, setDishImage] = useState()
    const [count, setCount] = useState(1)
    const [buttonContext, setButtonContext] = useState('')
+   const cart = new CartClass
 
-   function handleEdit() {
-      if (isAdmin) {
-         navigate(`/edit/${params.id}`)
-      }
-   }
+   
 
    function handleBack() {
       navigate(-1)
@@ -41,6 +37,14 @@ export function Details() {
       const context = Boolean(user.admin) ? 'Editar prato' : `incluir ∙ R$ ${(numberUpdated * dish.price).toFixed(2)}`
       setButtonContext(context)
 
+   }
+
+   async function handleButtonFLow(){
+      if (isAdmin) {
+        return navigate(`/edit/${params.id}`)
+      }
+      await cart.addItemToCart({dish_id:dish.id, quantity:count})
+      
    }
 
    useEffect(() => {
@@ -63,7 +67,7 @@ export function Details() {
       }
 
       DishSetup()
-   }, [])
+   }, [params])
    return (
       <Container>
 
@@ -72,10 +76,7 @@ export function Details() {
             <Content>
                <Left>
 
-                  <button onClick={handleBack}>
-                     <RxCaretLeft />
-                     <p>voltar</p>
-                  </button>
+                 <BackButton onClick={handleBack}/>
 
                   <img src={dishImage} alt={dish.title} />
 
@@ -110,7 +111,7 @@ export function Details() {
 
                      </Amount>
 
-                     <Button title={buttonContext} onClick={() => handleEdit()} />
+                     <Button title={buttonContext} onClick={() => handleButtonFLow()} />
 
                   </Submit>
 
