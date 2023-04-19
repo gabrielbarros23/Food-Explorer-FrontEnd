@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-    
+    cursor: pointer;
     >select{
         width: 100%;
         height: 5.6rem;

@@ -89,7 +89,7 @@ export function Cart(){
       if (error.response) {
           throw alert(error.response.data.message)
       } else {
-          throw alert('Não foi possível buscar o prato.')
+          throw alert('Não foi fazer o pedido.')
       }
     }
 
