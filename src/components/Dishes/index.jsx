@@ -33,8 +33,8 @@ export function Dishes({ data, ...rest }) {
 
    }
 
-   function handleDetails(id) {
-      navigate(`/details/${id}`)
+   function handleDetails() {
+      navigate(`/details/${data.id}`)
    }
 
    async function handleAddItemToCart({dish_id, quantity}){
@@ -97,16 +97,16 @@ export function Dishes({ data, ...rest }) {
             <img
                src={dishImage}
                alt={data.title}
-               onClick={() => handleDetails(data.id)}
+               onClick={() => handleDetails()}
             />
 
          </Image>
 
-         <h1 onClick={() => handleDetails(data.id)}>{data.title}</h1>
+         <h1 onClick={() => handleDetails()}>{data.title}</h1>
 
-         <p onClick={() => handleDetails(data.id)}>{data.description}</p>
+         <p onClick={() => handleDetails()}>{data.description}</p>
 
-         <p onClick={() => handleDetails(data.id)}>{'R$ ' + data.price}</p>
+         <p onClick={() => handleDetails()}>{'R$ ' + data.price}</p>
 
          <Market isAdmin={Admin}>
 
@@ -116,7 +116,14 @@ export function Dishes({ data, ...rest }) {
                <button onClick={() => HandleQuantity(1)}><AiOutlinePlus /></button>
             </Amount>
 
-            <Button title={ButtonContext} onClick={() => handleAddItemToCart({dish_id:data.id, quantity}).then(setQuantity(1))} />
+            <Button 
+               title={ButtonContext} 
+               onClick={() => 
+                  Admin? 
+                  handleDetails()
+                  : 
+                  handleAddItemToCart({dish_id:data.id, quantity}).then(setQuantity(1))
+               }/>
          </Market>
 
 
