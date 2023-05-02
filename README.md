@@ -1,7 +1,7 @@
 
 # Food Explorer
 
-Food Explorer é o ultimo desafio do curso explorer da Rocketseat. Uma aplicação responsiva de um restaurante onde o usuários pode criar sua conta e o administrador pode gerenciar o restaurante. 
+Food Explorer é o último desafio do curso explorer da Rocketseat. Uma aplicação responsiva de um restaurante onde os usuários pode criar sua conta e o administrador podem gerenciar o restaurante. 
 ### Usuários
 
 - Criar uma conta e fazer login
