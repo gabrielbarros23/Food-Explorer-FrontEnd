@@ -74,11 +74,11 @@ export function Menu() {
                         Inicio
                     </button>
 
-                    {isAdmin &&
-                        <button className='link' onClick={() => handleNavigate('/order')}>
-                            Pedidos
-                        </button>
-                    }
+                    
+                    <button className='link' onClick={() => handleNavigate(isAdmin? '/order' : '/history')}>
+                        Pedidos
+                    </button>
+                    
 
                     {isAdmin &&
                         <button className='link' onClick={() => handleNavigate('/new')}>
