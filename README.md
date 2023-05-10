@@ -69,9 +69,11 @@ Inicie o servidor
 
 ## BackEnd
 
-No link abaixo estará o repositório do BackEnd com instruções para ligar o servidor em modo desenvolvimento
+Para conectar o backend com o frontend localmente juntos voce irá precisar dar deploy no BackEnd seguindo as instruções do deploy no repositório abaixo
 
 [BackEnd](https://github.com/gabrielbarros23/Food-Explorer-API)
+
+E após isso voce irá no frontend em src/services/api.js e troque o "https://food-explorer-api-ln4f.onrender.com" para "http://localhost:" e a porta que esta aparecendo no terminal do backend
 
 ## Conta Admin
 
